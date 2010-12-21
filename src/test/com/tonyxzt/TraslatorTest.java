@@ -1,5 +1,6 @@
 package test.com.tonyxzt;
 
+import com.google.api.translate.Language;
 import com.tonyxzt.language.Translator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,23 +15,30 @@ import org.junit.Test;
 public class TraslatorTest {
     @Test
     public void withPlainApi() throws Exception {
-        Translator translator = new Translator("en","fr");
-        Assert.assertEquals("salut",translator.translate("hi"));
+        Translator translator = new Translator();
+        Assert.assertEquals("salut",translator.translate("hi",Language.ENGLISH,Language.FRENCH));
     }
     @Test
     public void withDictionaryScrapApiEnglishFrench() throws Exception {
-        Translator translator = new Translator("en","fr",Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
-        Assert.assertTrue(translator.translate("hi").contains("bonjour"));
+        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
+        Assert.assertTrue(translator.translate("hi",Language.ENGLISH,Language.FRENCH).contains("bonjour"));
     }
     @Test
     public void withDictionaryScrapApiEnglishItalian() throws Exception {
-        Translator translator = new Translator("en","it",Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
-        Assert.assertTrue(translator.translate("hi").contains("ciao"));
-        Assert.assertTrue(translator.translate("hi").contains("salve"));
+        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
+        Assert.assertTrue(translator.translate("hi",Language.ENGLISH,Language.ITALIAN).contains("ciao"));
+        Assert.assertTrue(translator.translate("hi",Language.ENGLISH,Language.ITALIAN).contains("salve"));
     }
     @Test
     public void removeTheHtmlTags() throws Exception {
-        Translator translator = new Translator("en","fr",Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
-        Assert.assertFalse(translator.translate("hello").contains("<"));
+        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
+        Assert.assertFalse(translator.translate("hello",Language.ENGLISH,Language.FRENCH).contains("<"));
+    }
+
+    @Test
+    public void canGetHelpMessage() throws Exception {
+        String params[] = {"executable","--help"};
+        String returned = Translator.parseCommandLine(params);
+        Assert.assertTrue(returned.contains("help"));
     }
 }

@@ -2,6 +2,8 @@ package com.tonyxzt.language;
 import com.google.api.translate.Translate;
 import org.apache.commons.httpclient.NameValuePair;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -12,44 +14,35 @@ import java.util.regex.Pattern;
  * To change this template use File | Settings | File Templates.
  */
 public class Translator {
+    private static Map commandSwitchToTranslatorMode = new HashMap<String,TranslationMode>();
+
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
-
-    private String _inLang ="";
-    private String _outLang ="";
-    public Translator(String inLang, String outLang) {
-        _inLang=inLang;
-        _outLang = outLang;
+    static {
+        commandSwitchToTranslatorMode.put("--gApi",TranslationMode.USES_ONLY_API);
+        commandSwitchToTranslatorMode.put("--gDic",TranslationMode.USES_DICTIONARY_BY_SCRAPING );
     }
-
-    public Translator(String inLang, String outLang,TranslationMode mode) {
+    public Translator()  {
+    }
+    public Translator(TranslationMode mode) {
         _mode=mode;
-        _inLang=inLang;
-        _outLang = outLang;
+    }
+    public static void main(String[] inLine) {
+        if ("--help".equals(inLine[2]))
+            System.out.println("help");
     }
 
-    public String translate(String ciao) throws Exception {
+    public String translate(String ciao,String langIn,String langOut) throws Exception {
         switch (_mode) {
             case USES_ONLY_API:
-                return Translate.translate(ciao, _inLang, _outLang);
-
+                return Translate.translate(ciao, langIn, langOut );
             case USES_DICTIONARY_BY_SCRAPING:
-                NameValuePair[] params = new NameValuePair[]{new NameValuePair("aq", "f"), new NameValuePair("langpair", _inLang+"|"+_outLang),
-                            new NameValuePair("q", ciao), new NameValuePair("hl", "en")};
-                String theResult = Utils.lookupTranslationByProviderByGet("http://www.google.com/translate_dict", params);
-                Pattern p = Pattern.compile("<span class=\"dct-tt\">|<div class=\"wbtr_cnt\">");
-                String splitted[] = p.split(theResult, Pattern.MULTILINE | Pattern.DOTALL);
-                String toReturn="";
-                String toAdd="";
-                for (int i=2;i<splitted.length;i++)  {
-                    toAdd= splitted[i].substring(0,splitted[i].indexOf("</span>"));
-                    toAdd = Utils.stripBlock(toAdd,"a");
-                    toReturn+=toAdd;
-                    toReturn+=", ";
-                }
-                return toReturn;
+                return GoogleDictionary.lookUp(ciao, langIn, langOut);
             default:
-                return Translate.translate(ciao, _inLang, _outLang);
+                return Translate.translate(ciao, langIn, langOut);
         }
+    }
+    public static String parseCommandLine(String[] params) {
+        return "help";
     }
 }
