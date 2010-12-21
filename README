@@ -1,0 +1,12 @@
+general purpose command line utility for google languages services.
+
+items:
+DONE: do translation in languages supported by google translate via api
+DONE: do translation in language supported by google dictionary via scraping
+
+TODO: veryfy special char support and limits (preferrede encoding utf-8)
+TODO: interface via command line
+TODO: can do massive bulk lookup and save in "rosita" xml format
+TODO: clean up the scraping part with some refactoring if possibile.
+TODO: add note about the term of use of google language services
+
