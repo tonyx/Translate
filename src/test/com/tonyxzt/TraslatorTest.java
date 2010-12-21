@@ -19,6 +19,11 @@ public class TraslatorTest {
         Assert.assertEquals("salut",translator.translate("hi",Language.ENGLISH,Language.FRENCH));
     }
     @Test
+    public void chinese() throws Exception {
+        Translator translator = new Translator();
+        Assert.assertEquals("你好",translator.translate("hi",Language.ENGLISH,Language.CHINESE));
+    }
+    @Test
     public void withDictionaryScrapApiEnglishFrench() throws Exception {
         Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
         Assert.assertTrue(translator.translate("hi",Language.ENGLISH,Language.FRENCH).contains("bonjour"));
@@ -33,6 +38,12 @@ public class TraslatorTest {
     public void removeTheHtmlTags() throws Exception {
         Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
         Assert.assertFalse(translator.translate("hello",Language.ENGLISH,Language.FRENCH).contains("<"));
+    }
+
+    @Test
+    public void canHandleChinese() throws Exception {
+        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
+        Assert.assertFalse(translator.translate("hi",Language.ENGLISH,Language.FRENCH).contains("<"));
     }
 
     @Test
