@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="translate" default="all">
+  
+  
+  <property file="translate.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="jre/lib/alt-rt.jar"/>
+      <include name="jre/lib/alt-string.jar"/>
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/lib/Tidy.jar"/>
+    <pathelement location="${basedir}/lib/activation.jar"/>
+    <pathelement location="${basedir}/lib/commons-codec-1.3.jar"/>
+    <pathelement location="${basedir}/lib/commons-httpclient.jar"/>
+    <pathelement location="${basedir}/lib/commons-lang-2.4.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-adapters-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-api-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/lib/google-api-translate-java-0.53.jar"/>
+    <pathelement location="${basedir}/lib/jaxb-api.jar"/>
+    <pathelement location="${basedir}/lib/jaxb-impl.jar"/>
+    <pathelement location="${basedir}/lib/jaxb-xjc.jar"/>
+    <pathelement location="${basedir}/lib/jaxb1-impl.jar"/>
+    <pathelement location="${basedir}/lib/jaxen-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/jsr173_1.0_api.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.0.jar"/>
+    <pathelement location="${basedir}/lib/log4j.jar"/>
+    <pathelement location="${basedir}/lib/testng-5.8-jdk15.jar"/>
+    <pathelement location="${basedir}/lib/xalan.jar"/>
+    <pathelement location="${basedir}/lib/xmltool-1.1.jar"/>
+    <pathelement location="${basedir}/lib/xmlunit1.0.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Translate -->
+  
+  <dirname property="module.translate.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.translate" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.translate" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.translate" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.translate" value="${compiler.args}"/>
+  
+  <property name="translate.output.dir" value="${module.translate.basedir}/out/production/Translate"/>
+  <property name="translate.testoutput.dir" value="${module.translate.basedir}/out/test/Translate"/>
+  
+  <path id="translate.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="translate.module.production.classpath">
+    <path refid="${module.jdk.classpath.translate}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="translate.runtime.production.module.classpath">
+    <pathelement location="${translate.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="translate.module.classpath">
+    <path refid="${module.jdk.classpath.translate}"/>
+    <pathelement location="${translate.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="translate.runtime.module.classpath">
+    <pathelement location="${translate.testoutput.dir}"/>
+    <pathelement location="${translate.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.translate">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.translate">
+    <patternset refid="excluded.from.module.translate"/>
+  </patternset>
+  
+  <path id="translate.module.sourcepath">
+    <dirset dir="${module.translate.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.translate" depends="compile.module.translate.production,compile.module.translate.tests" description="Compile module Translate"/>
+  
+  <target name="compile.module.translate.production" description="Compile module Translate; production classes">
+    <mkdir dir="${translate.output.dir}"/>
+    <javac destdir="${translate.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.translate}/javac">
+      <compilerarg line="${compiler.args.translate}"/>
+      <bootclasspath refid="translate.module.bootclasspath"/>
+      <classpath refid="translate.module.production.classpath"/>
+      <src refid="translate.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.translate"/>
+    </javac>
+    
+    <copy todir="${translate.output.dir}">
+      <fileset dir="${module.translate.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+
+ <target name ="jarall">
+
+ </target>
+
+  <target name="compile.module.translate.tests" depends="compile.module.translate.production" description="compile module Translate; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.translate" description="cleanup module">
+    <delete dir="${translate.output.dir}"/>
+    <delete dir="${translate.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.translate" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.translate" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
