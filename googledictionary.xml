@@ -192,7 +192,7 @@
 
 
   <target name="createJar" depends="all">
-      <jar basedir="${module.googledictionary.basedir}/out/production" destfile="trans.jar" >
+      <jar basedir="${module.googledictionary.basedir}/out/production/googleDictionary" destfile="trans.jar" >
       </jar>
   </target>
 

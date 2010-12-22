@@ -109,7 +109,6 @@ public class TraslatorTest {
     }
 
 
-
     @Test
     public void canGetThePlainLanguageName() throws Exception {
         TranslatorMock translator = new TranslatorMock();
