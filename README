@@ -18,3 +18,14 @@ issues: special chars in windows do not shows on console (will probably work in 
 issues: somehow a log4j warning appears
 
 
+after a build is done (manually doing a jar of the builded sources and adding it and all on lib dir on classpath) an example of execution
+is the following:
+
+
+>java com.tonyxzt.language.Translator --gApi --oriLang=it --targetLang=en "ciao amico"
+hello friend
+
+>java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en ciao
+[log4j:WARN bla bla bla message will be removed]
+bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
+
