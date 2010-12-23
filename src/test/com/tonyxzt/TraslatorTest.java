@@ -103,9 +103,16 @@ public class TraslatorTest {
     @Test
     public void orilanItalianTargetEnSayHi() throws Exception {
         TranslatorMock translator = new TranslatorMock();
-        translator.wrapCommandLineParameters(new String[]{"--oriLang=it","--targetLang=en","hi"});
+        translator.wrapCommandLineParameters(new String[]{"--oriLang=it","--targetLang=en","ciao"});
         Assert.assertEquals("it",translator.getOriLang());
         Assert.assertEquals("hi",translator.translate("hi"));
+    }
+
+    @Test
+    public void manageOutputFile() throws Exception {
+        TranslatorMock translator = new TranslatorMock();
+        translator.wrapCommandLineParameters(new String[] {"--oriLang=it","--targetLang=en","--outFile=out","ciao"});
+        Assert.assertTrue(translator.readMockFile().contains("hello"));
     }
 
 

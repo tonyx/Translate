@@ -5,6 +5,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.xml.utils.StringToStringTableVector;
 
 import javax.swing.text.html.parser.Parser;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,8 @@ import java.util.regex.Pattern;
 public class Translator {
     protected String _oriLang;
     protected String _targetLang;
+    protected boolean _saveToFile=false;
+    protected String _fileName;
 
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
@@ -56,14 +59,39 @@ public class Translator {
             if (strIn[i].startsWith("--targetLang=")) {
                 this._targetLang=strIn[i].substring(strIn[i].indexOf("=")+1);
             }
+            if (strIn[i].startsWith("--outFile=")) {
+                this._saveToFile=true;
+                this._fileName=strIn[i].substring(strIn[i].indexOf("=")+1);
+            }
         }
         try {
-            return translate(strIn[strIn.length-1]);
+            String result = translate(strIn[strIn.length-1]);
+            if (_saveToFile)
+                saveToFile(strIn[strIn.length-1]+"=  "+result,_fileName);
+            return result;
         } catch (Exception e) {
             return e.getMessage();
         }
 
     }
+
+
+    protected String _mockedResultFile;
+    protected void saveToFile(String result,String fileName) {
+        File file = new File(fileName);
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(result.getBytes("UTF-8"));
+            out.close();
+        }
+        catch (FileNotFoundException fo) {
+            }
+        catch (UnsupportedEncodingException uo) {
+        }
+        catch (IOException io) {
+        }
+    }
+
 
     public String helpCommand() {
         return "usage: gtranslate [--languages] [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] word";

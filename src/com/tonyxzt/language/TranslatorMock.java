@@ -15,4 +15,13 @@ public class TranslatorMock extends Translator{
     public String getOriLang() {
         return _oriLang;
     }
+
+    @Override
+    protected void saveToFile(String result,String fileName) {
+        _mockedResultFile=result;
+    }
+
+    public String readMockFile() {
+        return _mockedResultFile;
+    }
 }
