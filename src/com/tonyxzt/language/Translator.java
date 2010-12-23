@@ -78,18 +78,25 @@ public class Translator {
 
     protected String _mockedResultFile;
     protected void saveToFile(String result,String fileName) {
+        Exception ex=null;
         File file = new File(fileName);
         try {
-            FileOutputStream out = new FileOutputStream(file);
+            FileOutputStream out = new FileOutputStream(file,true);
             out.write(result.getBytes("UTF-8"));
+            out.write("\n".getBytes());
             out.close();
         }
         catch (FileNotFoundException fo) {
+            ex=fo;
             }
         catch (UnsupportedEncodingException uo) {
+            ex=uo;
         }
         catch (IOException io) {
+            ex=io;
         }
+        if (ex!=null)
+            System.out.println(ex.getMessage());
     }
 
 
