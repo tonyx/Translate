@@ -22,7 +22,9 @@ public class Translator {
     protected String _oriLang;
     protected String _targetLang;
     protected boolean _saveToFile=false;
+    protected boolean _readFromFile=false;
     protected String _fileName;
+    protected String _inFileName;
 
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
@@ -63,20 +65,28 @@ public class Translator {
                 this._saveToFile=true;
                 this._fileName=strIn[i].substring(strIn[i].indexOf("=")+1);
             }
+            if (strIn[i].startsWith("--inFile=")) {
+                this._readFromFile=true;
+                this._inFileName=strIn[i].substring(strIn[i].indexOf("=")+1);
+            }
+
+
         }
         try {
+
+        //    String contentToRead= (_readFromFile?readContentFromFile(_inFileName):strIn[strIn.length-1]);
+
             String result = translate(strIn[strIn.length-1]);
             if (_saveToFile)
-                saveToFile(strIn[strIn.length-1]+"=  "+result,_fileName);
+                saveToFile(strIn[strIn.length-1]+" = "+result,_fileName);
             return result;
+
         } catch (Exception e) {
             return e.getMessage();
         }
-
     }
 
 
-    protected String _mockedResultFile;
     protected void saveToFile(String result,String fileName) {
         Exception ex=null;
         File file = new File(fileName);

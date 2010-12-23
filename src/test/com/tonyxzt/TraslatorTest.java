@@ -115,13 +115,21 @@ public class TraslatorTest {
         Assert.assertTrue(translator.readMockFile().contains("hello"));
     }
 
-
     @Test
     public void canGetThePlainLanguageName() throws Exception {
         TranslatorMock translator = new TranslatorMock();
         String returned = translator.wrapCommandLineParameters(new String[]{"--languages"});
         Assert.assertTrue("extend languages description is not contained",returned.toLowerCase().contains("italian"));
     }
+
+    @Test
+    public void canReadFromInputFile() throws Exception {
+        TranslatorMock translator = new TranslatorMock();
+        translator.setMockedInputFileContent("sinistra\ndestra");
+        String returned = translator.wrapCommandLineParameters(new String[] {"--oriLang=it","--targetLang=en","--inFile=infile"});
+// ...
+    }
+
 }
 
 

@@ -8,6 +8,8 @@ package com.tonyxzt.language;
  * To change this template use File | Settings | File Templates.
  */
 public class TranslatorMock extends Translator{
+    protected String _mockedResultFile;
+    protected String _mockedInputFileContent;
     public TranslationMode getMode() {
         return _mode;
     }
@@ -23,5 +25,9 @@ public class TranslatorMock extends Translator{
 
     public String readMockFile() {
         return _mockedResultFile;
+    }
+
+    public void setMockedInputFileContent(String content)  {
+        _mockedInputFileContent=content;
     }
 }
