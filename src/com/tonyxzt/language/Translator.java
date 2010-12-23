@@ -5,6 +5,8 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.xml.utils.StringToStringTableVector;
 
 import javax.swing.text.html.parser.Parser;
+import java.io.*;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -17,16 +19,15 @@ import java.util.regex.Pattern;
  * To change this template use File | Settings | File Templates.
  */
 public class Translator {
-    private static Map commandSwitchToTranslatorMode = new HashMap<String,TranslationMode>();
     protected String _oriLang;
     protected String _targetLang;
+    protected boolean _saveToFile=false;
+    protected boolean _readFromFile=false;
+    protected String _fileName;
+    protected String _inFileName;
 
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
-    static {
-        commandSwitchToTranslatorMode.put("gApi",TranslationMode.USES_ONLY_API);
-        commandSwitchToTranslatorMode.put("gDic",TranslationMode.USES_DICTIONARY_BY_SCRAPING );
-    }
 
     public Translator()  {
     }
@@ -60,54 +61,100 @@ public class Translator {
             if (strIn[i].startsWith("--targetLang=")) {
                 this._targetLang=strIn[i].substring(strIn[i].indexOf("=")+1);
             }
+            if (strIn[i].startsWith("--outFile=")) {
+                this._saveToFile=true;
+                this._fileName=strIn[i].substring(strIn[i].indexOf("=")+1);
+            }
+            if (strIn[i].startsWith("--inFile=")) {
+                this._readFromFile=true;
+                this._inFileName=strIn[i].substring(strIn[i].indexOf("=")+1);
+            }
+
+
         }
         try {
-            return translate(strIn[strIn.length-1]);
+
+        //    String contentToRead= (_readFromFile?readContentFromFile(_inFileName):strIn[strIn.length-1]);
+
+            String result = translate(strIn[strIn.length-1]);
+            if (_saveToFile)
+                saveToFile(strIn[strIn.length-1]+" = "+result,_fileName);
+            return result;
+
         } catch (Exception e) {
             return e.getMessage();
         }
-
     }
+
+
+    protected void saveToFile(String result,String fileName) {
+        Exception ex=null;
+        File file = new File(fileName);
+        try {
+            FileOutputStream out = new FileOutputStream(file,true);
+            out.write(result.getBytes("UTF-8"));
+            out.write("\n".getBytes());
+            out.close();
+        }
+        catch (FileNotFoundException fo) {
+            ex=fo;
+            }
+        catch (UnsupportedEncodingException uo) {
+            ex=uo;
+        }
+        catch (IOException io) {
+            ex=io;
+        }
+        if (ex!=null)
+            System.out.println(ex.getMessage());
+    }
+
 
     public String helpCommand() {
         return "usage: gtranslate [--languages] [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] word";
     }
 
-
     public String validLanguages() {
         String toReturn = "";
-        for (String lan : Language.validLanguages) {
-            toReturn+=lan;
-            toReturn+="\n";
+        Field[] langField = Language.class.getDeclaredFields();
+        for (Field f:langField) {
+            if ("String".equals(f.getType().getSimpleName())) {
+                toReturn+=f.getName().toLowerCase();
+                String shortDesc="";
+                try {
+                     shortDesc = (String)f.get(f);
+                } catch (IllegalAccessException e) {
+                }
+                toReturn=toReturn+"\t";
+                toReturn=toReturn+shortDesc+"\n";
+            }
         }
         return toReturn;
     }
 
-    public String translate(String ciao,String langIn,String langOut) throws Exception {
+    @Deprecated
+    public String translate(String word,String langIn,String langOut) throws Exception {
         switch (_mode) {
             case USES_ONLY_API:
-                return Translate.translate(ciao, langIn, langOut );
+                return Translate.translate(word, langIn, langOut );
             case USES_DICTIONARY_BY_SCRAPING:
-                return GoogleDictionary.lookUp(ciao, langIn, langOut);
+                return GoogleDictionary.lookUp(word, langIn, langOut);
             default:
-                return Translate.translate(ciao, langIn, langOut);
+                return Translate.translate(word, langIn, langOut);
         }
     }
 
-    public String translate(String ciao) throws Exception {
+    public String translate(String word) throws Exception {
         switch (_mode) {
             case USES_ONLY_API:
-                return Translate.translate(ciao,this._oriLang, this._targetLang );
+                return Translate.translate(word,this._oriLang, this._targetLang );
             case USES_DICTIONARY_BY_SCRAPING:
-                return GoogleDictionary.lookUp(ciao, this._oriLang, this._targetLang);
+                return GoogleDictionary.lookUp(word, this._oriLang, this._targetLang);
             default:
-                return Translate.translate(ciao, this._oriLang, this._targetLang);
+                return Translate.translate(word, this._oriLang, this._targetLang);
         }
     }
 
-    public static String parseCommandLine(String[] params) {
-        return "help";
-    }
 }
 
 

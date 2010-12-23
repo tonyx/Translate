@@ -1,5 +1,4 @@
-general purpose command line utility for google languages services.
-
+general purpose command line utility for google languages services.  
 items:
 DONE: do translation in languages supported by google translate via api
 DONE: do translation in language supported by google dictionary via scraping
@@ -10,13 +9,21 @@ TODO: can do massive bulk lookup and save in "rosita" xml format
 TODO: clean up the scraping part with some refactoring if possibile.
 TODO: add note about the term of use of google language services
 
-TODO added item: provide an automated build
+TODO added item: provide an automated build 
+	tasks: create by hand a distribution zip containing the jar and a command line for bash and windows -> DONE
+    task: create by hand a manifesto referencing all the libs and the main class 
+	task: automate the zip creation in the ant file -> DONE
+
+
 TODO added item: provide an installation tool
 TODO added item: clean the lib dir from unused jars
 
 issues: special chars in windows do not shows on console (will probably work in output to file version, using utf-8)
-issues: somehow a log4j warning appears
+issues: somehow a log4j warning appears -> FIXED
 
+issues:the -gDic option should not be called massively because it does not use any officially supported google api and google can block automated call to the service.
+
+usage:
 
 after a build is done (manually doing a jar of the builded sources and adding it and all on lib dir on classpath) an example of execution
 is the following:
@@ -26,6 +33,5 @@ is the following:
 hello friend
 
 >java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en ciao
-[log4j:WARN bla bla bla message will be removed]
 bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
