@@ -69,14 +69,12 @@ public class Translator {
                 this._readFromFile=true;
                 this._inFileName=strIn[i].substring(strIn[i].indexOf("=")+1);
             }
-
-
         }
         try {
+            String contentToRead= (_readFromFile?readContentFromFile(_inFileName):strIn[strIn.length-1]);
 
-        //    String contentToRead= (_readFromFile?readContentFromFile(_inFileName):strIn[strIn.length-1]);
-
-            String result = translate(strIn[strIn.length-1]);
+            //String result = translate(strIn[strIn.length-1]);
+            String result = translate(contentToRead);
             if (_saveToFile)
                 saveToFile(strIn[strIn.length-1]+" = "+result,_fileName);
             return result;
@@ -84,6 +82,10 @@ public class Translator {
         } catch (Exception e) {
             return e.getMessage();
         }
+    }
+
+    protected String readContentFromFile(String fileName) {
+        return "";
     }
 
 

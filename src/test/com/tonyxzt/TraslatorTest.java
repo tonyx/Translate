@@ -125,9 +125,9 @@ public class TraslatorTest {
     @Test
     public void canReadFromInputFile() throws Exception {
         TranslatorMock translator = new TranslatorMock();
-        translator.setMockedInputFileContent("sinistra\ndestra");
+        translator.setMockedInputFileContent("sinistra");
         String returned = translator.wrapCommandLineParameters(new String[] {"--oriLang=it","--targetLang=en","--inFile=infile"});
-// ...
+        Assert.assertTrue(returned.contains("left"));
     }
 
 }
