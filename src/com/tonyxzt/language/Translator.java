@@ -1,10 +1,6 @@
 package com.tonyxzt.language;
 import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
-import com.sun.istack.tools.ProtectedTask;
-
-import java.io.*;
-import java.lang.reflect.Field;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,8 +20,12 @@ public class Translator {
     protected FileIoManager fileIoManager = new FileIoManager();
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
+    OnLineDictionary googleDictionary;
+    OnLineDictionary googleTranslator;
 
     public Translator()  {
+        googleDictionary = new GoogleDictionary();
+        googleTranslator = new GoogleTranslator();
         fileIoManager = new FileIoManager();
     }
 
@@ -70,7 +70,7 @@ public class Translator {
     }
 
     protected void saveToFile(String result,String fileName) {
-         fileIoManager.saveToFile(result,fileName);
+         fileIoManager.saveToFile(result, fileName);
     }
 
 
@@ -85,11 +85,11 @@ public class Translator {
     public String translate(String word) throws Exception {
         switch (_mode) {
             case USES_ONLY_API:
-                return Translate.translate(word,this._oriLang, this._targetLang );
+                return this.googleTranslator.lookUp(word,this._oriLang, this._targetLang );
             case USES_DICTIONARY_BY_SCRAPING:
-                return GoogleDictionary.lookUp(word, this._oriLang, this._targetLang);
+                return this.googleDictionary.lookUp(word, this._oriLang, this._targetLang);
             default:
-                return Translate.translate(word, this._oriLang, this._targetLang);
+                return this.googleTranslator.lookUp(word,this._oriLang, this._targetLang );
         }
     }
 }
