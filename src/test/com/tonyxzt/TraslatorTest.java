@@ -130,6 +130,16 @@ public class TraslatorTest {
         Assert.assertTrue(returned.contains("left"));
     }
 
+    @Test
+    public void canReadFromInputFileMultipleLines() throws Exception {
+        TranslatorMock translator = new TranslatorMock();
+        translator.setMockedInputFileContent("sinistra\ndestra");
+        String returned = translator.wrapCommandLineParameters(new String[] {"--oriLang=it","--targetLang=en","--inFile=infile"});
+        Assert.assertTrue(returned.contains("left"));
+        Assert.assertTrue(returned.contains("right"));
+    }
+
+
 }
 
 

@@ -48,7 +48,7 @@ public class Translator {
         if ("--languages".equals(strIn[0])) {
             return validLanguages();
         }
-        for (int i=0;i<strIn.length-1;i++) {
+        for (int i=0;i<strIn.length;i++) {
             if ("--gApi".equals(strIn[i])) {
                 this._mode=Translator.TranslationMode.USES_ONLY_API;
             }
@@ -70,21 +70,47 @@ public class Translator {
                 this._inFileName=strIn[i].substring(strIn[i].indexOf("=")+1);
             }
         }
+
         try {
-            String contentToRead= (_readFromFile?readContentFromFile(_inFileName):strIn[strIn.length-1]);
-
-            //String result = translate(strIn[strIn.length-1]);
-            String result = translate(contentToRead);
-            if (_saveToFile)
-                saveToFile(strIn[strIn.length-1]+" = "+result,_fileName);
-            return result;
-
+            String toReturn="";
+            String toBeTranslated= (_readFromFile? readContentFromFile(_inFileName):strIn[strIn.length-1]);
+            String splitted[] = toBeTranslated.split("\n");
+            for (String content : splitted) {
+                String translated = translate(content);
+                toReturn+=translated;
+                toReturn+="\n";
+                if (_saveToFile) {
+                    saveToFile(content.trim()+ " = "+translated,_fileName);
+                }
+            }
+            return toReturn;
         } catch (Exception e) {
             return e.getMessage();
         }
     }
 
     protected String readContentFromFile(String fileName) {
+        String toReturn="";
+        File file = new File(fileName);
+        try {
+            FileInputStream fileIn = new FileInputStream(file);
+            byte[] inBytes = new byte[1024];
+
+            while (fileIn.read(inBytes)!=-1) {
+                fileIn.read(inBytes);
+                String strReaden = new String(inBytes,"UTF-8");
+                toReturn+=strReaden;
+            }
+            fileIn.close();
+            //String toReturn = new String(inBytes,"UTF-8");
+            toReturn = toReturn.trim();
+            return toReturn;
+            //return new String(inBytes,"UTF-8");
+        }
+        catch (FileNotFoundException fe) {
+        }
+        catch (IOException fe) {
+        }
         return "";
     }
 
@@ -100,7 +126,7 @@ public class Translator {
         }
         catch (FileNotFoundException fo) {
             ex=fo;
-            }
+        }
         catch (UnsupportedEncodingException uo) {
             ex=uo;
         }

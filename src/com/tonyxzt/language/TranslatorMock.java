@@ -23,6 +23,11 @@ public class TranslatorMock extends Translator{
         _mockedResultFile=result;
     }
 
+    @Override
+    protected String readContentFromFile(String fileName) {
+        return _mockedInputFileContent;
+    }
+
     public String readMockFile() {
         return _mockedResultFile;
     }
