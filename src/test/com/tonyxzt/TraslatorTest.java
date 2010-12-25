@@ -20,32 +20,32 @@ public class TraslatorTest {
     @Test
     public void withPlainApi() throws Exception {
         Translator translator = new Translator();
-        Assert.assertEquals("salut",translator.translate("hi",Language.ENGLISH,Language.FRENCH));
+        Assert.assertEquals("salut",translator.wrapCommandLineParameters(new String[]{"--oriLang=en","--targetLang=fr","salut"}));
     }
     @Test
     @Ignore
-    // in some installation of idea the test launches the -Dfile.encoding=windows-1252 parameter that
     // give false error on the test: the correct par is -Dfile.encoding=UTF-8
     public void chinese() throws Exception {
         Translator translator = new Translator();
-        Assert.assertEquals("你好",translator.translate("hi",Language.ENGLISH,Language.CHINESE));
+        //Assert.assertEquals("你好",translator.translate("hi",Language.ENGLISH,Language.CHINESE));
     }
     @Test
     public void withDictionaryScrapApiEnglishFrench() throws Exception {
-        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
-        Assert.assertTrue(translator.translate("hi", Language.ENGLISH, Language.FRENCH).contains("bonjour"));
+        Translator translator = new Translator();
+        Assert.assertTrue(translator.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=fr","hi"}).contains("salut"));
     }
 
     @Test
     public void withDictionaryScrapApiEnglishItalian() throws Exception {
-        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
-        Assert.assertTrue(translator.translate("hi",Language.ENGLISH,Language.ITALIAN).contains("ciao"));
-        Assert.assertTrue(translator.translate("hi", Language.ENGLISH, Language.ITALIAN).contains("salve"));
+        Translator translator = new Translator();
+        String result = translator.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=it","hi"});
+        Assert.assertTrue(result.contains("ciao"));
+        Assert.assertTrue(result.contains("salve"));
     }
 
     @Test
     public void aslkfaslkfas() throws Exception {
-        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
+        Translator translator = new Translator();
         String returned = translator.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=it","hi"});
         Assert.assertTrue(returned.contains("ciao"));
         Assert.assertTrue(returned.contains("salve"));
@@ -53,8 +53,9 @@ public class TraslatorTest {
 
     @Test
     public void removeTheHtmlTags() throws Exception {
-        Translator translator = new Translator(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING);
-        Assert.assertFalse(translator.translate("hello", Language.ENGLISH, Language.FRENCH).contains("<"));
+        Translator translator = new Translator();
+        String returned = translator.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=fr","hello"});
+        Assert.assertFalse(returned.contains("<"));
     }
 
     @Test
@@ -96,7 +97,6 @@ public class TraslatorTest {
     public void canSetLanguage() throws Exception {
         TranslatorMock translator = new TranslatorMock();
         translator.wrapCommandLineParameters(new String[]{"--oriLang=it","ciao"});
-        //Assert.assertEquals(Translator.TranslationMode.USES_ONLY_API,translator.getMode());
         Assert.assertEquals("it",translator.getOriLang());
     }
 
@@ -138,7 +138,6 @@ public class TraslatorTest {
         Assert.assertTrue(returned.contains("left"));
         Assert.assertTrue(returned.contains("right"));
     }
-
 
 }
 
