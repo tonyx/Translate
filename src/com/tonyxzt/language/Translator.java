@@ -20,14 +20,8 @@ public class Translator {
     protected FileIoManager fileIoManager = new FileIoManager();
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
-    OnLineDictionary googleDictionary;
-    OnLineDictionary googleTranslator;
-
-    public Translator()  {
-        googleDictionary = new GoogleDictionary();
-        googleTranslator = new GoogleTranslator();
-        fileIoManager = new FileIoManager();
-    }
+    OnLineDictionary googleDictionary= new GoogleDictionary();
+    OnLineDictionary googleTranslator=new GoogleTranslator();
 
     public static void main(String[] inLine) {
         Translator translate = new Translator();

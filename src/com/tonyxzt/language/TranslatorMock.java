@@ -10,6 +10,18 @@ package com.tonyxzt.language;
 public class TranslatorMock extends Translator{
     protected String _mockedResultFile;
     protected String _mockedInputFileContent;
+    protected ExternalSourceManager _externalSourceManager;
+
+    public TranslatorMock() {
+        super();
+    }
+
+    public TranslatorMock(ExternalSourceManager externalSourceManager) {
+        googleDictionary = new GoogleDictionaryMock(externalSourceManager);
+        //this._externalSourceManager=externalSourceManager;
+        //To change body of created methods use File | Settings | File Templates.
+    }
+
     public TranslationMode getMode() {
         return _mode;
     }

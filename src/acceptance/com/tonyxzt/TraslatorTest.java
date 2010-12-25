@@ -77,19 +77,6 @@ public class TraslatorTest {
 
     //   return "usage: gtranslate [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] word";
 
-    @Test
-    public void canHandleDictionaryParameter() throws Exception {
-        TranslatorMock translator = new TranslatorMock();
-        translator.wrapCommandLineParameters(new String[]{"--gDic","ciao"});
-        Assert.assertEquals(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING,translator.getMode());
-    }
-
-    @Test
-    public void passgPlainTranlator() throws Exception {
-        TranslatorMock translator = new TranslatorMock();
-        translator.wrapCommandLineParameters(new String[]{"--gApi","ciao"});
-        Assert.assertEquals(Translator.TranslationMode.USES_ONLY_API,translator.getMode());
-    }
 
     @Test
     public void canSetLanguage() throws Exception {
@@ -114,13 +101,6 @@ public class TraslatorTest {
     }
 
     @Test
-    public void canGetThePlainLanguageName() throws Exception {
-        TranslatorMock translator = new TranslatorMock();
-        String returned = translator.wrapCommandLineParameters(new String[]{"--languages"});
-        Assert.assertTrue("extend languages description is not contained",returned.toLowerCase().contains("italian"));
-    }
-
-    @Test
     public void canReadFromInputFile() throws Exception {
         TranslatorMock translator = new TranslatorMock();
         translator.setMockedInputFileContent("sinistra");
@@ -138,6 +118,5 @@ public class TraslatorTest {
     }
 
 }
-
 
 
