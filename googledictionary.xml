@@ -203,7 +203,7 @@
   </target>
 
 
-  <target name="compile.module.googledictionary.tests" depends="compile.module.googledictionary.production" description="compile module GoogleDictionary; test classes" unless="skip.tests"/>
+  <target name="compile.module.googledictionary.tests" depends="compile.module.googledictionary.production" description="compile module GoogleDictionary; acceptance classes" unless="skip.tests"/>
   
   <target name="clean.module.googledictionary" description="cleanup module">
     <delete dir="${googledictionary.output.dir}"/>

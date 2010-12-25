@@ -1,4 +1,4 @@
-package test.com.tonyxzt;
+package acceptance.com.tonyxzt;
 
 import com.google.api.translate.Language;
 import com.tonyxzt.language.Translator;
@@ -6,8 +6,6 @@ import com.tonyxzt.language.TranslatorMock;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,7 +22,7 @@ public class TraslatorTest {
     }
     @Test
     @Ignore
-    // give false error on the test: the correct par is -Dfile.encoding=UTF-8
+    // give false error on the acceptance: the correct par is -Dfile.encoding=UTF-8
     public void chinese() throws Exception {
         Translator translator = new Translator();
         //Assert.assertEquals("你好",translator.translate("hi",Language.ENGLISH,Language.CHINESE));
@@ -38,7 +36,7 @@ public class TraslatorTest {
     @Test
     public void withDictionaryScrapApiEnglishItalian() throws Exception {
         Translator translator = new Translator();
-        String result = translator.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=it","hi"});
+        String result = translator.wrapCommandLineParameters(new String[]{"--gDic", "--oriLang=en", "--targetLang=it", "hi"});
         Assert.assertTrue(result.contains("ciao"));
         Assert.assertTrue(result.contains("salve"));
     }
