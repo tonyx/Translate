@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 public class GoogleDictionaryFilterAndCleanContent implements FilterAndCleanContent {
     private static final int INDEX_START_FILTERING = 2;
     public String filter(String theResult) {
-
         Pattern p = Pattern.compile("<span class=\"dct-tt\">|<div class=\"wbtr_cnt\">");
         String splitted[] = p.split(theResult, Pattern.MULTILINE | Pattern.DOTALL);
         String toReturn="";
@@ -27,9 +26,11 @@ public class GoogleDictionaryFilterAndCleanContent implements FilterAndCleanCont
         for (int i=INDEX_START_FILTERING ;i<splitted.length;i++)  {
             toAdd= splitted[i].substring(0,splitted[i].indexOf("</span>"));
             toAdd = Utils.stripBlock(toAdd, "a");
-            toReturn+=toAdd;
-            toReturn+=", ";
+            if (!"\n".equals(toAdd.replaceAll(" ",""))) {
+                toReturn+=toAdd;
+                toReturn+=", ";
+            }
         }
-        return toReturn;
+        return toReturn.replaceAll("<[^>]*>","");
     }
 }

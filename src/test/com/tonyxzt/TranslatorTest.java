@@ -51,5 +51,22 @@ public class TranslatorTest {
         Assert.assertTrue(returned.contains("bonjour"));
     }
 
+    @Test
+    public void shouldRemoveHtmlStuffsFromContent() throws Exception {
+        ExternalSourceManager externalSource = new ExternalSourceManagerMock(ArabicGHtmlContent.content);
+        Translator translatorWithMockedSources = new TranslatorMock(externalSource);
+        String returned = translatorWithMockedSources.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=ar","moon"});
+        Assert.assertFalse(returned.contains("<"));
+    }
+
+    @Test
+    public void shouldNotContainSingleEmptyEol() throws Exception {
+        ExternalSourceManager externalSource = new ExternalSourceManagerMock(ArabicGHtmlContent.content);
+        Translator translatorWithMockedSources = new TranslatorMock(externalSource);
+        String returned = translatorWithMockedSources.wrapCommandLineParameters(new String[]{"--gDic","--oriLang=en","--targetLang=ar","moon"});
+        Assert.assertFalse(returned.contains("<"));
+    }
 
 }
+
+
