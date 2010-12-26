@@ -5,9 +5,11 @@ DONE: do translation in language supported by google dictionary via scraping
 
 DONE: verify special char support and limits (preferrede encoding utf-8) (sometimes not testable)
 DONE: interface via command line
-TODO: can do massive bulk lookup and save in "rosita" xml format
-TODO: clean up the scraping part with some refactoring if possibile.
-TODO: add note about the term of use of google language services
+TODO: can do massive bulk lookup and save in "rosita" xml format // descoped
+DONE: clean up the scraping part with some refactoring if possibile. DONE
+TODO: add note about the term of use of google language services // descoped
+
+TODO: replace the recursive stripblog with a regular expression.
 
 TODO added item: provide an automated build 
 	tasks: create by hand a distribution zip containing the jar and a command line for bash and windows -> DONE
@@ -16,22 +18,34 @@ TODO added item: provide an automated build
 
 
 TODO added item: provide an installation tool
-TODO added item: clean the lib dir from unused jars
+DONE: clean the lib dir from unused jars
 
 issues: special chars in windows do not shows on console (will probably work in output to file version, using utf-8)
-issues: somehow a log4j warning appears -> FIXED
+issues: somehow a log4j warning appears -> FIXED  (not sure, take the log4j.properties from the jar to the current dir in case)
 
-issues:the -gDic option should not be called massively because it does not use any officially supported google api and google can block automated call to the service.
+issues:the -gDic option should not be called massively because google server can block it.
 
 usage:
 
 after a build is done (manually doing a jar of the builded sources and adding it and all on lib dir on classpath) an example of execution
 is the following:
 
+>java com.tonyxzt.language.Translator --languages
+[to list supported languages]
+
+>java com.tonyxzt.language.Translator --help
+[to print help]
 
 >java com.tonyxzt.language.Translator --gApi --oriLang=it --targetLang=en "ciao amico"
 hello friend
 
 >java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en ciao
 bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
+
+>java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en ciao
+bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
+
+>java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en --inFile=infile.txt --outFile=outfile.txt
+[will take the list of the words from infile and write them in the outfile.txt. it will still use standard output, anyway)
+
 
