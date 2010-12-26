@@ -9,27 +9,27 @@ package com.tonyxzt.language;
  */
 public class CommandLineToStatusClassWrapper {
      public void setStatusReadyForTheAction(Translator translator, String[] strIn)  {
-        for (int i=0;i<strIn.length;i++) {
-            if ("--gApi".equals(strIn[i])) {
-                translator._mode= Translator.TranslationMode.USES_ONLY_API;
-            }
-            if ("--gDic".equals(strIn[i])) {
-                translator._mode= Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING;
-            }
-            if (strIn[i].startsWith("--oriLang=")) {
-                translator._oriLang=strIn[i].substring(strIn[i].indexOf("=")+1);
-            }
-            if (strIn[i].startsWith("--targetLang=")) {
-                translator._targetLang=strIn[i].substring(strIn[i].indexOf("=")+1);
-            }
-            if (strIn[i].startsWith("--outFile=")) {
-                translator._saveToFile=true;
-                translator._fileName=strIn[i].substring(strIn[i].indexOf("=")+1);
-            }
-            if (strIn[i].startsWith("--inFile=")) {
-                translator._readFromFile=true;
-                translator._inFileName=strIn[i].substring(strIn[i].indexOf("=")+1);
-            }
-        }
+         for (String aStrIn : strIn) {
+             if ("--gApi".equals(aStrIn)) {
+                 translator._mode = Translator.TranslationMode.USES_ONLY_API;
+             }
+             if ("--gDic".equals(aStrIn)) {
+                 translator._mode = Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING;
+             }
+             if (aStrIn.startsWith("--oriLang=")) {
+                 translator._oriLang = aStrIn.substring(aStrIn.indexOf("=") + 1);
+             }
+             if (aStrIn.startsWith("--targetLang=")) {
+                 translator._targetLang = aStrIn.substring(aStrIn.indexOf("=") + 1);
+             }
+             if (aStrIn.startsWith("--outFile=")) {
+                 translator._saveToFile = true;
+                 translator._fileName = aStrIn.substring(aStrIn.indexOf("=") + 1);
+             }
+             if (aStrIn.startsWith("--inFile=")) {
+                 translator._readFromFile = true;
+                 translator._inFileName = aStrIn.substring(aStrIn.indexOf("=") + 1);
+             }
+         }
     }
 }

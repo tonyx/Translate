@@ -67,7 +67,7 @@ public class Translator {
     }
 
     public String helpCommand() {
-        return "usage: gtranslate [--languages] [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] word";
+        return "usage: gtranslate [--languages] [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
     }
 
     public String validLanguages() {
