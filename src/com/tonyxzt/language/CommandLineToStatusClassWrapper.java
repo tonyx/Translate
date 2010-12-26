@@ -7,7 +7,7 @@ package com.tonyxzt.language;
  * Time: 12.42
  * To change this template use File | Settings | File Templates.
  */
-public class CommandLineToStausClassWrapper {
+public class CommandLineToStatusClassWrapper {
      public void setStatusReadyForTheAction(Translator translator, String[] strIn)  {
         for (int i=0;i<strIn.length;i++) {
             if ("--gApi".equals(strIn[i])) {

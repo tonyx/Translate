@@ -1,6 +1,5 @@
 package com.tonyxzt.language;
 import com.google.api.translate.Language;
-import com.google.api.translate.Translate;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,6 +21,7 @@ public class Translator {
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
     OnLineDictionary googleDictionary= new GoogleDictionary();
     OnLineDictionary googleTranslator=new GoogleTranslator();
+    CommandLineToStatusClassWrapper commandlineToStatusWrapper = new CommandLineToStatusClassWrapper();
 
     public static void main(String[] inLine) {
         Translator translate = new Translator();
@@ -35,7 +35,7 @@ public class Translator {
         if ("--languages".equals(strIn[0])) {
             return validLanguages();
         }
-        new CommandLineToStausClassWrapper().setStatusReadyForTheAction(this,strIn);
+        commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn);
         return doAction(strIn);
     }
 
@@ -58,7 +58,6 @@ public class Translator {
         }
     }
 
-
     protected String readContentFromFile(String fileName) {
          return fileIoManager.readContentFromFile(fileName);
     }
@@ -66,7 +65,6 @@ public class Translator {
     protected void saveToFile(String result,String fileName) {
          fileIoManager.saveToFile(result, fileName);
     }
-
 
     public String helpCommand() {
         return "usage: gtranslate [--languages] [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] word";
