@@ -1,4 +1,4 @@
-general purpose command line utility for google languages services.  
+command line utility for google languages services.
 items:
 DONE: do translation in languages supported by google translate via api
 DONE: do translation in language supported by google dictionary via scraping

@@ -9,15 +9,49 @@ import com.google.api.translate.Language;
  * To change this template use File | Settings | File Templates.
  */
 public class Translator {
+    public void setOriLang(String _oriLang) {
+        this._oriLang = _oriLang;
+    }
+
+    public void setTargetLang(String _targetLang) {
+        this._targetLang = _targetLang;
+    }
+
     protected String _oriLang;
     protected String _targetLang;
+
+    public void setSaveToFile(boolean _saveToFile) {
+        this._saveToFile = _saveToFile;
+    }
+
     protected boolean _saveToFile=false;
+
+
+    public void setReadFromFile(boolean _readFromFile) {
+        this._readFromFile = _readFromFile;
+    }
+
     protected boolean _readFromFile=false;
+
+    public void setFileName(String _fileName) {
+        this._fileName = _fileName;
+    }
+
     protected String _fileName;
+
+    public void setInFileName(String _inFileName) {
+        this._inFileName = _inFileName;
+    }
+
     protected String _inFileName;
 
     protected FileIoManager fileIoManager = new FileIoManager();
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
+
+    public void setMode(TranslationMode _mode) {
+        this._mode = _mode;
+    }
+
     TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
     OnLineDictionary googleDictionary= new GoogleDictionary();
     OnLineDictionary googleTranslator=new GoogleTranslator();
