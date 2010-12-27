@@ -102,10 +102,8 @@ public class Translator {
                 toReturn+=strReaden;
             }
             fileIn.close();
-            //String toReturn = new String(inBytes,"UTF-8");
             toReturn = toReturn.trim();
             return toReturn;
-            //return new String(inBytes,"UTF-8");
         }
         catch (FileNotFoundException fe) {
         }
@@ -182,7 +180,6 @@ public class Translator {
                 return Translate.translate(word, this._oriLang, this._targetLang);
         }
     }
-
 }
 
 

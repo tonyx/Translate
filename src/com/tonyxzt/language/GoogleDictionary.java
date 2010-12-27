@@ -18,8 +18,10 @@ public class GoogleDictionary {
         for (int i=INDEX_START_FILTERING ;i<splitted.length;i++)  {
             toAdd= splitted[i].substring(0,splitted[i].indexOf("</span>"));
             toAdd = Utils.stripBlock(toAdd, "a");
-            toReturn+=toAdd;
-            toReturn+=", ";
+            if (!"".equals(toAdd.trim())) {
+                toReturn+=toAdd;
+                toReturn+=", ";
+            }
         }
         return toReturn;
     }
