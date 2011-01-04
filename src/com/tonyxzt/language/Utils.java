@@ -14,14 +14,6 @@ import org.apache.commons.httpclient.methods.GetMethod;
  */
 public class Utils {
 
-    public static String lookupTranslationByProviderByGet(String url, NameValuePair[] queryString) throws Exception {
-        HttpClient client = new HttpClient();
-        HttpMethod method = new GetMethod(url);
-        method.setQueryString(queryString);
-        client.executeMethod(method) ;
-        return method.getResponseBodyAsString();
-    }
-
     public static String stripBlock(String toStrip,String badTag) {
         int indStart = toStrip.indexOf("<"+badTag);
         if (indStart==-1) return toStrip;

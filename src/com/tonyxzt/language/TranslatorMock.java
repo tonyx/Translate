@@ -1,5 +1,9 @@
 package com.tonyxzt.language;
 
+import test.com.tonyxzt.StubbedGHtmlContent;
+
+import java.security.PublicKey;
+
 /**
  * Created by IntelliJ IDEA.
  * User: tonyx
@@ -10,12 +14,9 @@ package com.tonyxzt.language;
 public class TranslatorMock extends Translator{
     protected String _mockedResultFile;
     protected String _mockedInputFileContent;
-    public TranslationMode getMode() {
-        return _mode;
-    }
 
-    public String getOriLang() {
-        return _oriLang;
+    public TranslatorMock(GoogleDictionary googleDctionary) {
+        this.googleDictionary = googleDictionary;
     }
 
     @Override

@@ -190,7 +190,7 @@
 
  </target>
 
-  <target name="compile.module.translate.tests" depends="compile.module.translate.production" description="compile module Translate; test classes" unless="skip.tests"/>
+  <target name="compile.module.translate.tests" depends="compile.module.translate.production" description="compile module Translate; acceptance classes" unless="skip.tests"/>
   
   <target name="clean.module.translate" description="cleanup module">
     <delete dir="${translate.output.dir}"/>
