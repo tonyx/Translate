@@ -36,16 +36,16 @@ is the following:
 >java com.tonyxzt.language.Translator --help
 [to print help]
 
->java com.tonyxzt.language.Translator --gApi --oriLang=it --targetLang=en "ciao amico"
+>java com.tonyxzt.language.Translator --dic=gApi --oriLang=it --targetLang=en "ciao amico"
 hello friend
 
->java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en ciao
+>java com.tonyxzt.language.Translator --dic=gDic --oriLang=it --targetLang=en ciao
 bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
->java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en ciao
+>java com.tonyxzt.language.Translator --dic=gDic --oriLang=it --targetLang=en ciao
 bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
->java com.tonyxzt.language.Translator --gDic --oriLang=it --targetLang=en --inFile=infile.txt --outFile=outfile.txt
+>java com.tonyxzt.language.Translator --dic=gDic --oriLang=it --targetLang=en --inFile=infile.txt --outFile=outfile.txt
 [will take the list of the words from infile and write them in the outfile.txt. it will still use standard output, anyway)
 
 
