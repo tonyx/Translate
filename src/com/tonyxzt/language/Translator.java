@@ -1,6 +1,9 @@
 package com.tonyxzt.language;
 import com.google.api.translate.Language;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Tonino
@@ -9,14 +12,29 @@ import com.google.api.translate.Language;
  * To change this template use File | Settings | File Templates.
  */
 public class Translator {
-    TranslationMode _mode = Translator.TranslationMode.USES_ONLY_API;
-    OnLineDictionary googleDictionary = new GoogleDictionary();
-    OnLineDictionary googleTranslator =new GoogleTranslator();
+    OnLineDictionary currentDictionary;
+    Map<String,OnLineDictionary> commandToTranslator;
     CommandLineToStatusClassWrapper commandlineToStatusWrapper = new CommandLineToStatusClassWrapper();
     protected FileIoManager fileIoManager = new FileIoManager();
-
     protected String _oriLang;
     protected String _targetLang;
+    protected boolean _saveToFile=false;
+    protected boolean _readFromFile=false;
+    protected String _inFileName;
+    public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
+
+    public static void main(String[] inLine) {
+        Map<String,OnLineDictionary> mapDictionaries = new HashMap<String,OnLineDictionary>(){
+               {put("gDic",new GoogleDictionary());
+                put("gApi",new GoogleTranslator());}
+        };
+        Translator translate = new Translator(mapDictionaries);
+        System.out.println(translate.wrapCommandLineParameters(inLine));
+    }
+
+    public void setCurrentDictionary(OnLineDictionary currentDictionary) {
+        this.currentDictionary = currentDictionary;
+    }
 
     public void setOriLang(String _oriLang) {
         this._oriLang = _oriLang;
@@ -26,31 +44,28 @@ public class Translator {
         this._targetLang = _targetLang;
     }
 
+    public Translator(Map<String,OnLineDictionary> mapTranslator) {
+        this.commandToTranslator = mapTranslator;
+    }
+
+    @Deprecated
+//    public Translator(OnLineDictionary googleDictionary, OnLineDictionary googleTranslator) {
+//        this.googleTranslator=googleTranslator;
+//        this.googleDictionary=googleDictionary;
+//    }
+
+
     public Translator() {
-        new Translator(new GoogleDictionary());
+        //new Translator(new GoogleDictionary());
     }
-
-    public Translator(GoogleDictionary googleDictionary) {
-        this.googleDictionary=googleDictionary;
-    }
-
-    public Translator(GoogleDictionary googleDictionary, CommandLineToStatusClassWrapper commandlineToStaturWrapper) {
-        this.commandlineToStatusWrapper=commandlineToStatusWrapper;
-    }
-
 
     public void setSaveToFile(boolean _saveToFile) {
         this._saveToFile = _saveToFile;
     }
 
-    protected boolean _saveToFile=false;
-
-
     public void setReadFromFile(boolean _readFromFile) {
         this._readFromFile = _readFromFile;
     }
-
-    protected boolean _readFromFile=false;
 
     public void setFileName(String _fileName) {
         this._fileName = _fileName;
@@ -62,28 +77,17 @@ public class Translator {
         this._inFileName = _inFileName;
     }
 
-    protected String _inFileName;
-
-
-    public TranslationMode getMode() {
-        return _mode;
-    }
+//    public TranslationMode getMode() {
+//        return _mode;
+//    }
 
     public String getOriLang() {
         return _oriLang;
     }
 
-    public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
-
-    public void setMode(TranslationMode _mode) {
-        this._mode = _mode;
-    }
-
-
-    public static void main(String[] inLine) {
-        Translator translate = new Translator();
-        System.out.println(translate.wrapCommandLineParameters(inLine));
-    }
+//    public void setMode(TranslationMode _mode) {
+//        this._mode = _mode;
+//    }
 
     public String wrapCommandLineParameters(String[] strIn)  {
         if (strIn.length==0|| "--help".equals(strIn[0])) {
@@ -92,7 +96,7 @@ public class Translator {
         if ("--languages".equals(strIn[0])) {
             return validLanguages();
         }
-        commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn);
+        commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.commandToTranslator);
         return doAction(strIn);
     }
 
@@ -124,7 +128,7 @@ public class Translator {
     }
 
     public String helpCommand() {
-        return "usage: gtranslate [--languages] [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
+        return "usage: gtranslate [--languages] [--dic=gApi|--dic=gDic] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
     }
 
     public String validLanguages() {
@@ -132,14 +136,7 @@ public class Translator {
     }
 
     public String translate(String word) throws Exception {
-        switch (_mode) {
-            case USES_ONLY_API:
-                return this.googleTranslator.lookUp(word,this._oriLang, this._targetLang );
-            case USES_DICTIONARY_BY_SCRAPING:
-                return this.googleDictionary.lookUp(word, this._oriLang, this._targetLang);
-            default:
-                return this.googleTranslator.lookUp(word,this._oriLang, this._targetLang );
-        }
+        return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
     }
 }
 

@@ -3,6 +3,7 @@ package com.tonyxzt.language;
 import test.com.tonyxzt.StubbedGHtmlContent;
 
 import java.security.PublicKey;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,8 +17,13 @@ public class TranslatorMock extends Translator{
     protected String _mockedInputFileContent;
 
     public TranslatorMock(GoogleDictionary googleDctionary) {
-        this.googleDictionary = googleDictionary;
+        this.currentDictionary = googleDctionary;
     }
+
+    public TranslatorMock(Map<String,OnLineDictionary> mapTranslator) {
+        this.commandToTranslator = mapTranslator;
+    }
+
 
     @Override
     protected void saveToFile(String result,String fileName) {
