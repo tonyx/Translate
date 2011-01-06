@@ -28,16 +28,9 @@ public class TranslatorTest {
         };
     }
 
-//    @Test
-//    public void canHandleDictionaryParameter() throws Exception {
-//        Translator translator = new Translator(new GoogleDictionary(new ExternalSourceManagerMock(StubbedGHtmlContent.content)));
-//        translator.wrapCommandLineParameters(new String[]{"--gDic","ciao"});
-//        Assert.assertEquals(Translator.TranslationMode.USES_DICTIONARY_BY_SCRAPING, translator.getMode());
-//    }
-
     @Test
     public void canGetThePlainLanguageName() throws Exception {
-        Translator translator = new TranslatorMock(new GoogleDictionary(new ExternalSourceManagerMock(StubbedGHtmlContent.content)));
+        Translator translator = new Translator(mapDictionaries);
         String returned = translator.wrapCommandLineParameters(new String[]{"--languages"});
         Assert.assertTrue("extend languages description is not contained",returned.toLowerCase().contains("italian"));
     }

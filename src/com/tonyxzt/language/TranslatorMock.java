@@ -16,9 +16,9 @@ public class TranslatorMock extends Translator{
     protected String _mockedResultFile;
     protected String _mockedInputFileContent;
 
-    public TranslatorMock(GoogleDictionary googleDctionary) {
-        this.currentDictionary = googleDctionary;
-    }
+//    public TranslatorMock(GoogleDictionary googleDctionary) {
+//        this.currentDictionary = googleDctionary;
+//    }
 
     public TranslatorMock(Map<String,OnLineDictionary> mapTranslator) {
         this.commandToTranslator = mapTranslator;

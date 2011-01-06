@@ -21,6 +21,7 @@ public class Translator {
     protected boolean _saveToFile=false;
     protected boolean _readFromFile=false;
     protected String _inFileName;
+    protected String _fileName;
     public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
 
     public static void main(String[] inLine) {
@@ -48,13 +49,6 @@ public class Translator {
         this.commandToTranslator = mapTranslator;
     }
 
-    @Deprecated
-//    public Translator(OnLineDictionary googleDictionary, OnLineDictionary googleTranslator) {
-//        this.googleTranslator=googleTranslator;
-//        this.googleDictionary=googleDictionary;
-//    }
-
-
     public Translator() {
         //new Translator(new GoogleDictionary());
     }
@@ -71,23 +65,13 @@ public class Translator {
         this._fileName = _fileName;
     }
 
-    protected String _fileName;
-
     public void setInFileName(String _inFileName) {
         this._inFileName = _inFileName;
     }
 
-//    public TranslationMode getMode() {
-//        return _mode;
-//    }
-
     public String getOriLang() {
         return _oriLang;
     }
-
-//    public void setMode(TranslationMode _mode) {
-//        this._mode = _mode;
-//    }
 
     public String wrapCommandLineParameters(String[] strIn)  {
         if (strIn.length==0|| "--help".equals(strIn[0])) {

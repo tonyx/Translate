@@ -94,7 +94,7 @@ public class TraslatorTest {
 
     @Test
     public void canSetLanguage() throws Exception {
-        Translator translator = new TranslatorMock(new GoogleDictionary(new ExternalSourceManagerMock(StubbedGHtmlContent.content)));
+        Translator translator = new Translator(mapDictionaries);
         translator.wrapCommandLineParameters(new String[]{"--oriLang=it","ciao"});
         Assert.assertEquals("it",translator.getOriLang());
     }
@@ -102,7 +102,6 @@ public class TraslatorTest {
     @Test
     public void orilanItalianTargetEnSayHi() throws Exception {
         Translator translator = new Translator(mapDictionaries);
-
         translator.wrapCommandLineParameters(new String[]{"--dic=gApi","--oriLang=it","--targetLang=en","ciao"});
         Assert.assertEquals("it",translator.getOriLang());
         Assert.assertEquals("hi",translator.translate("hi"));
