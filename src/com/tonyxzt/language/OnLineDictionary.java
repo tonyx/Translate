@@ -8,5 +8,5 @@ package com.tonyxzt.language;
  * To change this template use File | Settings | File Templates.
  */
 public interface OnLineDictionary {
-    public  String lookUp(String ciao, String langIn, String langOut) throws Exception;
+    public  String lookUp(String word, String langIn, String langOut) throws Exception;
 }

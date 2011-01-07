@@ -10,7 +10,7 @@ import com.google.api.translate.Translate;
  * To change this template use File | Settings | File Templates.
  */
 public class GoogleTranslator implements OnLineDictionary {
-    public String lookUp(String ciao, String langIn, String langOut) throws Exception {
-        return Translate.translate(ciao, langIn, langOut);
+    public String lookUp(String word, String langIn, String langOut) throws Exception {
+        return Translate.translate(word, langIn, langOut);
     }
 }

@@ -24,9 +24,9 @@ public class GoogleDictionary implements OnLineDictionary{
         new GoogleDictionary(new ExternalSourceManager());
     }
 
-    public String lookUp(String ciao, String langIn, String langOut) throws Exception {
+    public String lookUp(String word, String langIn, String langOut) throws Exception {
         NameValuePair[] params = new NameValuePair[]{new NameValuePair("aq", "f"), new NameValuePair("langpair", langIn+"|"+langOut),
-                new NameValuePair("q", ciao), new NameValuePair("hl", "en")};
+                new NameValuePair("q", word), new NameValuePair("hl", "en")};
         String theResult = sourceManager.lookupTranslationByProviderByGet("http://www.google.com/translate_dict", params);
         return filter.filter(theResult);
 
