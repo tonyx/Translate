@@ -30,14 +30,13 @@ bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
 adding different sources:
 
-1) create a class implementing the interface OnLineDictionary
+1) create a class implementing the interface OnLineDictionary, say MyDictionaryApi
 2) add a key and an instance of that class to the mapDictionaries in the main method:
         Map<String,OnLineDictionary> mapDictionaries = new HashMap<String,OnLineDictionary>(){
                {put("gDic",new GoogleDictionary());
                 put("gApi",new GoogleTranslator());
                 put("myApi", new MyDictionaryApi());
                 }
-
         };
 3) in this way the command should be able to access to the new "MyDictionaryApi" implementation
 as follows:
