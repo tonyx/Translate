@@ -1,29 +1,5 @@
-command line utility for google languages services.
-items:
-DONE: do translation in languages supported by google translate via api
-DONE: do translation in language supported by google dictionary via scraping
+command line utility for  languages services.
 
-DONE: verify special char support and limits (preferrede encoding utf-8) (sometimes not testable)
-DONE: interface via command line
-TODO: can do massive bulk lookup and save in "rosita" xml format // descoped
-DONE: clean up the scraping part with some refactoring if possibile. DONE
-TODO: add note about the term of use of google language services // descoped
-
-TODO: replace the recursive stripblog with a regular expression.
-
-TODO added item: provide an automated build 
-	tasks: create by hand a distribution zip containing the jar and a command line for bash and windows -> DONE
-    task: create by hand a manifesto referencing all the libs and the main class 
-	task: automate the zip creation in the ant file -> DONE
-
-
-TODO added item: provide an installation tool
-DONE: clean the lib dir from unused jars
-
-issues: special chars in windows do not shows on console (will probably work in output to file version, using utf-8)
-issues: somehow a log4j warning appears -> FIXED  (not sure, take the log4j.properties from the jar to the current dir in case)
-
-issues:the -gDic option should not be called massively because google server can block it.
 
 usage:
 
@@ -49,3 +25,52 @@ bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 [will take the list of the words from infile and write them in the outfile.txt. it will still use standard output, anyway)
 
 
+--
+
+
+adding different sources:
+
+1) create a class implementing the interface OnLineDictionary
+2) add a key and an instance of that class to the mapDictionaries in the main method:
+        Map<String,OnLineDictionary> mapDictionaries = new HashMap<String,OnLineDictionary>(){
+               {put("gDic",new GoogleDictionary());
+                put("gApi",new GoogleTranslator());
+                put("myApi", new MyDictionaryApi());
+                }
+
+        };
+3) in this way the command should be able to access to the new "MyDictionaryApi" implementation
+as follows:
+>java com.tonyxzt.language.Translator --dic=myApi --oriLang=it --targetLang=en ciao
+
+
+
+-----------------------------------
+
+
+toto list:
+
+DONE: do translation in languages supported by google translate via api
+DONE: do translation in language supported by google dictionary via scraping
+
+DONE: verify special char support and limits (preferrede encoding utf-8) (sometimes not testable)
+DONE: interface via command line
+TODO: can do massive bulk lookup and save in "rosita" xml format // descoped
+DONE: clean up the scraping part with some refactoring if possibile. DONE
+TODO: add note about the term of use of google language services // descoped
+
+TODO: replace the recursive stripblog with a regular expression.
+
+TODO added item: provide an automated build
+	tasks: create by hand a distribution zip containing the jar and a command line for bash and windows -> DONE
+    task: create by hand a manifesto referencing all the libs and the main class
+	task: automate the zip creation in the ant file -> DONE
+
+
+TODO added item: provide an installation tool
+DONE: clean the lib dir from unused jars
+
+issues: special chars in windows do not shows on console (will probably work in output to file version, using utf-8)
+issues: somehow a log4j warning appears -> FIXED  (not sure, take the log4j.properties from the jar to the current dir in case)
+
+issues: the -gDic option should not be called massively because google server can block it.
