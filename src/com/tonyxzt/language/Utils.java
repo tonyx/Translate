@@ -5,6 +5,9 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: tonyx
@@ -24,4 +27,8 @@ public class Utils {
         return stripBlock(toReturn,badTag);
     }
 
+    public static List<Object> findImplementationOfInterface(Class<OnLineDictionary> onLineDictionaryClass) {
+
+        return new ArrayList<Object>();
+    }
 }

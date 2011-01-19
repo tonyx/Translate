@@ -22,7 +22,6 @@ public class Translator {
     protected boolean _readFromFile=false;
     protected String _inFileName;
     protected String _fileName;
-    public enum TranslationMode { USES_ONLY_API,USES_DICTIONARY_BY_SCRAPING};
 
     public static void main(String[] inLine) {
         Map<String,OnLineDictionary> mapDictionaries = new HashMap<String,OnLineDictionary>(){

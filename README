@@ -43,7 +43,6 @@ as follows:
 >java com.tonyxzt.language.Translator --dic=myApi --oriLang=it --targetLang=en ciao
 
 
-
 -----------------------------------
 
 
