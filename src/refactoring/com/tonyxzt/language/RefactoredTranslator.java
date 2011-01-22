@@ -1,5 +1,6 @@
-package com.tonyxzt.language;
+package refactoring.com.tonyxzt.language;
 import com.google.api.translate.Language;
+import com.tonyxzt.language.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +12,11 @@ import java.util.Map;
  * Time: 19.51
  * To change this template use File | Settings | File Templates.
  */
-public class Translator {
-    OnLineDictionary currentDictionary;
-    Map<String,OnLineDictionary> commandToTranslator;
-    CommandLineToStatusClassWrapper commandlineToStatusWrapper = new CommandLineToStatusClassWrapper();
-    protected FileIoManager fileIoManager = new FileIoManager();
+public class RefactoredTranslator {
+    GenericDictionary currentDictionary;
+    Map<String,GenericDictionary> commandToTranslator;
+    RefactoredCommandLineToStatusClassWrapper commandlineToStatusWrapper = new RefactoredCommandLineToStatusClassWrapper();
+    protected RefactoredFileIoManager fileIoManager = new RefactoredFileIoManager();
     protected String _oriLang;
     protected String _targetLang;
     protected boolean _saveToFile=false;
@@ -24,15 +25,17 @@ public class Translator {
     protected String _fileName;
 
     public static void main(String[] inLine) {
-        Map<String,OnLineDictionary> mapDictionaries = new HashMap<String,OnLineDictionary>(){
-               {put("gDic",new GoogleDictionary());
-                put("gApi",new GoogleTranslator());}
+        Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>(){
+            {put("gDic",new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter()));
+             put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}}));
+        }
         };
-        Translator translate = new Translator(mapDictionaries);
-        System.out.println(translate.wrapCommandLineParameters(inLine));
+        RefactoredTranslator translate = new RefactoredTranslator(mapDictionaries);
+        translate.wrapCommandLineParameters(inLine);
+        System.out.println(translate.doAction(inLine));
     }
 
-    public void setCurrentDictionary(OnLineDictionary currentDictionary) {
+    public void setCurrentDictionary(GenericDictionary currentDictionary) {
         this.currentDictionary = currentDictionary;
     }
 
@@ -44,11 +47,11 @@ public class Translator {
         this._targetLang = _targetLang;
     }
 
-    public Translator(Map<String,OnLineDictionary> mapTranslator) {
+    public RefactoredTranslator(Map<String, GenericDictionary> mapTranslator) {
         this.commandToTranslator = mapTranslator;
     }
 
-    public Translator() {
+    public RefactoredTranslator() {
         //new RefactoredTranslator(new GoogleDictionary());
     }
 
@@ -72,26 +75,33 @@ public class Translator {
         return _oriLang;
     }
 
-    public String wrapCommandLineParameters(String[] strIn)  {
+    public void wrapCommandLineParameters(String[] strIn)  {
+        commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.commandToTranslator);
+        //return doAction(strIn);
+    }
+
+
+    public String doAction(String[] strIn) {
         if (strIn.length==0|| "--help".equals(strIn[0])) {
             return helpCommand();
         }
         if ("--languages".equals(strIn[0])) {
             return validLanguages();
         }
-        commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.commandToTranslator);
-        return doAction(strIn);
-    }
-
-    private String doAction(String[] strIn) {
         try {
             String toReturn="";
-            String toBeTranslated= (_readFromFile? readContentFromFile(_inFileName):strIn[strIn.length-1]);
-            String splitted[] = toBeTranslated.split("\n");
-            for (String content : splitted) {
+
+//            if (!_readFromFile)
+//            {
+//                currentDictionary.setInputStream(new SimpleInputStream(new String[]{strIn[strIn.length-1]}));
+//            } else {
+//                currentDictionary.setInputStream(new SimpleInputStream(readContentFromFile(_inFileName).split("\n")));
+//            }
+            String content;
+            while ((content = currentDictionary.inputStream.next())!=null) {
                 String translated = translate(content);
                 toReturn+=translated;
-                toReturn+="\n";
+                toReturn +="\n";
                 if (_saveToFile) {
                     saveToFile(content.trim()+ " = "+translated,_fileName);
                 }
@@ -101,6 +111,26 @@ public class Translator {
             return e.getMessage();
         }
     }
+
+
+//    private String doAction(String[] strIn) {
+//        try {
+//            String toReturn="";
+//            String toBeTranslated= (_readFromFile? readContentFromFile(_inFileName):strIn[strIn.length-1]);
+//            String splitted[] = toBeTranslated.split("\n");
+//            for (String content : splitted) {
+//                String translated = translate(content);
+//                toReturn+=translated;
+//                toReturn+="\n";
+//                if (_saveToFile) {
+//                    saveToFile(content.trim()+ " = "+translated,_fileName);
+//                }
+//            }
+//            return toReturn.trim();
+//        } catch (Exception e) {
+//            return e.getMessage();
+//        }
+//    }
 
     protected String readContentFromFile(String fileName) {
          return fileIoManager.readContentFromFile(fileName);
@@ -122,3 +152,5 @@ public class Translator {
         return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
     }
 }
+
+

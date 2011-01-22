@@ -14,14 +14,18 @@ import java.util.regex.Pattern;
 public class GoogleDictionary implements OnLineDictionary{
 
     protected FilterAndCleanContent filter = new GoogleDictionaryFilterAndCleanContent();
-    protected ExternalSourceManager sourceManager = new ExternalSourceManager();
+    protected ExternalSourceManager sourceManager;
 
+    public GoogleDictionary(ExternalSourceManager sourceManager,FilterAndCleanContent filter) {
+        this.sourceManager = sourceManager;
+        this.filter = filter;
+    }
     public GoogleDictionary(ExternalSourceManager sourceManager) {
         this.sourceManager = sourceManager;
     }
 
     public GoogleDictionary() {
-        new GoogleDictionary(new ExternalSourceManager());
+        this(new ExternalSourceManager(),new GoogleDictionaryFilterAndCleanContent());
     }
 
     public String lookUp(String word, String langIn, String langOut) throws Exception {
