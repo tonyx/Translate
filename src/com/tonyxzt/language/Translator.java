@@ -123,5 +123,3 @@ public class Translator {
         return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
     }
 }
-
-
