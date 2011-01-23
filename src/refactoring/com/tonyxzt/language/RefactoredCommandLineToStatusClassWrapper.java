@@ -29,20 +29,25 @@ public class RefactoredCommandLineToStatusClassWrapper {
                 translator.setTargetLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
             }
             if (aStrIn.startsWith("--outFile=")) {
-                translator.setSaveToFile(true);
-                translator.setFileName(aStrIn.substring(aStrIn.indexOf("=") + 1));
-                translator.currentDictionary.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=")+1)));
+                stdOut=false;
+                translator.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=")+1)));
             }
             if (aStrIn.startsWith("--inFile=")) {
                 inlineread=false;
-                //translator.setReadFromFile(true);
-                translator.currentDictionary.setInputStream(new SimpleInputStream(translator.readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
-                //translator.setInFileName(aStrIn.substring(aStrIn.indexOf("=") + 1));
+                translator.setInputStream(new SimpleInputStream(translator.readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
             }
         }
         if (inlineread&&translator.currentDictionary!=null) {
-            translator.currentDictionary.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
+            translator.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
         }
-
+        if (stdOut&translator.currentDictionary!=null) {
+            translator.setOutStream(new OutStream(){
+                public void output(String out) {
+                    System.out.print(out);
+                }
+                public void close() {
+                }
+            });
+        }
     }
 }

@@ -35,7 +35,6 @@ public class FileOutStream implements OutStream {
         try {
             fo.close();
         } catch (IOException e) {
-
         }
     }
 }

@@ -38,34 +38,35 @@ public class RefactoringTest {
         GenericDictionary dictionary = new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}});
         Assert.assertEquals("ciao",dictionary.lookUp("hi", Language.ENGLISH, Language.ITALIAN));
     }
-    @Test
-    public void refactoringTranslator() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
-        org.junit.Assert.assertEquals("salut", translator.wrapCommandLineParameters(new String[]{"--dic=gApi", "--oriLang=en", "--targetLang=fr", "salut"}));
-    }
 
-    @Test
-    public void withDictionaryScrapApiEnglishItalian() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
-        String result = translator.wrapCommandLineParameters(new String[]{"--dic=gDic", "--oriLang=en", "--targetLang=it", "hi"});
-        org.junit.Assert.assertTrue(result.contains("ciao"));
-        org.junit.Assert.assertTrue(result.contains("salve"));
-    }
-
-    @Test
-    public void aslkfaslkfas() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
-        String returned = translator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=it","hi"});
-        Assert.assertTrue(returned.contains("ciao"));
-        Assert.assertTrue(returned.contains("salve"));
-    }
-
-    @Test
-    public void removeTheHtmlTags() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
-        String returned = translator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=fr","hello"});
-        org.junit.Assert.assertFalse(returned.contains("<"));
-    }
+//    @Test
+//    public void refactoringTranslator() throws Exception {
+//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        org.junit.Assert.assertEquals("salut", translator.wrapCommandLineParameters(new String[]{"--dic=gApi", "--oriLang=en", "--targetLang=fr", "salut"}));
+//    }
+//
+//    @Test
+//    public void withDictionaryScrapApiEnglishItalian() throws Exception {
+//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        String result = translator.wrapCommandLineParameters(new String[]{"--dic=gDic", "--oriLang=en", "--targetLang=it", "hi"});
+//        org.junit.Assert.assertTrue(result.contains("ciao"));
+//        org.junit.Assert.assertTrue(result.contains("salve"));
+//    }
+//
+//    @Test
+//    public void aslkfaslkfas() throws Exception {
+//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        String returned = translator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=it","hi"});
+//        Assert.assertTrue(returned.contains("ciao"));
+//        Assert.assertTrue(returned.contains("salve"));
+//    }
+//
+//    @Test
+//    public void removeTheHtmlTags() throws Exception {
+//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        String returned = translator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=fr","hello"});
+//        org.junit.Assert.assertFalse(returned.contains("<"));
+//    }
 
     @Test
     public void languageList() throws Exception {

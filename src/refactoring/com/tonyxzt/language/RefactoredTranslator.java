@@ -19,10 +19,8 @@ public class RefactoredTranslator {
     protected RefactoredFileIoManager fileIoManager = new RefactoredFileIoManager();
     protected String _oriLang;
     protected String _targetLang;
-    protected boolean _saveToFile=false;
-    protected boolean _readFromFile=false;
-    protected String _inFileName;
-    protected String _fileName;
+    InputStream inputStream;
+    OutStream outStream;
 
     public static void main(String[] inLine) {
         Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>(){
@@ -32,9 +30,17 @@ public class RefactoredTranslator {
         };
         RefactoredTranslator translate = new RefactoredTranslator(mapDictionaries);
         translate.wrapCommandLineParameters(inLine);
-        System.out.println(translate.doAction(inLine));
+        translate.doAction(inLine);
+        //System.out.println(translate.doAction(inLine));
     }
 
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream=inputStream;
+    }
+
+    public void setOutStream(OutStream outStream) {
+        this.outStream=outStream;
+    }
     public void setCurrentDictionary(GenericDictionary currentDictionary) {
         this.currentDictionary = currentDictionary;
     }
@@ -55,21 +61,6 @@ public class RefactoredTranslator {
         //new RefactoredTranslator(new GoogleDictionary());
     }
 
-    public void setSaveToFile(boolean _saveToFile) {
-        this._saveToFile = _saveToFile;
-    }
-
-    public void setReadFromFile(boolean _readFromFile) {
-        this._readFromFile = _readFromFile;
-    }
-
-    public void setFileName(String _fileName) {
-        this._fileName = _fileName;
-    }
-
-    public void setInFileName(String _inFileName) {
-        this._inFileName = _inFileName;
-    }
 
     public String getOriLang() {
         return _oriLang;
@@ -81,63 +72,29 @@ public class RefactoredTranslator {
     }
 
 
-    public String doAction(String[] strIn) {
+    public void doAction(String[] strIn) {
         if (strIn.length==0|| "--help".equals(strIn[0])) {
-            return helpCommand();
+            outStream.output(helpCommand());
         }
         if ("--languages".equals(strIn[0])) {
-            return validLanguages();
+            outStream.output(validLanguages());
         }
         try {
             String toReturn="";
-
-//            if (!_readFromFile)
-//            {
-//                currentDictionary.setInputStream(new SimpleInputStream(new String[]{strIn[strIn.length-1]}));
-//            } else {
-//                currentDictionary.setInputStream(new SimpleInputStream(readContentFromFile(_inFileName).split("\n")));
-//            }
             String content;
-            while ((content = currentDictionary.inputStream.next())!=null) {
+            while ((content = inputStream.next())!=null) {
                 String translated = translate(content);
                 toReturn+=translated;
                 toReturn +="\n";
-                if (_saveToFile) {
-                    saveToFile(content.trim()+ " = "+translated,_fileName);
-                }
+                outStream.output(content+" = "+translated);
             }
-            return toReturn.trim();
         } catch (Exception e) {
-            return e.getMessage();
+            outStream.output(e.getMessage());
         }
     }
 
-
-//    private String doAction(String[] strIn) {
-//        try {
-//            String toReturn="";
-//            String toBeTranslated= (_readFromFile? readContentFromFile(_inFileName):strIn[strIn.length-1]);
-//            String splitted[] = toBeTranslated.split("\n");
-//            for (String content : splitted) {
-//                String translated = translate(content);
-//                toReturn+=translated;
-//                toReturn+="\n";
-//                if (_saveToFile) {
-//                    saveToFile(content.trim()+ " = "+translated,_fileName);
-//                }
-//            }
-//            return toReturn.trim();
-//        } catch (Exception e) {
-//            return e.getMessage();
-//        }
-//    }
-
     protected String readContentFromFile(String fileName) {
          return fileIoManager.readContentFromFile(fileName);
-    }
-
-    protected void saveToFile(String result,String fileName) {
-         fileIoManager.saveToFile(result, fileName);
     }
 
     public String helpCommand() {
