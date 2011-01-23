@@ -1,4 +1,4 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
 /**
  * Created by IntelliJ IDEA.

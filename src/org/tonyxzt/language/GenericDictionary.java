@@ -1,9 +1,7 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
-import refactoring.com.tonyxzt.language.ContentFilter;
-import refactoring.com.tonyxzt.language.ContentProvider;
-
-import java.io.OutputStream;
+import org.tonyxzt.language.ContentFilter;
+import org.tonyxzt.language.ContentProvider;
 
 /**
  * Created by IntelliJ IDEA.

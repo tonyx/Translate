@@ -1,6 +1,5 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
-import java.io.File;
 import java.util.Map;
 
 /**

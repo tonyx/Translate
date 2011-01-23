@@ -1,6 +1,7 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
 import com.google.api.translate.Translate;
+import org.tonyxzt.language.ContentProvider;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,8 +1,7 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * Created by IntelliJ IDEA.

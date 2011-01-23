@@ -1,4 +1,6 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
+
+import org.tonyxzt.language.ContentFilter;
 
 /**
  * Created by IntelliJ IDEA.

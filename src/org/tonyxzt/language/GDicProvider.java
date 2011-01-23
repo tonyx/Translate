@@ -1,16 +1,10 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
-import com.sun.jndi.toolkit.url.UrlUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
-import refactoring.com.tonyxzt.language.ContentProvider;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import org.tonyxzt.language.ContentProvider;
 
 /**
  * Created by IntelliJ IDEA.

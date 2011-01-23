@@ -1,4 +1,6 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
+
+import org.tonyxzt.language.InputStream;
 
 /**
  * Created by IntelliJ IDEA.

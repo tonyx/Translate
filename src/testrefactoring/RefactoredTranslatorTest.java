@@ -3,10 +3,9 @@ package testrefactoring;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import refactoring.com.tonyxzt.language.*;
+import org.tonyxzt.language.*;
 import test.com.tonyxzt.StubbedGHtmlContent;
 
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ import java.util.Map;
 public class RefactoredTranslatorTest {
 
     Map<String,GenericDictionary> mapMockedDictionaries;
-    private RefactoredTranslator translator;
+    private Translator translator;
 
     @Before
     public void SetUp() {
@@ -38,7 +37,7 @@ public class RefactoredTranslatorTest {
                 },new ContentFilter(){public String filter(String aString) {return aString;}}));
             }
         };
-        translator = new RefactoredTranslator(mapMockedDictionaries);
+        translator = new Translator(mapMockedDictionaries);
     }
 
     @Test
@@ -54,7 +53,7 @@ public class RefactoredTranslatorTest {
 //
     @Test
     public void ValidLanguageCRFormatContainsItalian() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
+        Translator translator = new Translator(mapMockedDictionaries);
         Assert.assertTrue(translator.validLanguages().contains("it"));
     }
 //
@@ -64,7 +63,7 @@ public class RefactoredTranslatorTest {
     @Test
     public void forNoArgumentsShoudBehaveReturningHelp() throws Exception {
         InMemoryOutStream outStream = new InMemoryOutStream();
-        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
+        Translator translator = new Translator(mapMockedDictionaries);
         translator.wrapCommandLineParameters(new String[]{});
 
         translator.setInputStream(new InputStream() {
@@ -82,7 +81,7 @@ public class RefactoredTranslatorTest {
 
     @Test
     public void canReadFromInputFileMultipleLines() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
+        Translator translator = new Translator(mapMockedDictionaries);
         InputStream inputStream = new InputStream() {
             int count = 0;
             public String next() {
@@ -104,7 +103,7 @@ public class RefactoredTranslatorTest {
 //
     @Test
     public void canReadFromInputFile() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
+        Translator translator = new Translator(mapMockedDictionaries);
         InputStream inputStream = new InputStream() {
             int count = 0;
             public String next() {

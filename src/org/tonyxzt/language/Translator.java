@@ -1,8 +1,7 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 import com.google.api.translate.Language;
 import com.tonyxzt.language.*;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import java.util.Map;
  * Time: 19.51
  * To change this template use File | Settings | File Templates.
  */
-public class RefactoredTranslator {
+public class Translator {
     GenericDictionary currentDictionary;
     Map<String,GenericDictionary> commandToTranslator;
     RefactoredCommandLineToStatusClassWrapper commandlineToStatusWrapper = new RefactoredCommandLineToStatusClassWrapper();
@@ -38,7 +37,7 @@ public class RefactoredTranslator {
             return;
         }
 
-        RefactoredTranslator translate = new RefactoredTranslator(mapDictionaries);
+        Translator translate = new Translator(mapDictionaries);
         translate.wrapCommandLineParameters(inLine);
         translate.doAction(inLine);
     }
@@ -62,12 +61,12 @@ public class RefactoredTranslator {
         this._targetLang = _targetLang;
     }
 
-    public RefactoredTranslator(Map<String, GenericDictionary> mapTranslator) {
+    public Translator(Map<String, GenericDictionary> mapTranslator) {
         this.commandToTranslator = mapTranslator;
     }
 
-    public RefactoredTranslator() {
-        //new RefactoredTranslator(new GoogleDictionary());
+    public Translator() {
+        //new Translator(new GoogleDictionary());
     }
 
 

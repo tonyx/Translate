@@ -1,11 +1,9 @@
 package testrefactoring;
 
-import com.tonyxzt.language.*;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import refactoring.com.tonyxzt.language.*;
+import org.tonyxzt.language.*;
 import test.com.tonyxzt.StubbedGHtmlContent;
 
 import java.util.HashMap;
@@ -21,8 +19,8 @@ import java.util.Map;
 public class AcceptanceRefactoredTranslatorTest {
     Map<String,GenericDictionary> mapDictionaries;
     Map<String,GenericDictionary> mapMockedDictionaries;
-    private RefactoredTranslator translator;
-    private RefactoredTranslator translatorWithMockedSources;
+    private Translator translator;
+    private Translator translatorWithMockedSources;
 
     @Before
     public void SetUp() {
@@ -42,13 +40,13 @@ public class AcceptanceRefactoredTranslatorTest {
                 put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}}));
             }
         };
-        translator = new RefactoredTranslator(mapDictionaries);
-        translatorWithMockedSources = new RefactoredTranslator(mapMockedDictionaries);
+        translator = new Translator(mapDictionaries);
+        translatorWithMockedSources = new Translator(mapMockedDictionaries);
     }
 
 //    @Test
 //    public void canGetThePlainLanguageName() throws Exception {
-//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        Translator translator = new Translator(mapDictionaries);
 //        translator.wrapCommandLineParameters(new String[]{"--languages", "aaaa"});
 //        String returned = translator.doAction(new String[]{"--languages"});
 //        Assert.assertTrue("extend languages description is not contained",returned.toLowerCase().contains("italian"));
@@ -62,7 +60,7 @@ public class AcceptanceRefactoredTranslatorTest {
 
     @Test
     public void shouldBeAbleToManageAnyInputStreamer() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
+        Translator translator = new Translator(mapMockedDictionaries);
 
         translator.wrapCommandLineParameters(new String[]{"--dic=gDic", "--oriLang=en", "--targetLang=fr", "hi"});
         InMemoryOutStream inMemoryOutStream = new InMemoryOutStream();
@@ -77,7 +75,7 @@ public class AcceptanceRefactoredTranslatorTest {
 
     @Test
     public void canReadFromInputFileMultipleLines() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+        Translator translator = new Translator(mapDictionaries);
         InputStream inputStream = new InputStream(){ boolean start = true; public String next() {if (start) { start=false; return "ciao";} else return null;}};
         translator.wrapCommandLineParameters(new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
         translator.setInputStream(inputStream);
@@ -93,7 +91,7 @@ public class AcceptanceRefactoredTranslatorTest {
 
     @Test
     public void canReadFromInputFile() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+        Translator translator = new Translator(mapDictionaries);
         InputStream inputStream = new InputStream(){ boolean start = true; public String next() {if (start) { start=false; return "hi";} else return null;}};
         translator.wrapCommandLineParameters(new String[] {"--dic=gDic","--oriLang=en","--targetLang=it","--inFile=infile"});
 
@@ -111,7 +109,7 @@ public class AcceptanceRefactoredTranslatorTest {
 
     @Test
     public void manageOutputFile() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+        Translator translator = new Translator(mapDictionaries);
         translator.wrapCommandLineParameters(new String[]  {"--dic=gApi","--oriLang=it","--targetLang=en","--outFile=out","ciao"});
         InMemoryOutStream inMemoryOutStream = new InMemoryOutStream();
 

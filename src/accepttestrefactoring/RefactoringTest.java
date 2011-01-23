@@ -4,7 +4,7 @@ import com.google.api.translate.Language;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import refactoring.com.tonyxzt.language.*;
+import org.tonyxzt.language.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,13 +41,13 @@ public class RefactoringTest {
 
 //    @Test
 //    public void refactoringTranslator() throws Exception {
-//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        Translator translator = new Translator(mapDictionaries);
 //        org.junit.Assert.assertEquals("salut", translator.wrapCommandLineParameters(new String[]{"--dic=gApi", "--oriLang=en", "--targetLang=fr", "salut"}));
 //    }
 //
 //    @Test
 //    public void withDictionaryScrapApiEnglishItalian() throws Exception {
-//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        Translator translator = new Translator(mapDictionaries);
 //        String result = translator.wrapCommandLineParameters(new String[]{"--dic=gDic", "--oriLang=en", "--targetLang=it", "hi"});
 //        org.junit.Assert.assertTrue(result.contains("ciao"));
 //        org.junit.Assert.assertTrue(result.contains("salve"));
@@ -55,7 +55,7 @@ public class RefactoringTest {
 //
 //    @Test
 //    public void aslkfaslkfas() throws Exception {
-//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        Translator translator = new Translator(mapDictionaries);
 //        String returned = translator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=it","hi"});
 //        Assert.assertTrue(returned.contains("ciao"));
 //        Assert.assertTrue(returned.contains("salve"));
@@ -63,7 +63,7 @@ public class RefactoringTest {
 //
 //    @Test
 //    public void removeTheHtmlTags() throws Exception {
-//        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+//        Translator translator = new Translator(mapDictionaries);
 //        String returned = translator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=fr","hello"});
 //        org.junit.Assert.assertFalse(returned.contains("<"));
 //    }
@@ -77,13 +77,13 @@ public class RefactoringTest {
 
      @Test
     public void ValidLanguageCRFormat() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+        Translator translator = new Translator(mapDictionaries);
         org.junit.Assert.assertTrue(translator.validLanguages().contains("\n"));
     }
 
     @Test
     public void ValidLanguageCRFormatContainsItalian() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+        Translator translator = new Translator(mapDictionaries);
         org.junit.Assert.assertTrue(translator.validLanguages().contains("it"));
     }
 
@@ -91,7 +91,7 @@ public class RefactoringTest {
 
     @Test
     public void canSetLanguage() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+        Translator translator = new Translator(mapDictionaries);
         translator.wrapCommandLineParameters(new String[]{"--oriLang=it","ciao"});
         org.junit.Assert.assertEquals("it", translator.getOriLang());
     }
@@ -99,7 +99,7 @@ public class RefactoringTest {
 
     @Test
     public void orilanItalianTargetEnSayHi() throws Exception {
-         RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
+         Translator translator = new Translator(mapDictionaries);
          translator.wrapCommandLineParameters(new String[]{"--dic=gApi","--oriLang=it","--targetLang=en","ciao"});
          org.junit.Assert.assertEquals("it", translator.getOriLang());
          org.junit.Assert.assertEquals("hi", translator.translate("hi"));

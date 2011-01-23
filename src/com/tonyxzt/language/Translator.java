@@ -49,7 +49,7 @@ public class Translator {
     }
 
     public Translator() {
-        //new RefactoredTranslator(new GoogleDictionary());
+        //new Translator(new GoogleDictionary());
     }
 
     public void setSaveToFile(boolean _saveToFile) {

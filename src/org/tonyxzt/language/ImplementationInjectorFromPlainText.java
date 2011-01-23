@@ -1,4 +1,9 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
+
+import org.tonyxzt.language.ContentFilter;
+import org.tonyxzt.language.ContentProvider;
+import org.tonyxzt.language.GenericDictionary;
+import org.tonyxzt.language.ImplementationInjector;
 
 import java.util.HashMap;
 import java.util.Map;

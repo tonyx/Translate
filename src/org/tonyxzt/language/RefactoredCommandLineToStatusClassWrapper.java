@@ -1,10 +1,5 @@
-package refactoring.com.tonyxzt.language;
+package org.tonyxzt.language;
 
-import com.tonyxzt.language.FileIoManager;
-import com.tonyxzt.language.OnLineDictionary;
-import com.tonyxzt.language.Translator;
-
-import java.io.FileOutputStream;
 import java.util.Map;
 
 /**
@@ -15,7 +10,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class RefactoredCommandLineToStatusClassWrapper {
-    public void setStatusReadyForTheAction(RefactoredTranslator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
+    public void setStatusReadyForTheAction(Translator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
 
         translator.setOutStream(new OutStream(){
             public void output(String out) {

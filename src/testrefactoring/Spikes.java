@@ -4,7 +4,7 @@ import com.google.api.translate.Language;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import refactoring.com.tonyxzt.language.*;
+import org.tonyxzt.language.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +18,8 @@ import java.util.Map;
  */
 public class Spikes {
     Map<String,GenericDictionary> mapDictionaries;
-    String associateDictionaries = "gDic,refactoring.com.tonyxzt.language.GDicProvider,refactoring.com.tonyxzt.language.refactoring.GDicContentFilter";
-    String associategApi = "gApi,refactoring.com.tonyxzt.language.GApiProvider,refactoring.com.tonyxzt.language.refactoring.ContentFilterIdentity";
+    String associateDictionaries = "gDic,org.tonyxzt.language.GDicProvider,refactoring.com.tonyxzt.language.refactoring.GDicContentFilter";
+    String associategApi = "gApi,org.tonyxzt.language.GApiProvider,refactoring.com.tonyxzt.language.refactoring.ContentFilterIdentity";
     // "gDic",new GDicProvider(),new GDicContentFilter()))
     @Before
     public void SetUp() {
@@ -35,15 +35,15 @@ public class Spikes {
     public void shouldBeAbleToInstantiateDicClassesByReflection() throws Exception {
         ContentProvider provider;
         ContentFilter filter;
-        provider = (ContentProvider)Class.forName("refactoring.com.tonyxzt.language.GDicProvider").newInstance();
-        filter = (ContentFilter)Class.forName("refactoring.com.tonyxzt.language.GDicContentFilter").newInstance();
+        provider = (ContentProvider)Class.forName("org.tonyxzt.language.GDicProvider").newInstance();
+        filter = (ContentFilter)Class.forName("org.tonyxzt.language.GDicContentFilter").newInstance();
         GenericDictionary gDictionary = new GenericDictionary("gDic",provider,filter);
-        Assert.assertTrue(gDictionary.lookUp("hi", Language.ENGLISH,Language.ITALIAN).contains("ciao"));
+        Assert.assertTrue(gDictionary.lookUp("hi", Language.ENGLISH, Language.ITALIAN).contains("ciao"));
     }
 
     @Test
     public void shouldBeAbleToInstantiateFromConfig() throws Exception {
-        String theConf = "gDic,refactoring.com.tonyxzt.language.GDicProvider,refactoring.com.tonyxzt.language.refactoring.GDicContentFilter";
+        String theConf = "gDic,org.tonyxzt.language.GDicProvider,refactoring.com.tonyxzt.language.refactoring.GDicContentFilter";
 
     }
 
