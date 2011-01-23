@@ -33,6 +33,8 @@ adding different sources (for java coders):
 create an implementation of com.tonyxzt.language.ContentProvider
 create an implementation of com.tonyxzt.language.ContentFilter (if needed)
 
+(template project: https://github.com/tonyx/ExternalDictionaryProviderTemplate)
+
 compile and make them visible to the classpath
 add reference like:
 myApi,com.mypath.myDictionaryImplementation,com.mypath.MyContentFilter
