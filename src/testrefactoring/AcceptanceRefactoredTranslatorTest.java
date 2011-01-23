@@ -87,8 +87,6 @@ public class AcceptanceRefactoredTranslatorTest {
     }
 
 
-
-
     @Test
     public void canReadFromInputFile() throws Exception {
         Translator translator = new Translator(mapDictionaries);
@@ -133,6 +131,9 @@ public class AcceptanceRefactoredTranslatorTest {
         Assert.assertTrue(inMemoryOutStream.getContent().contains("salut"));
         Assert.assertTrue(inMemoryOutStream.getContent().contains("bonjour"));
     }
+
+
+
 
 
 //    @Test
