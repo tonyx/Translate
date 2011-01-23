@@ -16,21 +16,11 @@ public class GenericDictionary {
     ContentProvider provider;
     ContentFilter filter;
     String name;
-    private InputStream inputStream;
-    private OutStream outStream;
     public GenericDictionary(String name, ContentProvider provider, ContentFilter filter) {
         this.name = name;
         this.provider=provider;
         this.filter=filter;
     }
-
-//    public void setInputStream(InputStream inputStream) {
-//        this.inputStream=inputStream;
-//    }
-//
-//    public void setOutStream(OutStream outStream) {
-//        this.outStream=outStream;
-//    }
 
     public String lookUp(String word,String langIn, String langOut) throws Exception {
         return filter.filter(provider.retrieve(word,langIn,langOut));
