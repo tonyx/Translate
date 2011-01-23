@@ -12,13 +12,15 @@ import java.io.*;
 public class FileOutStream implements OutStream {
     File file;
     FileOutputStream fo;
+    Exception ex=null;
     public FileOutStream(String fileName) {
         file = new File(fileName);
         try {
             fo = new FileOutputStream(file,true);
-        } catch (FileNotFoundException fo) {
+        } catch (FileNotFoundException fnf) {
+            fnf.printStackTrace();
         } catch (IOException io) {
-
+            io.printStackTrace();
         }
     }
 
@@ -27,7 +29,10 @@ public class FileOutStream implements OutStream {
             fo.write(outString.getBytes("UTF-9"));
             fo.write("\n".getBytes());
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+
         } catch (IOException o) {
+            o.printStackTrace();
         }
     }
 
@@ -35,6 +40,8 @@ public class FileOutStream implements OutStream {
         try {
             fo.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
+
