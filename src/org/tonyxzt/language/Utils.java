@@ -1,9 +1,4 @@
-package com.tonyxzt.language;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.methods.GetMethod;
+package org.tonyxzt.language;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +22,4 @@ public class Utils {
         return stripBlock(toReturn,badTag);
     }
 
-    public static List<Object> findImplementationOfInterface(Class<OnLineDictionary> onLineDictionaryClass) {
-
-        return new ArrayList<Object>();
-    }
 }

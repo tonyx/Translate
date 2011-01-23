@@ -14,7 +14,7 @@ public class ImplementationInjectorFromFile implements ImplementationInjector {
     String content ="";
     Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>();
     public ImplementationInjectorFromFile(String fileName) {
-        RefactoredFileIoManager io = new RefactoredFileIoManager();
+        FileIoManager io = new FileIoManager();
         content = io.readContentFromFile(fileName);
     }
     public Map<String, GenericDictionary> getMap() throws Exception{

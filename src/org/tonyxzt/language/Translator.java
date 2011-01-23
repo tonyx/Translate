@@ -1,6 +1,5 @@
 package org.tonyxzt.language;
 import com.google.api.translate.Language;
-import com.tonyxzt.language.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +14,8 @@ import java.util.Map;
 public class Translator {
     GenericDictionary currentDictionary;
     Map<String,GenericDictionary> commandToTranslator;
-    RefactoredCommandLineToStatusClassWrapper commandlineToStatusWrapper = new RefactoredCommandLineToStatusClassWrapper();
-    protected RefactoredFileIoManager fileIoManager = new RefactoredFileIoManager();
+    CommandLineToStatusClassWrapper commandlineToStatusWrapper = new CommandLineToStatusClassWrapper();
+    protected FileIoManager fileIoManager = new FileIoManager();
     protected String _oriLang;
     protected String _targetLang;
     InputStream inputStream;

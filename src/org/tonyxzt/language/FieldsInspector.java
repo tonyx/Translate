@@ -1,15 +1,15 @@
-package com.tonyxzt.language;
+package org.tonyxzt.language;
 
 import java.lang.reflect.Field;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Tonino
- * Date: 25/12/10
- * Time: 13.00
+ * Date: 24/01/11
+ * Time: 0.18
  * To change this template use File | Settings | File Templates.
  */
-public class FieldsInspector {
+    public class FieldsInspector {
      public String fieldsAnValues(Class aClass) {
         String toReturn = "";
         Field[] fields = aClass.getDeclaredFields();

@@ -1,8 +1,5 @@
 package org.tonyxzt.language;
 
-import com.tonyxzt.language.Utils;
-import org.tonyxzt.language.ContentFilter;
-
 import java.util.regex.Pattern;
 
 /**

@@ -1,4 +1,4 @@
-package com.tonyxzt.language;
+package org.tonyxzt.language;
 
 import java.io.*;
 

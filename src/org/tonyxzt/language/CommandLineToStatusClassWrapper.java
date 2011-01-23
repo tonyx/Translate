@@ -9,7 +9,7 @@ import java.util.Map;
  * Time: 12.42
  * To change this template use File | Settings | File Templates.
  */
-public class RefactoredCommandLineToStatusClassWrapper {
+public class CommandLineToStatusClassWrapper {
     public void setStatusReadyForTheAction(Translator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
 
         translator.setOutStream(new OutStream(){
@@ -37,7 +37,7 @@ public class RefactoredCommandLineToStatusClassWrapper {
                 }
                 if (aStrIn.startsWith("--inFile=")) {
                     //translator.setInputStream(new SimpleInputStream(translator.readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
-                    translator.setInputStream(new SimpleInputStream(new RefactoredFileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
+                    translator.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
                 }
             }
         }
