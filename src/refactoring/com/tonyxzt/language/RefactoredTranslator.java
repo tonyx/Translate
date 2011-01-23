@@ -2,6 +2,7 @@ package refactoring.com.tonyxzt.language;
 import com.google.api.translate.Language;
 import com.tonyxzt.language.*;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,14 +25,22 @@ public class RefactoredTranslator {
 
     public static void main(String[] inLine) {
         Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>(){
-            {put("gDic",new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter()));
-             put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}}));
-        }
+//            {put("gDic",new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter()));
+//             put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilterIdentity()));
+//            }
         };
+
+        try {
+            mapDictionaries.putAll(new ImplementationInjectorFromFile("conf/providers.txt").getMap());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return;
+        }
+
         RefactoredTranslator translate = new RefactoredTranslator(mapDictionaries);
         translate.wrapCommandLineParameters(inLine);
         translate.doAction(inLine);
-        //System.out.println(translate.doAction(inLine));
     }
 
     public void setInputStream(InputStream inputStream) {
@@ -75,6 +84,7 @@ public class RefactoredTranslator {
     public void doAction(String[] strIn) {
         if (strIn.length==0|| "--help".equals(strIn[0])) {
             outStream.output(helpCommand());
+            return;
         }
         if ("--languages".equals(strIn[0])) {
             outStream.output(validLanguages());
@@ -93,9 +103,9 @@ public class RefactoredTranslator {
         }
     }
 
-    protected String readContentFromFile(String fileName) {
-         return fileIoManager.readContentFromFile(fileName);
-    }
+//    protected String readContentFromFile(String fileName) {
+//         return fileIoManager.readContentFromFile(fileName);
+//    }
 
     public String helpCommand() {
         return "usage: gtranslate [--languages] [--dic=gApi|--dic=gDic] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";

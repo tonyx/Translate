@@ -21,6 +21,9 @@ import java.util.Map;
 public class AcceptanceRefactoredTranslatorTest {
     Map<String,GenericDictionary> mapDictionaries;
     Map<String,GenericDictionary> mapMockedDictionaries;
+    private RefactoredTranslator translator;
+    private RefactoredTranslator translatorWithMockedSources;
+
     @Before
     public void SetUp() {
         mapDictionaries = new HashMap<String,GenericDictionary>(){
@@ -39,6 +42,8 @@ public class AcceptanceRefactoredTranslatorTest {
                 put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}}));
             }
         };
+        translator = new RefactoredTranslator(mapDictionaries);
+        translatorWithMockedSources = new RefactoredTranslator(mapMockedDictionaries);
     }
 
 //    @Test
@@ -52,7 +57,6 @@ public class AcceptanceRefactoredTranslatorTest {
 
     @Test
     public void ValidLanguageCRFormatContainsItalian() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapDictionaries);
         Assert.assertTrue(translator.validLanguages().contains("it"));
     }
 
@@ -123,10 +127,8 @@ public class AcceptanceRefactoredTranslatorTest {
 
     @Test
     public void canUseMockedGoogleHtmlProvider() throws Exception {
-        RefactoredTranslator translatorWithMockedSources = new RefactoredTranslator(mapMockedDictionaries);
         translatorWithMockedSources.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=fr","hi"});
         InMemoryOutStream inMemoryOutStream = new InMemoryOutStream();
-        //mapMockedDictionaries.get("gDic").setOutStream(inMemoryOutStream);
         translatorWithMockedSources.setOutStream(inMemoryOutStream);
 
         translatorWithMockedSources.doAction((new String[]{"--dic=gDic","--oriLang=en","--targetLang=fr","hi"}));

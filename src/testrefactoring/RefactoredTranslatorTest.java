@@ -20,6 +20,8 @@ import java.util.Map;
 public class RefactoredTranslatorTest {
 
     Map<String,GenericDictionary> mapMockedDictionaries;
+    private RefactoredTranslator translator;
+
     @Before
     public void SetUp() {
         mapMockedDictionaries = new HashMap<String,GenericDictionary>(){
@@ -36,11 +38,11 @@ public class RefactoredTranslatorTest {
                 },new ContentFilter(){public String filter(String aString) {return aString;}}));
             }
         };
+        translator = new RefactoredTranslator(mapMockedDictionaries);
     }
 
     @Test
     public void canGetThePlainLanguageName() throws Exception {
-        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
         InMemoryOutStream outStream = new InMemoryOutStream();
         translator.wrapCommandLineParameters(new String[]{"--languages"});
         translator.setOutStream(outStream);
@@ -57,6 +59,26 @@ public class RefactoredTranslatorTest {
     }
 //
 //
+
+
+    @Test
+    public void forNoArgumentsShoudBehaveReturningHelp() throws Exception {
+        InMemoryOutStream outStream = new InMemoryOutStream();
+        RefactoredTranslator translator = new RefactoredTranslator(mapMockedDictionaries);
+        translator.wrapCommandLineParameters(new String[]{});
+
+        translator.setInputStream(new InputStream() {
+            public String next() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
+        translator.setOutStream(outStream);
+        translator.doAction(new String[]{});
+
+        Assert.assertTrue(translator.validLanguages().contains("it"));
+    }
+
 
     @Test
     public void canReadFromInputFileMultipleLines() throws Exception {

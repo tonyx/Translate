@@ -1,0 +1,3 @@
+gDic,refactoring.com.tonyxzt.language.GDicProvider,refactoring.com.tonyxzt.language.GDicContentFilter
+gApi,refactoring.com.tonyxzt.language.GApiProvider,refactoring.com.tonyxzt.language.ContentFilterIdentity
+
