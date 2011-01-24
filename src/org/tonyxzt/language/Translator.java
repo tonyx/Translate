@@ -29,10 +29,11 @@ public class Translator {
         };
 
         try {
-            mapDictionaries.putAll(new ImplementationInjectorFromFile("conf/providers.txt").getMap());
+            String path =  Translator.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("\\/[^\\/]*.jar","");
+            mapDictionaries.putAll(new ImplementationInjectorFromFile(path+"/conf/providers.txt").getMap());
         } catch (Exception e) {
+            System.out.println("error in the implementation injection. Check your conf directory and the providers.txt file");
             e.printStackTrace();
-            System.out.println(e.getMessage());
             return;
         }
 
