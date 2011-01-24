@@ -204,11 +204,6 @@
       <attribute name="Implementation-Version" value="1"/>
     </section>
 
-       <!--
-    <section name="common/class1.class">
-      <attribute name="Sealed" value="false"/>
-    </section>
-    -->
   </manifest>
   </target>
 
