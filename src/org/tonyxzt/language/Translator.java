@@ -94,7 +94,7 @@ public class Translator {
                 String translated = translate(content);
                 toReturn+=translated;
                 toReturn +="\n";
-                outStream.output(content+" = "+translated);
+                outStream.output(content.trim()+" = "+translated);
             }
         } catch (Exception e) {
             outStream.output(e.getMessage());

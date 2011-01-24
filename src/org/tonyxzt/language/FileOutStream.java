@@ -26,7 +26,7 @@ public class FileOutStream implements OutStream {
 
     public void output(String outString) {
         try  {
-            fo.write(outString.getBytes("UTF-9"));
+            fo.write(outString.getBytes("UTF-8"));
             fo.write("\n".getBytes());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
