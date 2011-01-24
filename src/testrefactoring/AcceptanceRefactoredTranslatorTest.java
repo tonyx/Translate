@@ -108,10 +108,8 @@ public class AcceptanceRefactoredTranslatorTest {
     @Test
     public void manageOutputFile() throws Exception {
         Translator translator = new Translator(mapDictionaries);
-        translator.wrapCommandLineParameters(new String[]  {"--dic=gApi","--oriLang=it","--targetLang=en","--outFile=out","ciao"});
         InMemoryOutStream inMemoryOutStream = new InMemoryOutStream();
-
-        //mapDictionaries.get("gApi").setOutStream(inMemoryOutStream);
+        translator.wrapCommandLineParameters(new String[]  {"--dic=gApi","--oriLang=it","--targetLang=en","--outFile=out","ciao"});
         translator.setOutStream(inMemoryOutStream);
 
         translator.doAction(new String[]{"--dic=gApi", "--oriLang=it", "--targetLang=en", "--outFile=out", "ciao"});

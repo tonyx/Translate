@@ -87,6 +87,7 @@ public class Translator {
         }
         if ("--languages".equals(strIn[0])) {
             outStream.output(validLanguages());
+            return;
         }
         try {
             String toReturn="";
@@ -98,7 +99,8 @@ public class Translator {
                 outStream.output(content.trim()+" = "+translated);
             }
         } catch (Exception e) {
-            outStream.output(e.getMessage());
+            e.printStackTrace();
+            //outStream.output(e.getMessage());
         }
     }
 
