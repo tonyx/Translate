@@ -12,6 +12,7 @@ import java.util.Map;
 public class CommandLineToStatusClassWrapper {
     public void setStatusReadyForTheAction(Translator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
 
+        if (translator.outStream==null)
         translator.setOutStream(new OutStream(){
             public void output(String out) {
                 System.out.print(out);

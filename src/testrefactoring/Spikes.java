@@ -41,11 +41,6 @@ public class Spikes {
         Assert.assertTrue(gDictionary.lookUp("hi", Language.ENGLISH, Language.ITALIAN).contains("ciao"));
     }
 
-    @Test
-    public void shouldBeAbleToInstantiateFromConfig() throws Exception {
-        String theConf = "gDic,org.tonyxzt.language.GDicProvider,refactoring.com.tonyxzt.language.refactoring.GDicContentFilter";
-
-    }
 
 }
 

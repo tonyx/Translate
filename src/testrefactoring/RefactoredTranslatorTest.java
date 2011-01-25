@@ -69,6 +69,14 @@ public class RefactoredTranslatorTest {
     }
 
 
+    @Test
+    public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
+        InMemoryOutStream outStream = new InMemoryOutStream();
+        translator.setOutStream(outStream);
+        translator.wrapCommandLineParameters(new String[]{"--dic=gUnsupported"});
+        translator.doAction(new String[]{"--dic=gUnsupported"});
+        Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
+    }
 
 
 
@@ -101,6 +109,8 @@ public class RefactoredTranslatorTest {
 
         Assert.assertTrue(translator.validLanguages().contains("it"));
     }
+
+
 
 
     @Test

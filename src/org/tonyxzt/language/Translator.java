@@ -50,7 +50,10 @@ public class Translator {
         this.outStream=outStream;
     }
     public void setCurrentDictionary(GenericDictionary currentDictionary) {
-        this.currentDictionary = currentDictionary;
+        if (currentDictionary!=null)
+            this.currentDictionary = currentDictionary;
+        else
+            this.outStream.output("unresolved dictionary");
     }
 
     public void setOriLang(String _oriLang) {
@@ -90,7 +93,7 @@ public class Translator {
             return;
         }
 
-        if ("--languages".equals(strIn[1])) {
+        if (strIn.length>1&&"--languages".equals(strIn[1])) {
             outStream.output(validLanguages());
             return;
         }
@@ -125,7 +128,9 @@ public class Translator {
     }
 
     public String translate(String word) throws Exception {
-        return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
+        if (currentDictionary!=null)
+            return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
+        return "";
     }
 }
 
