@@ -89,6 +89,14 @@ public class Translator {
             outStream.output(validLanguages());
             return;
         }
+
+        if ("--languages".equals(strIn[1])) {
+            outStream.output(validLanguages());
+            return;
+        }
+
+
+
         try {
             String toReturn="";
             String content;
@@ -109,11 +117,11 @@ public class Translator {
 //    }
 
     public String helpCommand() {
-        return "usage: gtranslate [--languages] [--dic=gApi|--dic=gDic] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
+        return "usage: gtranslate [--dic=gApi|--dic=gDic][--languages] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
     }
 
     public String validLanguages() {
-        return new FieldsInspector().fieldsAnValues(Language.class);
+        return this.currentDictionary.supportedLanguages();
     }
 
     public String translate(String word) throws Exception {

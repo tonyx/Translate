@@ -23,4 +23,8 @@ public class GenericDictionary {
     public String lookUp(String word,String langIn, String langOut) throws Exception {
         return filter.filter(provider.retrieve(word,langIn,langOut));
     }
+
+    public String supportedLanguages() {
+        return provider.supportedLanguges();
+    }
 }

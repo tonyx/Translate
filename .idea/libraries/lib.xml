@@ -12,7 +12,6 @@
       <root url="jar://$PROJECT_DIR$/lib/dom4j-1.6.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-logging-api-1.1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jaxb-api.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/google-api-translate-java-0.53.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jaxb-xjc.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jaxb-impl.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jaxen-1.1.1.jar!/" />
@@ -23,6 +22,7 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-httpclient.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/google-api-translate-java-0.53.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

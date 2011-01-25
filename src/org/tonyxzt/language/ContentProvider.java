@@ -9,4 +9,5 @@ package org.tonyxzt.language;
  */
 public interface ContentProvider {
     String retrieve(String word, String langIn, String langOut) throws Exception;
+    String supportedLanguges();
 }

@@ -1,5 +1,6 @@
 package org.tonyxzt.language;
 
+import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
 import org.tonyxzt.language.ContentProvider;
 
@@ -14,5 +15,9 @@ public class GApiProvider implements ContentProvider {
 
     public String retrieve(String word, String langIn, String langOut) throws Exception{
         return Translate.translate(word,langIn,langOut);
+    }
+
+    public String supportedLanguges() {
+        return new FieldsInspector().fieldsAnValues(Language.class);
     }
 }
