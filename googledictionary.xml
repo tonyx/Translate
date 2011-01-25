@@ -214,8 +214,9 @@
 
 
   <target name="createJar" depends="manifest">
-      <jar basedir="${module.googledictionary.basedir}/out/production/GoogleDictionary" manifest="MANIFEST.MF" destfile="trans.jar" >
+      <jar basedir="${module.googledictionary.basedir}/out/production/GoogleDictionary" manifest="MANIFEST.MF" destfile="cltranslator.jar" >
       </jar>
+
   </target>
 
 
