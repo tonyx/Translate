@@ -1,4 +1,4 @@
-package testrefactoring;
+package spikes;
 
 import com.google.api.translate.Language;
 import junit.framework.Assert;
@@ -26,7 +26,7 @@ public class Spikes {
         mapDictionaries = new HashMap<String,GenericDictionary>(){
                {
                     put("gDic",new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter()));
-                    put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}}));
+                    put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilterIdentity()));
                }
         };
     }
@@ -38,7 +38,7 @@ public class Spikes {
         provider = (ContentProvider)Class.forName("org.tonyxzt.language.GDicProvider").newInstance();
         filter = (ContentFilter)Class.forName("org.tonyxzt.language.GDicContentFilter").newInstance();
         GenericDictionary gDictionary = new GenericDictionary("gDic",provider,filter);
-        Assert.assertTrue(gDictionary.lookUp("hi", Language.ENGLISH, Language.ITALIAN).contains("ciao"));
+        Assert.assertTrue(gDictionary.lookUp("hi", "en", "it").contains("ciao"));
     }
 
 

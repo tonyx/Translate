@@ -1,5 +1,4 @@
 package org.tonyxzt.language;
-import com.google.api.translate.Language;
 
 import java.util.HashMap;
 import java.util.Map;

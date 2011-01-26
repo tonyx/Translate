@@ -1,4 +1,4 @@
-package testrefactoring;
+package test.com.tonyxzt;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +17,7 @@ import java.util.Map;
  * Time: 1.02
  * To change this template use File | Settings | File Templates.
  */
-public class RefactoredTranslatorTest {
+public class TranslatorTest {
 
     Map<String,GenericDictionary> mapMockedDictionaries;
     private Translator translator;
@@ -43,7 +43,7 @@ public class RefactoredTranslatorTest {
                     public String supportedLanguges() {
                         return "italian\t it";
                     }
-                },new ContentFilter(){public String filter(String aString) {return aString;}}));
+                 },new ContentFilterIdentity()));
             }
         };
         translator = new Translator(mapMockedDictionaries);
@@ -64,7 +64,6 @@ public class RefactoredTranslatorTest {
         translator.wrapCommandLineParameters(new String[]{"--dic=gApi", "--languages"});
         translator.setOutStream(outStream);
         translator.doAction(new String[]{"--dic=gApi","--languages"});
-        //Assert.assertTrue(true);
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
@@ -77,39 +76,6 @@ public class RefactoredTranslatorTest {
         translator.doAction(new String[]{"--dic=gUnsupported"});
         Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
     }
-
-
-
-//
-    @Test
-    @Ignore
-    public void ValidLanguageCRFormatContainsItalian() throws Exception {
-        Translator translator = new Translator(mapMockedDictionaries);
-        Assert.assertTrue(translator.validLanguages().contains("it"));
-    }
-//
-//
-
-
-    @Test
-    @Ignore
-    public void forNoArgumentsShoudBehaveReturningHelp() throws Exception {
-        InMemoryOutStream outStream = new InMemoryOutStream();
-        Translator translator = new Translator(mapMockedDictionaries);
-        translator.wrapCommandLineParameters(new String[]{});
-
-        translator.setInputStream(new InputStream() {
-            public String next() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
-
-        translator.setOutStream(outStream);
-        translator.doAction(new String[]{});
-
-        Assert.assertTrue(translator.validLanguages().contains("it"));
-    }
-
 
 
 

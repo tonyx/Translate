@@ -1,6 +1,5 @@
-package accepttestrefactoring;
+package acceptance.com.tonyxzt;
 
-import com.google.api.translate.Language;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,25 +17,28 @@ import java.util.Map;
  */
 public class RefactoringTest {
     Map<String,GenericDictionary> mapDictionaries;
+    InMemoryOutStream ios;
+    Translator translator;
     @Before
     public void SetUp() {
         mapDictionaries = new HashMap<String,GenericDictionary>(){
                {
                     put("gDic",new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter()));
-                    put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}}));
+                    put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilterIdentity()));
                }
         };
+        translator = new Translator(mapDictionaries);
     }
 
     @Test
     public void DictionaryTest() throws Exception{
         GenericDictionary dictionary = new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter());
-        Assert.assertTrue(dictionary.lookUp("hi", Language.ENGLISH,Language.ITALIAN).contains("piacere"));
+        Assert.assertTrue(dictionary.lookUp("hi", "en","it").contains("piacere"));
     }
     @Test
     public void TranslatorTest() throws Exception {
         GenericDictionary dictionary = new GenericDictionary("gApi",new GApiProvider(),new ContentFilter(){public String filter(String aString) {return aString;}});
-        Assert.assertEquals("ciao",dictionary.lookUp("hi", Language.ENGLISH, Language.ITALIAN));
+        Assert.assertEquals("ciao",dictionary.lookUp("hi", "en", "it"));
     }
 
 //    @Test
@@ -68,30 +70,11 @@ public class RefactoringTest {
 //        org.junit.Assert.assertFalse(returned.contains("<"));
 //    }
 
-    @Test
-    public void languageList() throws Exception {
-        Assert.assertNotNull(Language.validLanguages);
-        Assert.assertTrue("should countain en", Language.validLanguages.contains("en"));
-        Assert.assertFalse("should not countain xx", Language.validLanguages.contains("xx"));
-    }
-
-     @Test
-    public void ValidLanguageCRFormat() throws Exception {
-        Translator translator = new Translator(mapDictionaries);
-        org.junit.Assert.assertTrue(translator.validLanguages().contains("\n"));
-    }
-
-    @Test
-    public void ValidLanguageCRFormatContainsItalian() throws Exception {
-        Translator translator = new Translator(mapDictionaries);
-        org.junit.Assert.assertTrue(translator.validLanguages().contains("it"));
-    }
 
     //   return "usage: gtranslate [--gApi|--gDic] [--oriLang=orilang] [--targetLang=targetlang] word";
 
     @Test
     public void canSetLanguage() throws Exception {
-        Translator translator = new Translator(mapDictionaries);
         translator.wrapCommandLineParameters(new String[]{"--oriLang=it","ciao"});
         org.junit.Assert.assertEquals("it", translator.getOriLang());
     }
@@ -99,11 +82,9 @@ public class RefactoringTest {
 
     @Test
     public void orilanItalianTargetEnSayHi() throws Exception {
-         Translator translator = new Translator(mapDictionaries);
          translator.wrapCommandLineParameters(new String[]{"--dic=gApi","--oriLang=it","--targetLang=en","ciao"});
          org.junit.Assert.assertEquals("it", translator.getOriLang());
          org.junit.Assert.assertEquals("hi", translator.translate("hi"));
      }
-
 
 }
