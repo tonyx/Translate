@@ -6,22 +6,22 @@ usage:
 after a build is done (manually doing a jar of the builded sources and adding it and all on lib dir on classpath) an example of execution
 is the following:
 
->java -jar cltranslator.jar -dic=gApi --languages
+>java -jar cltranslatorSNAPSHOT.jar -dic=gApi --languages
 [to list supported languages of the dictionary mapped as gApi]
 
->java -jar cltranslator.jar --help
+>java -jar cltranslatorSNAPSHOT.jar --help
 [to print help]
 
->java -jar cltranslator.jar --dic=gApi --oriLang=it --targetLang=en "ciao amico"
+>java -jar cltranslatorSNAPSHOT.jar --dic=gApi --oriLang=it --targetLang=en "ciao amico"
 hello friend
 
->java -jar cltranslator.jar --dic=gDic --oriLang=it --targetLang=en ciao
+>java -jar cltranslatorSNAPSHOT.jar --dic=gDic --oriLang=it --targetLang=en ciao
 bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
->java -jar cltranslator.jar --dic=gDic --oriLang=it --targetLang=en ciao
+>java -jar cltranslatorSNAPSHOT.jar --dic=gDic --oriLang=it --targetLang=en ciao
 bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
->java -jar cltranslator.jar --dic=gDic --oriLang=it --targetLang=en --inFile=infile.txt --outFile=outfile.txt
+>java -jar cltranslatorSNAPSHOT.jar --dic=gDic --oriLang=it --targetLang=en --inFile=infile.txt --outFile=outfile.txt
 [will take the list of the words from infile and write them in the outfile.txt. it will still use standard output, anyway)
 
 
@@ -31,14 +31,18 @@ bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 adding different sources (for java coders):
 
 create an implementation of org.tonyxzt.language.core.ContentProvider
-create an implementation of org.tonyxzt.language.core.ContentFilter (if needed)
+create an implementation of org.tonyxzt.language.core.ContentFilter
 
 (template project: https://github.com/tonyx/ExternalDictionaryProviderTemplate)
 
-compile and make them visible to the classpath
+compile producing a .jar
+
+add reference in the Class-path of the Manifest to that jar (can use the manifest task in the googledictionary.xml
+ant file)
+
 add reference like:
 myApi,com.mypath.myDictionaryImplementation,com.mypath.MyContentFilter
-(or you can use the default filter com.tonyxzt.language.ContentFilterIdentity)
+in the conf/providers.txt
 
 then in the command line is available the --dic=myApi option  as follow:
 
