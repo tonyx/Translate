@@ -22,7 +22,9 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-httpclient.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/google-api-translate-java-0.53.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/google-api-translate-java-0.94.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/cldicpluginSNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gapipluginSNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

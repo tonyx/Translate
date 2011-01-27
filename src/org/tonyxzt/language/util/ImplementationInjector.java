@@ -1,4 +1,6 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.util;
+
+import org.tonyxzt.language.core.GenericDictionary;
 
 import java.util.Map;
 

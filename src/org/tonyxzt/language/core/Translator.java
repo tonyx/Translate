@@ -1,4 +1,9 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.core;
+
+import org.tonyxzt.language.util.CommandLineToStatusClassWrapper;
+import org.tonyxzt.language.io.InputStream;
+import org.tonyxzt.language.io.OutStream;
+import org.tonyxzt.language.util.ImplementationInjectorFromFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +52,11 @@ public class Translator {
     public void setOutStream(OutStream outStream) {
         this.outStream=outStream;
     }
+
+    public OutStream getOutStream() {
+        return this.outStream;
+    }
+
     public void setCurrentDictionary(GenericDictionary currentDictionary) {
         if (currentDictionary!=null)
             this.currentDictionary = currentDictionary;

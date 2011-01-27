@@ -2,10 +2,10 @@ package test.com.tonyxzt;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.tonyxzt.language.*;
-import test.com.tonyxzt.StubbedGHtmlContent;
+import org.tonyxzt.language.core.*;
+import org.tonyxzt.language.io.InMemoryOutStream;
+import org.tonyxzt.language.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,6 +115,7 @@ public class TranslatorTest {
         translator.setOutStream(outStream);
         translator.doAction(new String[] {"--dic=gDic","--oriLang=it","--targetLang=en","--inFile=infile"});
         Assert.assertTrue(outStream.getContent().contains("salut"));
+
     }
 
     @Test

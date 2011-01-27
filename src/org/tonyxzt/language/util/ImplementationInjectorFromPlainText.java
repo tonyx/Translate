@@ -1,9 +1,8 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.util;
 
-import org.tonyxzt.language.ContentFilter;
-import org.tonyxzt.language.ContentProvider;
-import org.tonyxzt.language.GenericDictionary;
-import org.tonyxzt.language.ImplementationInjector;
+import org.tonyxzt.language.core.GenericDictionary;
+import org.tonyxzt.language.core.ContentFilter;
+import org.tonyxzt.language.core.ContentProvider;
 
 import java.util.HashMap;
 import java.util.Map;

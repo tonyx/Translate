@@ -1,6 +1,6 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.io;
 
-import org.tonyxzt.language.InputStream;
+import org.tonyxzt.language.io.InputStream;
 
 /**
  * Created by IntelliJ IDEA.

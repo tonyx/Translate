@@ -1,4 +1,9 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.util;
+
+import org.tonyxzt.language.core.GenericDictionary;
+import org.tonyxzt.language.core.ContentFilter;
+import org.tonyxzt.language.core.ContentProvider;
+import org.tonyxzt.language.io.FileIoManager;
 
 import java.util.HashMap;
 import java.util.Map;

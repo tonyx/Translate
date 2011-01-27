@@ -30,8 +30,8 @@ bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 
 adding different sources (for java coders):
 
-create an implementation of org.tonyxzt.language.ContentProvider
-create an implementation of org.tonyxzt.language.ContentFilter (if needed)
+create an implementation of org.tonyxzt.language.core.ContentProvider
+create an implementation of org.tonyxzt.language.core.ContentFilter (if needed)
 
 (template project: https://github.com/tonyx/ExternalDictionaryProviderTemplate)
 

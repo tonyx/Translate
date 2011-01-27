@@ -1,4 +1,6 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.io;
+
+import org.tonyxzt.language.io.OutStream;
 
 /**
  * Created by IntelliJ IDEA.

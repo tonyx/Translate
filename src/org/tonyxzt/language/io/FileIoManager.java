@@ -1,4 +1,4 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.io;
 
 import java.io.*;
 
@@ -10,7 +10,7 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class FileIoManager {
-    protected String readContentFromFile(String fileName) {
+    public String readContentFromFile(String fileName) {
         String toReturn="";
         File file = new File(fileName);
         try {

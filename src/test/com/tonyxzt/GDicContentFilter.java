@@ -1,4 +1,7 @@
-package org.tonyxzt.language;
+package test.com.tonyxzt;
+
+import org.tonyxzt.language.core.ContentFilter;
+import org.tonyxzt.language.util.Utils;
 
 import java.util.regex.Pattern;
 

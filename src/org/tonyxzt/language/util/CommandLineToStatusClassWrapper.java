@@ -1,4 +1,11 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.util;
+
+import org.tonyxzt.language.core.GenericDictionary;
+import org.tonyxzt.language.core.Translator;
+import org.tonyxzt.language.io.FileIoManager;
+import org.tonyxzt.language.io.FileOutStream;
+import org.tonyxzt.language.io.OutStream;
+import org.tonyxzt.language.io.SimpleInputStream;
 
 import java.util.Map;
 
@@ -12,7 +19,7 @@ import java.util.Map;
 public class CommandLineToStatusClassWrapper {
     public void setStatusReadyForTheAction(Translator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
 
-        if (translator.outStream==null)
+        if (translator.getOutStream()==null)
         translator.setOutStream(new OutStream(){
             public void output(String out) {
                 System.out.print(out);
@@ -37,7 +44,6 @@ public class CommandLineToStatusClassWrapper {
                     translator.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=")+1)));
                 }
                 if (aStrIn.startsWith("--inFile=")) {
-                    //translator.setInputStream(new SimpleInputStream(translator.readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
                     translator.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
                 }
             }

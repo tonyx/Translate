@@ -1,2 +1,4 @@
-gDic,org.tonyxzt.language.GDicProvider,org.tonyxzt.language.GDicContentFilter
-gApi,org.tonyxzt.language.GApiProvider,org.tonyxzt.language.ContentFilterIdentity
+gDic,org.tonyx.GoogleDicProvider,org.tonyx.GoogleDicContentFilter
+gApi,org.externalLangProvider.MyContentProvider,org.externalLangProvider.MyContentFilter
+rut,org.externalLangProvider.MyContentProvider,org.externalLangProvider.MyContentFilter
+

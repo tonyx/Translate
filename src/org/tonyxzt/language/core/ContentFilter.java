@@ -1,4 +1,4 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.core;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,7 +1,7 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.core;
 
-import org.tonyxzt.language.ContentFilter;
-import org.tonyxzt.language.ContentProvider;
+import org.tonyxzt.language.core.ContentFilter;
+import org.tonyxzt.language.core.ContentProvider;
 
 /**
  * Created by IntelliJ IDEA.

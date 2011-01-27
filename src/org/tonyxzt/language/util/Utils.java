@@ -1,4 +1,4 @@
-package org.tonyxzt.language;
+package org.tonyxzt.language.util;
 
 import java.util.ArrayList;
 import java.util.List;
