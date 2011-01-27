@@ -117,6 +117,37 @@ public class TranslatorTest {
         Assert.assertTrue(outStream.getContent().contains("salut"));
     }
 
+    @Test
+    public void helpCommandShouldReturnAvailablesDictionaries() throws Exception {
+        InMemoryOutStream outStream  = new InMemoryOutStream();
+        mapMockedDictionaries.put("myDic",new GenericDictionary("myDic",  (new ContentProvider(){
+            public String retrieve(String word, String langIn, String langOut) throws Exception {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            public String supportedLanguges() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }),new ContentFilter(){
+            public String filter(String content) {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }));
+        translator = new Translator(mapMockedDictionaries);
+        translator.wrapCommandLineParameters(new String[]{"--help"});
+        translator.setOutStream(outStream);
+        translator.doAction(new String[]{"--help"});
+        System.out.println(outStream.getContent());
+        Assert.assertTrue(outStream.getContent().contains("gApi"));
+        Assert.assertTrue(outStream.getContent().contains("gDic"));
+        Assert.assertTrue(outStream.getContent().contains("myDic"));
+    }
+
+
+
+
+
+
 //
 //
 //

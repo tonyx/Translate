@@ -14,7 +14,6 @@ public class Translator {
     GenericDictionary currentDictionary;
     Map<String,GenericDictionary> commandToTranslator;
     CommandLineToStatusClassWrapper commandlineToStatusWrapper = new CommandLineToStatusClassWrapper();
-    protected FileIoManager fileIoManager = new FileIoManager();
     protected String _oriLang;
     protected String _targetLang;
     InputStream inputStream;
@@ -119,7 +118,16 @@ public class Translator {
 //    }
 
     public String helpCommand() {
-        return "usage: gtranslate [--dic=gApi|--dic=gDic][--languages] [--oriLang=orilang] [--targetLang=targetlang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
+        //return "usage: gtranslate [--dic=gApi|--dic=gDic][--languages] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
+        return "usage: gtranslate "+injectedDictionariesList()+"[--languages] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
+    }
+
+    private String injectedDictionariesList() {
+        String toReturn = "[";
+        for (String key : this.commandToTranslator.keySet()) {
+            toReturn +="--dic="+key+"|";
+        }
+        return toReturn.substring(0,toReturn.lastIndexOf("|"))+"]";
     }
 
     public String validLanguages() {

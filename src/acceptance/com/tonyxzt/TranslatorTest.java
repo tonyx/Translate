@@ -84,6 +84,7 @@ public class TranslatorTest {
         translator.wrapCommandLineParameters(new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
         translator.setInputStream(inputStream);
         translator.setOutStream(ios);
+
         translator.doAction(new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
 
         Assert.assertTrue(ios.getContent().contains("bye"));
@@ -135,22 +136,6 @@ public class TranslatorTest {
     }
 
 
-
-
-//    @Test
-//    public void shouldRemoveHtmlStuffsFromContent() throws Exception {
-//        RefactoredTranslatorMock translatorWithMockedSources = new RefactoredTranslatorMock(mapDictionaries);
-//        String returned = translatorWithMockedSources.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=ar","moon"});
-//        Assert.assertFalse(returned.contains("<"));
-//    }
-//
-//    @Test
-//    public void shouldNotContainSingleEmptyEol() throws Exception {
-//        RefactoredTranslatorMock targetRefactoredTranslator = new RefactoredTranslatorMock(mapDictionaries);
-//
-//        String returned = targetRefactoredTranslator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=ar","moon"});
-//        Assert.assertFalse(returned.contains("<"));
-//    }
 }
 
 
