@@ -54,8 +54,7 @@ public class TranslatorTest {
         InMemoryOutStream outStream = new InMemoryOutStream();
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.setOutStream(outStream);
-        //translator.doAction(new String[]{"--dic=gApi","--languages"});
-        translator.doAction();//new String[]{"--dic=gApi","--languages"});
+        translator.doAction();
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
@@ -64,8 +63,7 @@ public class TranslatorTest {
         InMemoryOutStream outStream = new InMemoryOutStream();
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.setOutStream(outStream);
-        //translator.doAction(new String[]{"--dic=gApi","--languages"});
-        translator.doAction(); //new String[]{"--dic=gApi","--languages"});
+        translator.doAction();
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
@@ -148,8 +146,6 @@ public class TranslatorTest {
         Assert.assertTrue(outStream.getContent().contains("gDic"));
         Assert.assertTrue(outStream.getContent().contains("myDic"));
     }
-
-
 
 
 
