@@ -23,14 +23,10 @@ public class Translator {
     protected String _targetLang;
     InputStream inputStream;
     OutStream outStream;
+    String command[];
 
     public static void main(String[] inLine) {
-        Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>(){
-//            {put("gDic",new GenericDictionary("gDic",new GDicProvider(),new GDicContentFilter()));
-//             put("gApi",new GenericDictionary("gApi",new GApiProvider(),new ContentFilterIdentity()));
-//            }
-        };
-
+        Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>();
         try {
             String path =  Translator.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("\\/[^\\/]*.jar","");
             mapDictionaries.putAll(new ImplementationInjectorFromFile(path+"/conf/providers.txt").getMap());
@@ -41,8 +37,8 @@ public class Translator {
         }
 
         Translator translate = new Translator(mapDictionaries);
-        translate.wrapCommandLineParameters(inLine);
-        translate.doAction(inLine);
+        translate.setCommand(inLine);
+        translate.doAction();
     }
 
     public void setInputStream(InputStream inputStream) {
@@ -80,33 +76,27 @@ public class Translator {
         //new Translator(new GoogleDictionary());
     }
 
-
-    public String getOriLang() {
-        return _oriLang;
-    }
-
-    public void wrapCommandLineParameters(String[] strIn)  {
+    public void setCommand(String[] strIn)  {
+        command=strIn;
         commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.commandToTranslator);
-        //return doAction(strIn);
     }
 
 
-    public void doAction(String[] strIn) {
-        if (strIn.length==0|| "--help".equals(strIn[0])) {
+
+     public void doAction() {
+        if (command.length==0|| "--help".equals(command[0])) {
             outStream.output(helpCommand());
             return;
         }
-        if ("--languages".equals(strIn[0])) {
+        if ("--languages".equals(command[0])) {
             outStream.output(validLanguages());
             return;
         }
 
-        if (strIn.length>1&&"--languages".equals(strIn[1])) {
+        if (command.length>1&&"--languages".equals(command[1])) {
             outStream.output(validLanguages());
             return;
         }
-
-
 
         try {
             String toReturn="";
@@ -119,16 +109,43 @@ public class Translator {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //outStream.output(e.getMessage());
         }
     }
 
-//    protected String readContentFromFile(String fileName) {
-//         return fileIoManager.readContentFromFile(fileName);
+
+
+//    @Deprecated
+//    public void doAction(String[] strIn) {
+//        if (strIn.length==0|| "--help".equals(strIn[0])) {
+//            outStream.output(helpCommand());
+//            return;
+//        }
+//        if ("--languages".equals(strIn[0])) {
+//            outStream.output(validLanguages());
+//            return;
+//        }
+//
+//        if (strIn.length>1&&"--languages".equals(strIn[1])) {
+//            outStream.output(validLanguages());
+//            return;
+//        }
+//
+//        try {
+//            String toReturn="";
+//            String content;
+//            while ((content = inputStream.next())!=null) {
+//                String translated = translate(content);
+//                toReturn+=translated;
+//                toReturn +="\n";
+//                outStream.output(content.trim()+" = "+translated);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //    }
 
+
     public String helpCommand() {
-        //return "usage: gtranslate [--dic=gApi|--dic=gDic][--languages] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
         return "usage: gtranslate "+injectedDictionariesList()+"[--languages] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
     }
 

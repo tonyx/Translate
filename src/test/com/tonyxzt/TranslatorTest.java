@@ -52,18 +52,20 @@ public class TranslatorTest {
     @Test
     public void canGetThePlainLanguageName() throws Exception {
         InMemoryOutStream outStream = new InMemoryOutStream();
-        translator.wrapCommandLineParameters(new String[]{"--dic=gApi","--languages"});
+        translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.setOutStream(outStream);
-        translator.doAction(new String[]{"--dic=gApi","--languages"});
+        //translator.doAction(new String[]{"--dic=gApi","--languages"});
+        translator.doAction();//new String[]{"--dic=gApi","--languages"});
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
     @Test
     public void canGetLanguagesFromSpecifigDictionary() throws Exception {
         InMemoryOutStream outStream = new InMemoryOutStream();
-        translator.wrapCommandLineParameters(new String[]{"--dic=gApi", "--languages"});
+        translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.setOutStream(outStream);
-        translator.doAction(new String[]{"--dic=gApi","--languages"});
+        //translator.doAction(new String[]{"--dic=gApi","--languages"});
+        translator.doAction(); //new String[]{"--dic=gApi","--languages"});
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
@@ -72,8 +74,9 @@ public class TranslatorTest {
     public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
         InMemoryOutStream outStream = new InMemoryOutStream();
         translator.setOutStream(outStream);
-        translator.wrapCommandLineParameters(new String[]{"--dic=gUnsupported"});
-        translator.doAction(new String[]{"--dic=gUnsupported"});
+        translator.setCommand(new String[]{"--dic=gUnsupported"});
+        //translator.doAction(new String[]{"--dic=gUnsupported"});
+        translator.doAction();//new String[]{"--dic=gUnsupported"});
         Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
     }
 
@@ -89,10 +92,11 @@ public class TranslatorTest {
             }
         };
         InMemoryOutStream outStream  = new InMemoryOutStream();
-        translator.wrapCommandLineParameters(new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
+        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.setInputStream(inputStream);
         translator.setOutStream(outStream);
-        translator.doAction(new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
+        //translator.doAction(new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
+        translator.doAction();//new String[] {"--dic=gDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
 
         Assert.assertTrue(outStream.getContent().contains("salut!"));
         Assert.assertTrue(outStream.getContent().contains("\n"));
@@ -111,9 +115,10 @@ public class TranslatorTest {
         };
         InMemoryOutStream outStream  = new InMemoryOutStream();
         translator.setInputStream(inputStream);
-        translator.wrapCommandLineParameters(new String[] {"--dic=gDic","--oriLang=it","--targetLang=en","--inFile=infile"});
+        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.setOutStream(outStream);
-        translator.doAction(new String[] {"--dic=gDic","--oriLang=it","--targetLang=en","--inFile=infile"});
+        translator.doAction();//new String[] {"--dic=gDic","--oriLang=it","--targetLang=en","--inFile=infile"});
+        //translator.doAction(new String[] {"--dic=gDic","--oriLang=it","--targetLang=en","--inFile=infile"});
         Assert.assertTrue(outStream.getContent().contains("salut"));
 
     }
@@ -135,10 +140,11 @@ public class TranslatorTest {
             }
         }));
         translator = new Translator(mapMockedDictionaries);
-        translator.wrapCommandLineParameters(new String[]{"--help"});
+        translator.setCommand(new String[]{"--help"});
         translator.setOutStream(outStream);
-        translator.doAction(new String[]{"--help"});
-        System.out.println(outStream.getContent());
+        //translator.doAction(new String[]{"--help"});
+        translator.doAction();//new String[]{"--help"});
+
         Assert.assertTrue(outStream.getContent().contains("gApi"));
         Assert.assertTrue(outStream.getContent().contains("gDic"));
         Assert.assertTrue(outStream.getContent().contains("myDic"));
@@ -156,7 +162,7 @@ public class TranslatorTest {
 //    @Test
 //    public void shouldRemoveHtmlStuffsFromContent() throws Exception {
 //        RefactoredTranslatorMock translatorWithMockedSources = new RefactoredTranslatorMock(mapMockedDictionaries);
-//        String returned = translatorWithMockedSources.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=ar","moon"});
+//        String returned = translatorWithMockedSources.setCommand(new String[]{"--dic=gDic","--oriLang=en","--targetLang=ar","moon"});
 //        Assert.assertFalse(returned.contains("<"));
 //    }
 //
@@ -164,7 +170,7 @@ public class TranslatorTest {
 //    public void shouldNotContainSingleEmptyEol() throws Exception {
 //        RefactoredTranslatorMock targetRefactoredTranslator = new RefactoredTranslatorMock(mapMockedDictionaries);
 //
-//        String returned = targetRefactoredTranslator.wrapCommandLineParameters(new String[]{"--dic=gDic","--oriLang=en","--targetLang=ar","moon"});
+//        String returned = targetRefactoredTranslator.setCommand(new String[]{"--dic=gDic","--oriLang=en","--targetLang=ar","moon"});
 //        Assert.assertFalse(returned.contains("<"));
 //    }
 }
