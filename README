@@ -49,6 +49,10 @@ then in the command line is available the --dic=myApi option  as follow:
 >java -jar cltranslator.jar --dic=myApi --oriLang=it --targetLang=en ciao
 
 
-
 -----------------------------------
+
+in the libs there are two implementations:
+cldicpluginSNAPSHOT.jar (output of https://github.com/tonyx/googleDictionaryPlugin)
+gapipluginSNAPSHOT.jar (output of https://github.com/tonyx/ExternalDictionaryProviderTemplate)
+
 
