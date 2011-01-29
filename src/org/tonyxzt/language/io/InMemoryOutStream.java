@@ -11,12 +11,21 @@ import org.tonyxzt.language.io.OutStream;
  */
 public class InMemoryOutStream implements OutStream {
     String buffer = "";
+    String url = "";
     public void output(String out) {
         buffer+=out;
         buffer+="\n";
     }
 
+    public void openUrl(String url) {
+        this.url=url;
+    }
+
     public void close() {
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public String getContent() {

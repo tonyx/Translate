@@ -1,5 +1,7 @@
 package org.tonyxzt.language.core;
 
+import java.util.StringTokenizer;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Tonino
@@ -10,4 +12,5 @@ package org.tonyxzt.language.core;
 public interface ContentProvider {
     String retrieve(String word, String langIn, String langOut) throws Exception;
     String supportedLanguges();
+    String getInfoUrl();
 }

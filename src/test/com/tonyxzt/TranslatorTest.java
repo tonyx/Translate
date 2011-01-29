@@ -6,7 +6,11 @@ import org.junit.Test;
 import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
+import org.tonyxzt.language.util.FakeBrowserActivator;
 
+import java.awt.*;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +35,10 @@ public class TranslatorTest {
                         return "italian\t it";
                     }
 
+                    public String getInfoUrl() {
+                        return "http://www.google.com/dictionary";
+                    }
+
                     public String retrieve(String word, String langIn, String langOut) throws Exception {
                         return StubbedGHtmlContent.content;
                     }
@@ -43,7 +51,11 @@ public class TranslatorTest {
                     public String supportedLanguges() {
                         return "italian\t it";
                     }
-                 },new ContentFilterIdentity()));
+
+                    public String getInfoUrl() {
+                        return null;  //To change body of implemented methods use File | Settings | File Templates.
+                    }
+                },new ContentFilterIdentity()));
             }
         };
         translator = new Translator(mapMockedDictionaries);
@@ -98,8 +110,24 @@ public class TranslatorTest {
 
         Assert.assertTrue(outStream.getContent().contains("salut!"));
         Assert.assertTrue(outStream.getContent().contains("\n"));
+    }
+
+
+
+    @Test
+    public void canGetTheUrlService() {
+        InMemoryOutStream outStream  = new InMemoryOutStream();
+        FakeBrowserActivator browserActivator = new FakeBrowserActivator();
+        translator.setOutStream(outStream);
+        translator.setBrowserActivator(browserActivator);
+
+        translator.setCommand(new String[] {"--dic=gDic", "--info"});
+        translator.doAction();
+        Assert.assertEquals("http://www.google.com/dictionary", browserActivator.getOutUrl());
 
     }
+
+
 //
 //
     @Test
@@ -132,6 +160,10 @@ public class TranslatorTest {
             public String supportedLanguges() {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
+
+            public String getInfoUrl() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
         }),new ContentFilter(){
             public String filter(String content) {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -148,6 +180,11 @@ public class TranslatorTest {
     }
 
 
+    @Test
+    public void testBrowser() throws Exception
+    {
+        Desktop.getDesktop().browse(new URI("http:www.repubblica.it"));
+    }
 
 
 //

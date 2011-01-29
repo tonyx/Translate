@@ -27,4 +27,9 @@ public class GenericDictionary {
     public String supportedLanguages() {
         return provider.supportedLanguges();
     }
+
+    public String getInfoUrl() {
+        return provider.getInfoUrl();
+    }
+
 }

@@ -24,6 +24,7 @@ public class CommandLineToStatusClassWrapper {
                 public void output(String out) {
                     System.out.print(out);
                 }
+
                 public void close() {
                 }
             });

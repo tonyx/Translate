@@ -1,5 +1,6 @@
 package org.tonyxzt.language.core;
 
+import org.tonyxzt.language.util.BrowserActivator;
 import org.tonyxzt.language.util.CommandLineToStatusClassWrapper;
 import org.tonyxzt.language.io.InputStream;
 import org.tonyxzt.language.io.OutStream;
@@ -24,6 +25,7 @@ public class Translator {
     InputStream inputStream;
     OutStream outStream;
     String command[];
+    BrowserActivator browserActivator;// = new DefaultBrowserActivator();
 
     public static void main(String[] inLine) {
         Map<String,GenericDictionary> mapDictionaries = new HashMap<String,GenericDictionary>();
@@ -43,6 +45,10 @@ public class Translator {
 
     public void setInputStream(InputStream inputStream) {
         this.inputStream=inputStream;
+    }
+
+    public void setBrowserActivator(BrowserActivator browserActivator) {
+        this.browserActivator=browserActivator;
     }
 
     public void setOutStream(OutStream outStream) {
@@ -68,29 +74,36 @@ public class Translator {
         this._targetLang = _targetLang;
     }
 
-    public Translator(Map<String, GenericDictionary> mapTranslator) {
-        this.commandToTranslator = mapTranslator;
+
+
+    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator) {
+        this.commandToTranslator=mapTranslator;
+        this.browserActivator=browserActivator;
     }
 
-    public Translator() {
-        //new Translator(new GoogleDictionary());
+    public Translator(Map<String, GenericDictionary> mapTranslator) {
+        this(mapTranslator,new DefaultBrowserActivator());
     }
+
 
     public void setCommand(String[] strIn)  {
         command=strIn;
         commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.commandToTranslator);
     }
 
-
-
      public void doAction() {
         if (command.length==0|| "--help".equals(command[0])) {
             outStream.output(helpCommand());
             return;
         }
+
         if ("--languages".equals(command[0])) {
             outStream.output(validLanguages());
             return;
+        }
+
+        if ("--info".equals(command[1])) {
+            this.browserActivator.activateBrowser(currentDictionary.getInfoUrl());
         }
 
         if (command.length>1&&"--languages".equals(command[1])) {

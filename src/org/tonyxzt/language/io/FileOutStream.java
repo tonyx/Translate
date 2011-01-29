@@ -36,6 +36,10 @@ public class FileOutStream implements OutStream {
         }
     }
 
+    public void openUrl(String url) {
+        throw new RuntimeException("unsupported for file implementation");
+    }
+
     public void close() {
         try {
             fo.close();
