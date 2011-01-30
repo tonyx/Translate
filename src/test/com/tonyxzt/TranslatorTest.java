@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
+import org.tonyxzt.language.io.OutStream;
 import org.tonyxzt.language.util.FakeBrowserActivator;
 
 import java.awt.*;
@@ -25,9 +26,12 @@ public class TranslatorTest {
 
     Map<String,GenericDictionary> mapMockedDictionaries;
     private Translator translator;
+    FakeBrowserActivator browserActivator;
+    InMemoryOutStream outStream = new InMemoryOutStream();
 
     @Before
     public void SetUp() {
+        browserActivator = new FakeBrowserActivator();
         mapMockedDictionaries = new HashMap<String,GenericDictionary>(){
             {
                 put("gDic",new GenericDictionary("gDic",new ContentProvider(){
@@ -58,23 +62,19 @@ public class TranslatorTest {
                 },new ContentFilterIdentity()));
             }
         };
-        translator = new Translator(mapMockedDictionaries);
+        translator = new Translator(mapMockedDictionaries,browserActivator,outStream);
     }
 
     @Test
     public void canGetThePlainLanguageName() throws Exception {
-        InMemoryOutStream outStream = new InMemoryOutStream();
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
-        translator.setOutStream(outStream);
         translator.doAction();
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
     @Test
     public void canGetLanguagesFromSpecifigDictionary() throws Exception {
-        InMemoryOutStream outStream = new InMemoryOutStream();
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
-        translator.setOutStream(outStream);
         translator.doAction();
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
@@ -82,9 +82,6 @@ public class TranslatorTest {
 
     @Test
     public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
-        InMemoryOutStream outStream = new InMemoryOutStream();
-        translator.setOutStream(outStream);
-
         translator.setCommand(new String[]{"--dic=gUnsupported"});
         translator.doAction();
         Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
@@ -94,18 +91,8 @@ public class TranslatorTest {
 
     @Test
     public void canReadFromInputFileMultipleLines() throws Exception {
-        InputStream inputStream = new InputStream() {
-            int count = 0;
-            public String next() {
-                if (count++<3) return "hi";
-                else return null;
-            }
-        };
-        InMemoryOutStream outStream  = new InMemoryOutStream();
-        translator.setInputStream(inputStream);
 
         translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
-        translator.setOutStream(outStream);
         translator.doAction();
 
         Assert.assertTrue(outStream.getContent().contains("salut!"));
@@ -113,23 +100,14 @@ public class TranslatorTest {
     }
 
 
-
     @Test
     public void canGetTheUrlService() {
-        InMemoryOutStream outStream  = new InMemoryOutStream();
-        FakeBrowserActivator browserActivator = new FakeBrowserActivator();
-        translator.setOutStream(outStream);
-        translator.setBrowserActivator(browserActivator);
-
         translator.setCommand(new String[] {"--dic=gDic", "--info"});
         translator.doAction();
         Assert.assertEquals("http://www.google.com/dictionary", browserActivator.getOutUrl());
-
     }
 
 
-//
-//
     @Test
     public void canReadFromInputFile() throws Exception {
         InputStream inputStream = new InputStream() {
@@ -139,19 +117,15 @@ public class TranslatorTest {
                 else return null;
             }
         };
-        InMemoryOutStream outStream  = new InMemoryOutStream();
         translator.setInputStream(inputStream);
-        translator.setOutStream(outStream);
 
         translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.doAction();
         Assert.assertTrue(outStream.getContent().contains("salut"));
-
     }
 
     @Test
     public void helpCommandShouldReturnAvailablesDictionaries() throws Exception {
-        InMemoryOutStream outStream  = new InMemoryOutStream();
         mapMockedDictionaries.put("myDic",new GenericDictionary("myDic",  (new ContentProvider(){
             public String retrieve(String word, String langIn, String langOut) throws Exception {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -169,9 +143,7 @@ public class TranslatorTest {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         }));
-        translator = new Translator(mapMockedDictionaries);
         translator.setCommand(new String[]{"--help"});
-        translator.setOutStream(outStream);
         translator.doAction();
 
         Assert.assertTrue(outStream.getContent().contains("gApi"));
@@ -179,12 +151,6 @@ public class TranslatorTest {
         Assert.assertTrue(outStream.getContent().contains("myDic"));
     }
 
-
-    @Test
-    public void testBrowser() throws Exception
-    {
-        Desktop.getDesktop().browse(new URI("http:www.repubblica.it"));
-    }
 
 
 //

@@ -18,18 +18,6 @@ import java.util.Map;
  */
 public class CommandLineToStatusClassWrapper {
     public void setStatusReadyForTheAction(Translator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
-
-        if (translator.getOutStream()==null) {
-            translator.setOutStream(new OutStream(){
-                public void output(String out) {
-                    System.out.print(out);
-                }
-
-                public void close() {
-                }
-            });
-        }
-
         if (strIn!=null&&strIn.length>0) {
             translator.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
             for (String aStrIn : strIn) {
