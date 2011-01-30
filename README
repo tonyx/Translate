@@ -9,6 +9,9 @@ is the following:
 >java -jar cltranslatorSNAPSHOT.jar -dic=gApi --languages
 [to list supported languages of the dictionary mapped as gApi]
 
+>java -jar cltranslatorSNAPSHOT.jar -dic=gApi --info
+[open the browser to the provider url]
+
 >java -jar cltranslatorSNAPSHOT.jar --help
 [to print help]
 
