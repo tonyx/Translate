@@ -9,6 +9,8 @@ import org.tonyxzt.language.core.ContentProvider;
  * Date: 20/01/11
  * Time: 12.16
  * To change this template use File | Settings | File Templates.
+ * (c) Antonio Lucca 2011
+ * License gpl3: http://www.gnu.org/licenses/gpl-3.0.txt
  */
 public class GenericDictionary {
     ContentProvider provider;

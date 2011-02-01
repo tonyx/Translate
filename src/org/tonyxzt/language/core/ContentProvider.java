@@ -7,6 +7,10 @@ import java.util.StringTokenizer;
  * User: Tonino
  * Date: 20/01/11
  * Time: 12.22
+ *
+ * (c) Antonio Lucca 2011
+ * License gpl3: http://www.gnu.org/licenses/gpl-3.0.txt
+ *
  * To change this template use File | Settings | File Templates.
  */
 public interface ContentProvider {

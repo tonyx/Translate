@@ -16,6 +16,10 @@ import java.util.Map;
  * Date: 20/12/10
  * Time: 19.51
  * To change this template use File | Settings | File Templates.
+ *
+ * (c) Antonio Lucca 2011
+ * License gpl3: http://www.gnu.org/licenses/gpl-3.0.txt
+ *
  */
 public class Translator {
     GenericDictionary currentDictionary;

@@ -8,6 +8,7 @@ import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
 import org.tonyxzt.language.io.OutStream;
 import org.tonyxzt.language.util.FakeBrowserActivator;
+import org.tonyxzt.language.util.Utils;
 
 import java.awt.*;
 import java.net.URI;
@@ -113,14 +114,14 @@ public class TranslatorTest {
         InputStream inputStream = new InputStream() {
             int count = 0;
             public String next() {
-                if (count++<2) return "hi";
+                if (count++<3) return "hi";
                 else return null;
             }
         };
-        translator.setInputStream(inputStream);
 
         translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.doAction();
+        System.out.println(outStream.getContent());
         Assert.assertTrue(outStream.getContent().contains("salut"));
     }
 

@@ -13,13 +13,19 @@ import java.util.List;
 public class Utils {
 
     public static String stripBlock(String toStrip,String badTag) {
-        int indStart = toStrip.indexOf("<"+badTag);
-        if (indStart==-1) return toStrip;
-        int indEnd = toStrip.indexOf("</"+badTag+">");
-        String firstPiece = toStrip.substring(0,indStart);
-        String secondPiece = toStrip.substring(indEnd+("</"+badTag+">").length(),toStrip.length());
-        String toReturn=firstPiece+secondPiece;
-        return stripBlock(toReturn,badTag);
-    }
 
+//        int indStart = toStrip.indexOf("<"+badTag);
+//        if (indStart==-1) return toStrip;
+//        int indEnd = toStrip.indexOf("</"+badTag+">");
+//        String firstPiece = toStrip.substring(0,indStart);
+//        String secondPiece = toStrip.substring(indEnd+("</"+badTag+">").length(),toStrip.length());
+//        String toReturn=firstPiece+secondPiece;
+
+        String[] res = toStrip.split("<"+badTag+".[^>]*>|</"+badTag+">");
+        String strRes="";
+        for (int i =0;i<res.length;i+=2) {
+            strRes+=res[i];
+        }
+        return strRes;
+    }
 }
