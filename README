@@ -1,5 +1,9 @@
+
+
+
 command line utility for  languages services.
 
+license gpl 3 (http://www.gnu.org/licenses/gpl-3.0.txt)
 
 usage:
 
@@ -57,5 +61,7 @@ then in the command line is available the --dic=myApi option  as follow:
 in the libs there are two implementations:
 cldicpluginSNAPSHOT.jar (output of https://github.com/tonyx/googleDictionaryPlugin)
 gapipluginSNAPSHOT.jar (output of https://github.com/tonyx/ExternalDictionaryProviderTemplate)
+
+
 
 
