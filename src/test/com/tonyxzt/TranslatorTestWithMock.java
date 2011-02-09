@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
+import org.tonyxzt.language.util.BrowserActivator;
 import org.tonyxzt.language.util.FakeBrowserActivator;
 
 import static org.mockito.Mockito.*;
@@ -24,20 +25,26 @@ import java.util.Map;
 public class TranslatorTestWithMock {
     Map<String,GenericDictionary> mapMockedDictionaries;
     private Translator translator;
-    FakeBrowserActivator browserActivator;
+    BrowserActivator browserActivator;
+
+    //FakeBrowserActivator browserActivator;
     InMemoryOutStream outStream = new InMemoryOutStream();
+    ContentProvider gDicContentProviderMock;
+    ContentProvider gApiContentProviderMock;
 
     @Before
     public void SetUp() throws Exception {
 
-        browserActivator = new FakeBrowserActivator();
+        //browserActivator = new FakeBrowserActivator();
+        browserActivator = mock(BrowserActivator.class);
+        //when(browserActivator.I//).hi
 
-        ContentProvider gDicContentProviderMock =  mock(ContentProvider.class);
+        gDicContentProviderMock =  mock(ContentProvider.class);
         when(gDicContentProviderMock.supportedLanguges()).thenReturn("italian");
         when(gDicContentProviderMock.getInfoUrl()).thenReturn("http://www.google.com/dictionary");
-        when(gDicContentProviderMock.retrieve(anyString(),anyString(),anyString())).thenReturn(StubbedGHtmlContent.content);
+        when(gDicContentProviderMock.retrieve(anyString(), anyString(), anyString())).thenReturn(StubbedGHtmlContent.content);
 
-        ContentProvider gApiContentProviderMock =  mock(ContentProvider.class);
+        gApiContentProviderMock =  mock(ContentProvider.class);
         when(gApiContentProviderMock.supportedLanguges()).thenReturn("italian");
         when(gApiContentProviderMock.getInfoUrl()).thenReturn(null);
         when(gApiContentProviderMock.retrieve(anyString(),anyString(),anyString())).thenReturn("hi");
@@ -47,11 +54,8 @@ public class TranslatorTestWithMock {
         mapMockedDictionaries.put("gDic",new GenericDictionary("gDic",gDicContentProviderMock,new GDicContentFilter()));
         mapMockedDictionaries.put("gApi",new GenericDictionary("gApi",gApiContentProviderMock,new ContentFilterIdentity()));
 
-
         translator = new Translator(mapMockedDictionaries,browserActivator,outStream);
     }
-
-
 
 
 
@@ -61,13 +65,7 @@ public class TranslatorTestWithMock {
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.doAction();
         Assert.assertTrue("extend languages description is not contained", outStream.getContent().toLowerCase().contains("italian"));
-    }
-
-    @Test
-    public void canGetLanguagesFromSpecifigDictionary() throws Exception {
-        translator.setCommand(new String[]{"--dic=gApi", "--languages"});
-        translator.doAction();
-        Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
+        verify(gApiContentProviderMock).supportedLanguges();
     }
 
 
@@ -88,6 +86,7 @@ public class TranslatorTestWithMock {
 
         Assert.assertTrue(outStream.getContent().contains("salut!"));
         Assert.assertTrue(outStream.getContent().contains("\n"));
+        verify(gDicContentProviderMock).retrieve(anyString(),anyString(),anyString());
     }
 
 
@@ -95,24 +94,18 @@ public class TranslatorTestWithMock {
     public void canGetTheUrlService() {
         translator.setCommand(new String[] {"--dic=gDic", "--info"});
         translator.doAction();
-        Assert.assertEquals("http://www.google.com/dictionary", browserActivator.getOutUrl());
+        verify(browserActivator).activateBrowser("http://www.google.com/dictionary");
     }
 
 
     @Test
     public void canReadFromInputFile() throws Exception {
-        InputStream inputStream = new InputStream() {
-            int count = 0;
-            public String next() {
-                if (count++<3) return "hi";
-                else return null;
-            }
-        };
 
         translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.doAction();
         System.out.println(outStream.getContent());
         Assert.assertTrue(outStream.getContent().contains("salut"));
+        verify(gDicContentProviderMock).retrieve(anyString(),anyString(),anyString());
     }
 
     @Test
