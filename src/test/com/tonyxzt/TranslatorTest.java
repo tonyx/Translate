@@ -120,6 +120,7 @@ public class TranslatorTest {
         };
 
         translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
+        translator.setInputStream(inputStream);
         translator.doAction();
         System.out.println(outStream.getContent());
         Assert.assertTrue(outStream.getContent().contains("salut"));

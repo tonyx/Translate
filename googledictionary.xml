@@ -9,7 +9,10 @@
    -->
   
   <!-- Compiler options -->
-  
+
+
+  <property name="zuextra" value="zuzu"/>
+
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
   <property name="compiler.args" value=""/>
@@ -190,7 +193,8 @@
     </copy>
   </target>
 
-  <target name="manifest">
+  <target name="manifest" >
+      <echo message="${zuextra}"/>
    <tstamp>
      <format property="touch.time" pattern="yyyyMMDDhhmm"/>
    </tstamp>

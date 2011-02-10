@@ -22,6 +22,7 @@ public class CommandLineToStatusClassWrapper {
             translator.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
             for (String aStrIn : strIn) {
                 if (aStrIn.startsWith("--dic=")) {
+                    System.out.println("sdklfja;sfkjasl;dfj;aslfjasl;fj;asdlf");
                     translator.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
                 }
                 if (aStrIn.startsWith("--oriLang=")) {

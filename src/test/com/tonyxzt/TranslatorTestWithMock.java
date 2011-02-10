@@ -3,6 +3,7 @@ package test.com.tonyxzt;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
@@ -27,7 +28,6 @@ public class TranslatorTestWithMock {
     private Translator translator;
     BrowserActivator browserActivator;
 
-    //FakeBrowserActivator browserActivator;
     InMemoryOutStream outStream = new InMemoryOutStream();
     ContentProvider gDicContentProviderMock;
     ContentProvider gApiContentProviderMock;
@@ -35,9 +35,7 @@ public class TranslatorTestWithMock {
     @Before
     public void SetUp() throws Exception {
 
-        //browserActivator = new FakeBrowserActivator();
         browserActivator = mock(BrowserActivator.class);
-        //when(browserActivator.I//).hi
 
         gDicContentProviderMock =  mock(ContentProvider.class);
         when(gDicContentProviderMock.supportedLanguges()).thenReturn("italian");
@@ -69,25 +67,39 @@ public class TranslatorTestWithMock {
     }
 
 
+
     @Test
     public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
+
         translator.setCommand(new String[]{"--dic=gUnsupported"});
         translator.doAction();
         Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
     }
 
 
+    @Test
+    public void canReadFromInputStreamAllTheLinesUntilNull() throws Exception {
+
+        InputStream inputStreamm = mock(InputStream.class);
+        when(inputStreamm.next()).thenReturn("hi").thenReturn("hi").thenReturn(null);
+        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
+        translator.setInputStream(inputStreamm);
+        translator.doAction();
+        Assert.assertTrue(outStream.getContent().contains("salut"));
+        verify(inputStreamm,times(3)).next();
+    }
+
+
 
     @Test
-    public void canReadFromInputFileMultipleLines() throws Exception {
-
+    public void veryThatGDicIsCalledCorrectly() throws Exception {
         translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.doAction();
-
         Assert.assertTrue(outStream.getContent().contains("salut!"));
         Assert.assertTrue(outStream.getContent().contains("\n"));
         verify(gDicContentProviderMock).retrieve(anyString(),anyString(),anyString());
     }
+
 
 
     @Test
@@ -99,40 +111,18 @@ public class TranslatorTestWithMock {
 
 
     @Test
-    public void canReadFromInputFile() throws Exception {
-
-        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
-        translator.doAction();
-        System.out.println(outStream.getContent());
-        Assert.assertTrue(outStream.getContent().contains("salut"));
-        verify(gDicContentProviderMock).retrieve(anyString(),anyString(),anyString());
-    }
-
-    @Test
     public void helpCommandShouldReturnAvailablesDictionaries() throws Exception {
-        mapMockedDictionaries.put("myDic",new GenericDictionary("myDic",  (new ContentProvider(){
-            public String retrieve(String word, String langIn, String langOut) throws Exception {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
+        ContentProvider mockContentProvider = mock(ContentProvider.class);
+        ContentFilter contentFilter = mock(ContentFilter.class);
+        mapMockedDictionaries.put("myDic",new GenericDictionary("myDic",mockContentProvider,contentFilter));
 
-            public String supportedLanguges() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            public String getInfoUrl() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-        }),new ContentFilter(){
-            public String filter(String content) {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-        }));
         translator.setCommand(new String[]{"--help"});
         translator.doAction();
 
         Assert.assertTrue(outStream.getContent().contains("gApi"));
         Assert.assertTrue(outStream.getContent().contains("gDic"));
         Assert.assertTrue(outStream.getContent().contains("myDic"));
+
     }
 
 
