@@ -7,8 +7,12 @@ license gpl 3 (http://www.gnu.org/licenses/gpl-3.0.txt)
 
 usage:
 
-after a build is done (manually doing a jar of the builded sources and adding it and all on lib dir on classpath) an example of execution
-is the following:
+to build you can use the googledictionary.xml build file.
+
+creteJar task will crete the main jar.
+
+Example of execution is the following:
+
 
 >java -jar cltranslatorSNAPSHOT.jar --dic=gApi --languages
 [to list supported languages of the dictionary mapped as gApi]
@@ -35,7 +39,7 @@ bye-bye!, bye!, so long!, cheerio!, hello!, hi!, hallo!, hullo!,
 --
 
 
-adding different sources (for java coders):
+adding different implementations sources (for java coders):
 
 create an implementation of org.tonyxzt.language.core.ContentProvider
 create an implementation of org.tonyxzt.language.core.ContentFilter
@@ -51,7 +55,8 @@ add reference like:
 myApi,com.mypath.myDictionaryImplementation,com.mypath.MyContentFilter
 in the conf/providers.txt
 
-then in the command line is available the --dic=myApi option  as follow:
+in this way you introduced a new key "myApi" that can be passed to the --dic parameter:
+
 
 >java -jar cltranslator.jar --dic=myApi --oriLang=it --targetLang=en ciao
 
