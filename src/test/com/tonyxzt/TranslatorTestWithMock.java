@@ -7,6 +7,7 @@ import org.mockito.Matchers;
 import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
+import org.tonyxzt.language.io.OutStream;
 import org.tonyxzt.language.util.BrowserActivator;
 import org.tonyxzt.language.util.FakeBrowserActivator;
 
@@ -28,13 +29,15 @@ public class TranslatorTestWithMock {
     private Translator translator;
     BrowserActivator browserActivator;
 
-    InMemoryOutStream outStream = new InMemoryOutStream();
+    //InMemoryOutStream outStream = new InMemoryOutStream();
+    OutStream outStream;
     ContentProvider gDicContentProviderMock;
     ContentProvider gApiContentProviderMock;
 
     @Before
     public void SetUp() throws Exception {
 
+        outStream = mock(OutStream.class);
         browserActivator = mock(BrowserActivator.class);
 
         gDicContentProviderMock =  mock(ContentProvider.class);
@@ -60,10 +63,12 @@ public class TranslatorTestWithMock {
 
     @Test
     public void canGetThePlainLanguageName() throws Exception {
+
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.doAction();
-        Assert.assertTrue("extend languages description is not contained", outStream.getContent().toLowerCase().contains("italian"));
+
         verify(gApiContentProviderMock).supportedLanguges();
+        verify(outStream).output("italian");
     }
 
 
@@ -73,43 +78,40 @@ public class TranslatorTestWithMock {
 
         translator.setCommand(new String[]{"--dic=gUnsupported"});
         translator.doAction();
-        Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
+        //Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
+        verify(outStream).output("unresolved dictionary");
+
     }
-
-
+//
+//
     @Test
     public void canReadFromInputStreamAllTheLinesUntilNull() throws Exception {
 
         InputStream inputStreamm = mock(InputStream.class);
         when(inputStreamm.next()).thenReturn("hi").thenReturn("hi").thenReturn(null);
-        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
+
+        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=fr", "--inFile=infile"});
         translator.setInputStream(inputStreamm);
         translator.doAction();
-        Assert.assertTrue(outStream.getContent().contains("salut"));
+
         verify(inputStreamm,times(3)).next();
+        verify(gDicContentProviderMock,times(2)).retrieve(anyString(),anyString(),anyString());
+        verify(outStream,times(2)).output("hi = salut!, bonjour!, hé!, ");
     }
 
-
-
-    @Test
-    public void veryThatGDicIsCalledCorrectly() throws Exception {
-        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
-        translator.doAction();
-        Assert.assertTrue(outStream.getContent().contains("salut!"));
-        Assert.assertTrue(outStream.getContent().contains("\n"));
-        verify(gDicContentProviderMock).retrieve(anyString(),anyString(),anyString());
-    }
-
-
-
+//
+//
+//
+//
+//
     @Test
     public void canGetTheUrlService() {
         translator.setCommand(new String[] {"--dic=gDic", "--info"});
         translator.doAction();
         verify(browserActivator).activateBrowser("http://www.google.com/dictionary");
     }
-
-
+//
+//
     @Test
     public void helpCommandShouldReturnAvailablesDictionaries() throws Exception {
         ContentProvider mockContentProvider = mock(ContentProvider.class);
@@ -118,15 +120,11 @@ public class TranslatorTestWithMock {
 
         translator.setCommand(new String[]{"--help"});
         translator.doAction();
-
-        Assert.assertTrue(outStream.getContent().contains("gApi"));
-        Assert.assertTrue(outStream.getContent().contains("gDic"));
-        Assert.assertTrue(outStream.getContent().contains("myDic"));
+        verify(outStream).output("usage: gtranslate [--dic=myDic|--dic=gDic|--dic=gApi][--languages|--info] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]");
 
     }
 
-
-
-
-
 }
+
+
+
