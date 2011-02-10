@@ -97,6 +97,7 @@ public class Translator {
 
         if (command.length>1&&"--info".equals(command[1])) {
             this.browserActivator.activateBrowser(currentDictionary.getInfoUrl());
+            return;
         }
 
         if (command.length>1&&"--languages".equals(command[1])) {

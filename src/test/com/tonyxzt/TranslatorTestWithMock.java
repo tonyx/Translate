@@ -29,7 +29,6 @@ public class TranslatorTestWithMock {
     private Translator translator;
     BrowserActivator browserActivator;
 
-    //InMemoryOutStream outStream = new InMemoryOutStream();
     OutStream outStream;
     ContentProvider gDicContentProviderMock;
     ContentProvider gApiContentProviderMock;
@@ -60,13 +59,10 @@ public class TranslatorTestWithMock {
 
 
 
-
     @Test
     public void canGetThePlainLanguageName() throws Exception {
-
         translator.setCommand(new String[]{"--dic=gApi", "--languages"});
         translator.doAction();
-
         verify(gApiContentProviderMock).supportedLanguges();
         verify(outStream).output("italian");
     }
@@ -75,12 +71,9 @@ public class TranslatorTestWithMock {
 
     @Test
     public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
-
         translator.setCommand(new String[]{"--dic=gUnsupported"});
         translator.doAction();
-        //Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
         verify(outStream).output("unresolved dictionary");
-
     }
 //
 //
@@ -99,19 +92,15 @@ public class TranslatorTestWithMock {
         verify(outStream,times(2)).output("hi = salut!, bonjour!, hé!, ");
     }
 
-//
-//
-//
-//
-//
+
     @Test
     public void canGetTheUrlService() {
         translator.setCommand(new String[] {"--dic=gDic", "--info"});
         translator.doAction();
         verify(browserActivator).activateBrowser("http://www.google.com/dictionary");
     }
-//
-//
+
+
     @Test
     public void helpCommandShouldReturnAvailablesDictionaries() throws Exception {
         ContentProvider mockContentProvider = mock(ContentProvider.class);
