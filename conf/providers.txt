@@ -1,3 +1,4 @@
 gDic,org.tonyx.GoogleDicProvider,org.tonyx.GoogleDicContentFilter
 gApi,org.externalLangProvider.MyContentProvider,org.externalLangProvider.MyContentFilter
+transRef,org.tonyx.TranslateReferenceProvider,org.tonyx.TranslateReferenceContentFilter
 
