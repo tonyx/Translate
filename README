@@ -1,7 +1,6 @@
 
 
-
-command line utility for  languages services.
+command line utility for languages services.
 
 license gpl 3 (http://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -12,6 +11,15 @@ to build you can use the googledictionary.xml build file.
 creteJar task will crete the main jar.
 
 Example of execution is the following:
+
+(warning gApi and gDic are not supported anymore. 
+Use --dic=transRef)
+
+WARNING: term of use of the target website must be read, using the parameter --info
+
+
+>java -jar cltranslatorSNAPSHOT.jar --dic=transRef --info
+[will open the browser to the term of services] -- MUST READ
 
 
 >java -jar cltranslatorSNAPSHOT.jar --dic=gApi --languages
