@@ -16,7 +16,7 @@ public class StubbedGHtmlContent {
             "</script>\n" +
             "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" +
             "<meta name=\"keywords\" content=\"dictionary, dict, language, translate, translation, define, definition, glossary, online dictionary, language tool, multilingual dictionary of hi , Arabic, Bengali, Bulgarian, Chinese (Simplified), Chinese (Traditional), Croatian, Czech, Dutch, English, Finnish, French, German, Greek, Gujarati, Hebrew, Hindi, Italian, Kannada, Korean, Malayalam, Marathi, Portuguese, Russian, Serbian, Spanish, Tamil, Telugu, Thai\">\n" +
-            "<meta name=\"description\" content=\"hi! : salut!, bonjour!, hé! - Google&#39;s free online dictionary service.\">\n" +
+            "<meta name=\"description\" content=\"hi! : salut!, bonjour!, hÃ©! - Google&#39;s free online dictionary service.\">\n" +
             "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=EmulateIE7\">\n" +
             "<link rel=\"canonical\" href=\"/dictionary?hl=en&sl=en&tl=fr&q=hi\">\n" +
             "<title>\n" +
@@ -238,7 +238,7 @@ public class StubbedGHtmlContent {
             "<li class=\"dct-em\"\n" +
             "               >\n" +
             "<div  class=\"dct-em\">\n" +
-            "<span class=\"dct-tt\">hé!</span>\n" +
+            "<span class=\"dct-tt\">hÃ©!</span>\n" +
             "</div>\n" +
             "</li>\n" +
             "</ul>\n" +
@@ -263,7 +263,7 @@ public class StubbedGHtmlContent {
             "  /dictionary?q=Hi%2C+how+are+you%3F&hl=en&sl=en&tl=fr&oi=dict_re\n" +
             "\">Hi, how are you?</a></b>\n" +
             "</div>\n" +
-            "Salut, ça va?\n" +
+            "Salut, Ã§a va?\n" +
             "</li>\n" +
             "</ul>\n" +
             "<h3>Usage examples</h3>\n" +

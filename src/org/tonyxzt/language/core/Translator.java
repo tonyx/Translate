@@ -24,11 +24,12 @@ import java.util.Map;
 public class Translator {
     GenericDictionary currentDictionary;
     Map<String,GenericDictionary> dictionaries;
-    CommandLineToStatusClassWrapper commandlineToStatusWrapper = new CommandLineToStatusClassWrapper();
+    CommandLineToStatusClassWrapper commandlineToStatusWrapper;
     protected String _oriLang;
     protected String _targetLang;
     InputStream inputStream;
     OutStream outStream;
+
     String command[];
     BrowserActivator browserActivator;
 
@@ -43,8 +44,7 @@ public class Translator {
             return;
         }
 
-        Translator translate = new Translator(mapDictionaries,new DefaultBrowserActivator(),new StandardOutStream());
-        translate.setCommand(inLine);
+        Translator translate = new Translator(mapDictionaries,new DefaultBrowserActivator(),new StandardOutStream(), new CommandLineToStatusClassWrapper(inLine,mapDictionaries,new StandardOutStream()));
         translate.doAction();
     }
 
@@ -57,9 +57,11 @@ public class Translator {
     }
 
     public void setCurrentDictionary(GenericDictionary currentDictionary) {
-        if (currentDictionary!=null)
-            this.currentDictionary = currentDictionary;
+        if (currentDictionary!=null) {
+        //    this.currentDictionary = currentDictionary;
+        }
         else
+            //this.commandlineToStatusWrapper.getOutStream().output("unresolved dictionary");
             this.outStream.output("unresolved dictionary");
     }
 
@@ -71,48 +73,71 @@ public class Translator {
         this._targetLang = _targetLang;
     }
 
-
-    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator,OutStream outStream) {
+    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator,OutStream outStream, CommandLineToStatusClassWrapper mapper) {
         this.outStream=outStream;
         this.dictionaries =mapTranslator;
         this.browserActivator=browserActivator;
+        this.commandlineToStatusWrapper = mapper;
+    }
+
+    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator,OutStream outStream, CommandLineToStatusClassWrapper mapper,InputStream inStream) {
+        this.outStream=outStream;
+        this.inputStream=inStream;
+        this.dictionaries =mapTranslator;
+        this.browserActivator=browserActivator;
+        this.commandlineToStatusWrapper = mapper;
+    }
+
+    @Deprecated
+    public Translator(Map<String, GenericDictionary> mapMockedDictionaries, BrowserActivator browserActivator, OutStream outStream) {
+        this(mapMockedDictionaries,browserActivator,outStream,new CommandLineToStatusClassWrapper());
     }
 
 
+    public void readyToAct() {
+        commandlineToStatusWrapper.setStatusReadyForTheAction(this);
+        //command=commandlineToStatusWrapper.getStrIn();
+    }
+
+    @Deprecated
     public void setCommand(String[] strIn)  {
         command=strIn;
-        commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.dictionaries);
+        //commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.dictionaries);
     }
 
-     public void doAction() {
-        if (command.length==0|| "--help".equals(command[0])) {
-            outStream.output(helpCommand());
+    public void doAction() {
+        readyToAct();
+        String[] theCommand = this.commandlineToStatusWrapper.getStrIn();
+        if (theCommand.length==0|| "--help".equals(theCommand[0])) {
+            this.commandlineToStatusWrapper.getOutStream().output(helpCommand());
+            //outStream.output(helpCommand());
             return;
         }
 
-        if ("--languages".equals(command[0])) {
-            outStream.output(validLanguages());
+        if ("--languages".equals(theCommand[0])) {
+            //outStream.output(validLanguages());
+            this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
             return;
         }
 
-        if (command.length>1&&"--info".equals(command[1])) {
-            this.browserActivator.activateBrowser(currentDictionary.getInfoUrl());
+        if (theCommand.length>1&&"--info".equals(theCommand[1])) {
+            this.browserActivator.activateBrowser(this.commandlineToStatusWrapper.getGenericDictionary().getInfoUrl());
             return;
         }
 
-        if (command.length>1&&"--languages".equals(command[1])) {
-            outStream.output(validLanguages());
+        if (theCommand.length>1&&"--languages".equals(theCommand[1])) {
+            this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
+            //outStream.output(validLanguages());
             return;
         }
 
         try {
-            String toReturn="";
+            //String toReturn="";
             String content;
-            while ((content = inputStream.next())!=null) {
+            InputStream altInputStream = this.commandlineToStatusWrapper.getInputStream();
+            while ((content = altInputStream.next())!=null) {
                 String translated = translate(content);
-                toReturn+=translated;
-                toReturn +="\n";
-                outStream.output(content.trim()+" = "+translated);
+                this.commandlineToStatusWrapper.getOutStream().output(content.trim() + " = " + translated);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,19 +150,21 @@ public class Translator {
 
     private String injectedDictionariesList() {
         String toReturn = "[";
-        for (String key : this.dictionaries.keySet()) {
+        for (String key : dictionaries.keySet()) {
             toReturn +="--dic="+key+"|";
         }
         return toReturn.substring(0,toReturn.lastIndexOf("|"))+"]";
     }
 
     public String validLanguages() {
-        return this.currentDictionary.supportedLanguages();
+        return this.commandlineToStatusWrapper.getGenericDictionary().supportedLanguages();
+        //return this.currentDictionary.supportedLanguages();
     }
 
     public String translate(String word) throws Exception {
-        if (currentDictionary!=null)
-            return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
+        if (this.commandlineToStatusWrapper.getGenericDictionary()!=null)
+        //    return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
+              return this.commandlineToStatusWrapper.getGenericDictionary().lookUp(word,this.commandlineToStatusWrapper.getOriLang(),this.commandlineToStatusWrapper.getTargetLang());
         return "";
     }
 }

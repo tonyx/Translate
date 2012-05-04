@@ -7,6 +7,7 @@ import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
 import org.tonyxzt.language.io.OutStream;
+import org.tonyxzt.language.util.CommandLineToStatusClassWrapper;
 import org.tonyxzt.language.util.FakeBrowserActivator;
 import org.tonyxzt.language.util.Utils;
 
@@ -63,39 +64,51 @@ public class TranslatorTest {
                 },new ContentFilterIdentity()));
             }
         };
-        translator = new Translator(mapMockedDictionaries,browserActivator,outStream);
     }
 
-    @Test
-    public void canGetThePlainLanguageName() throws Exception {
-        translator.setCommand(new String[]{"--dic=gApi", "--languages"});
-        translator.doAction();
-        Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
-    }
 
     @Test
-    public void canGetLanguagesFromSpecifigDictionary() throws Exception {
-        translator.setCommand(new String[]{"--dic=gApi", "--languages"});
+    public void canGetThePlainLanguageNameRefactor() throws Exception {
+        // given
+        String[] command = new String[] {"--dic=gApi", "--languages"};
+        CommandLineToStatusClassWrapper clMapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,clMapper);
+
+        // when
         translator.doAction();
+
+        // then
         Assert.assertTrue("extend languages description is not contained",outStream.getContent().toLowerCase().contains("italian"));
     }
 
 
     @Test
     public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
-        translator.setCommand(new String[]{"--dic=gUnsupported"});
+        // given
+        String[] command = new String[] {"--dic=gUnsupported"};
+        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper  = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+
+        // when
         translator.doAction();
+
+        // then
         Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
     }
 
 
-
     @Test
     public void canReadFromInputFileMultipleLines() throws Exception {
+        // given
+        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
+        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
 
-        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
+        // when
+        //translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         translator.doAction();
 
+        // then
         Assert.assertTrue(outStream.getContent().contains("salut!"));
         Assert.assertTrue(outStream.getContent().contains("\n"));
     }
@@ -103,14 +116,25 @@ public class TranslatorTest {
 
     @Test
     public void canGetTheUrlService() {
-        translator.setCommand(new String[] {"--dic=gDic", "--info"});
+        // given
+        String[] command = new String[] {"--dic=gDic", "--info"};
+        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper  = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+
+        // when
         translator.doAction();
+
+        // then
         Assert.assertEquals("http://www.google.com/dictionary", browserActivator.getOutUrl());
     }
 
 
     @Test
     public void canReadFromInputFile() throws Exception {
+        // given
+        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
+        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
+
         InputStream inputStream = new InputStream() {
             int count = 0;
             public String next() {
@@ -119,9 +143,15 @@ public class TranslatorTest {
             }
         };
 
-        translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
-        translator.setInputStream(inputStream);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper,inputStream);
+
+        //translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
+        //translator.setInputStream(inputStream);
+
+        // when
         translator.doAction();
+
+        // then
         System.out.println(outStream.getContent());
         Assert.assertTrue(outStream.getContent().contains("salut"));
     }
@@ -145,7 +175,13 @@ public class TranslatorTest {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         }));
-        translator.setCommand(new String[]{"--help"});
+
+        String[] command = new String[]{"--help"};
+        //CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries);
+        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+
+        //translator.setCommand(new String[]{"--help"});
         translator.doAction();
 
         Assert.assertTrue(outStream.getContent().contains("gApi"));
