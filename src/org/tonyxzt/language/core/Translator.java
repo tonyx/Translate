@@ -71,6 +71,12 @@ public class Translator {
     public void doAction() {
         readyToAct();
         String[] theCommand = this.commandlineToStatusWrapper.getStrIn();
+
+        if (this.commandlineToStatusWrapper.getGenericDictionary()==null) {
+            this.commandlineToStatusWrapper.getOutStream().output("unresolved dictionary");
+            return;
+        }
+
         if (theCommand.length==0|| "--help".equals(theCommand[0])) {
             this.commandlineToStatusWrapper.getOutStream().output(helpCommand());
             //outStream.output(helpCommand());

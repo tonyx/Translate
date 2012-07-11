@@ -86,14 +86,14 @@ public class TranslatorTest {
     public void forUnsupportedLanguageShouldGetAWarningMessage() throws Exception {
         // given
         String[] command = new String[] {"--dic=gUnsupported"};
-        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper  = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries);
+        CommandLineToStatusClassWrapper commandLineToStatusClassWrapper  = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
         Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
 
         // when
         translator.doAction();
 
         // then
-        Assert.assertTrue(outStream.getContent().contains("unresolved dictionary"));
+        Assert.assertTrue(outStream.getContent(),outStream.getContent().contains("unresolved dictionary"));
     }
 
 

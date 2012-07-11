@@ -107,7 +107,10 @@ public class TranslatorTestWithMock {
     public void canGetTheUrlService() {
         // given
         String[] command = new String[] {"--dic=gDic", "--info"};
-        CommandLineToStatusClassWrapper mapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries);
+
+        //CommandLineToStatusClassWrapper mapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries);
+        CommandLineToStatusClassWrapper mapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
+
         Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,mapper);
 
         // when
