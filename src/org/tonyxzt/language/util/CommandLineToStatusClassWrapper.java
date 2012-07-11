@@ -27,14 +27,6 @@ public class CommandLineToStatusClassWrapper {
     private String[] strIn;
     private Map<String, GenericDictionary> dics;
 
-    public CommandLineToStatusClassWrapper(String[] strIn, Map<String, GenericDictionary> dics) {
-        this(strIn,dics,new StandardOutStream());
-//        this.strIn = strIn;
-//        this.dics = dics;
-//        setStatusReadyForTheAction(strIn);
-//        this.setOutStream(new StandardOutStream());
-    }
-
     public CommandLineToStatusClassWrapper(String[] strIn, Map<String, GenericDictionary> dics, OutStream outStream) {
         this.strIn = strIn;
         this.dics = dics;
@@ -42,19 +34,16 @@ public class CommandLineToStatusClassWrapper {
         this._outStream=outStream;
     }
 
-    public CommandLineToStatusClassWrapper() {
-    }
-
     public void setStatusReadyForTheAction(Translator translator)  {
         if (strIn!=null&&strIn.length>0) {
             translator.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
             for (String aStrIn : strIn) {
                 if (aStrIn.startsWith("--dic=")) {
-                    translator.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
+                    //translator.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
                     this.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
                 }
                 if (aStrIn.startsWith("--oriLang=")) {
-                    translator.setOriLang( aStrIn.substring(aStrIn.indexOf("=") + 1));
+                    //translator.setOriLang( aStrIn.substring(aStrIn.indexOf("=") + 1));
                     this.setOriLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
                 }
                 if (aStrIn.startsWith("--targetLang=")) {
@@ -66,7 +55,7 @@ public class CommandLineToStatusClassWrapper {
                     this.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=") + 1)));
                 }
                 if (aStrIn.startsWith("--inFile=")) {
-                    translator.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
+                    //translator.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
                     this.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=") + 1)).split("\n")));
                 }
             }
@@ -115,32 +104,6 @@ public class CommandLineToStatusClassWrapper {
     private void setCurrentDictionary(GenericDictionary genericDictionary) {
         this._genericDictionary=genericDictionary;
         //To change body of created methods use File | Settings | File Templates.
-    }
-
-
-    public void setStatusReadyForTheAction(Translator translator, String[] strIn,Map<String,GenericDictionary> dics)  {
-        this.strIn = strIn;
-        this.dics = dics;
-        if (strIn!=null&&strIn.length>0) {
-            translator.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
-            for (String aStrIn : strIn) {
-                if (aStrIn.startsWith("--dic=")) {
-                    translator.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
-                }
-                if (aStrIn.startsWith("--oriLang=")) {
-                    translator.setOriLang( aStrIn.substring(aStrIn.indexOf("=") + 1));
-                }
-                if (aStrIn.startsWith("--targetLang=")) {
-                    translator.setTargetLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
-                }
-                if (aStrIn.startsWith("--outFile=")) {
-                    translator.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=")+1)));
-                }
-                if (aStrIn.startsWith("--inFile=")) {
-                    translator.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
-                }
-            }
-        }
     }
 
     public InputStream getInputStream() {

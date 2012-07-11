@@ -22,15 +22,11 @@ import java.util.Map;
  *
  */
 public class Translator {
-    GenericDictionary currentDictionary;
     Map<String,GenericDictionary> dictionaries;
     CommandLineToStatusClassWrapper commandlineToStatusWrapper;
-    protected String _oriLang;
-    protected String _targetLang;
     InputStream inputStream;
     OutStream outStream;
 
-    String command[];
     BrowserActivator browserActivator;
 
     public static void main(String[] inLine) {
@@ -52,27 +48,6 @@ public class Translator {
         this.inputStream=inputStream;
     }
 
-    public void setOutStream(OutStream outStream) {
-        this.outStream=outStream;
-    }
-
-    public void setCurrentDictionary(GenericDictionary currentDictionary) {
-        if (currentDictionary!=null) {
-        //    this.currentDictionary = currentDictionary;
-        }
-        else
-            //this.commandlineToStatusWrapper.getOutStream().output("unresolved dictionary");
-            this.outStream.output("unresolved dictionary");
-    }
-
-    public void setOriLang(String _oriLang) {
-        this._oriLang = _oriLang;
-    }
-
-    public void setTargetLang(String _targetLang) {
-        this._targetLang = _targetLang;
-    }
-
     public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator,OutStream outStream, CommandLineToStatusClassWrapper mapper) {
         this.outStream=outStream;
         this.dictionaries =mapTranslator;
@@ -88,21 +63,9 @@ public class Translator {
         this.commandlineToStatusWrapper = mapper;
     }
 
-    @Deprecated
-    public Translator(Map<String, GenericDictionary> mapMockedDictionaries, BrowserActivator browserActivator, OutStream outStream) {
-        this(mapMockedDictionaries,browserActivator,outStream,new CommandLineToStatusClassWrapper());
-    }
-
-
     public void readyToAct() {
         commandlineToStatusWrapper.setStatusReadyForTheAction(this);
         //command=commandlineToStatusWrapper.getStrIn();
-    }
-
-    @Deprecated
-    public void setCommand(String[] strIn)  {
-        command=strIn;
-        //commandlineToStatusWrapper.setStatusReadyForTheAction(this,strIn,this.dictionaries);
     }
 
     public void doAction() {

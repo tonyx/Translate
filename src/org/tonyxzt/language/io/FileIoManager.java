@@ -14,21 +14,49 @@ public class FileIoManager {
         String toReturn="";
         File file = new File(fileName);
         try {
+//            String tempRet="";
             FileInputStream fileIn = new FileInputStream(file);
-            byte[] inBytes = new byte[1024];
 
-            while (fileIn.read(inBytes)!=-1) {
-                fileIn.read(inBytes);
-                String strReaden = new String(inBytes,"UTF-8");
-                toReturn+=strReaden;
+            //FileInputStream fstream = new FileInputStream("textfile.txt");
+            // Get the object of DataInputStream
+
+            DataInputStream in = new DataInputStream(fileIn);
+            //BufferedReader br = new BufferedReader(new InputStreamReader(in,"UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in,"UTF8"));
+            String strLine;
+            //Read File Line By Line
+            while ((strLine = br.readLine()) != null)   {
+                // Print the content on the console
+                toReturn+=strLine;
+                toReturn+="\n";
             }
-            fileIn.close();
-            toReturn = toReturn.trim();
+
+//            byte[] inBytes = new byte[10];
+//            while (fileIn.read(inBytes)!=-1) {
+//                fileIn.read(inBytes);
+//                String strReaden = new String(inBytes,"UTF-8");
+//                //System.out.println(strReaden);
+//                toReturn+=strReaden;
+//            }
+//            fileIn.close();
+//            toReturn = toReturn.trim();
+//
+////
+////            //OutputStream debugFile=new FileOutputStream("DEBUG.txt");
+////            //debugFile.write(toReturn.getBytes("UTF-8"));
+////
             return toReturn;
         }
+
         catch (FileNotFoundException fe) {
+            fe.printStackTrace();
         }
         catch (IOException fe) {
+            fe.printStackTrace();
+        }
+
+        catch (Exception ex)  {
+            ex.printStackTrace();
         }
         return "";
     }
