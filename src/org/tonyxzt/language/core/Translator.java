@@ -72,11 +72,6 @@ public class Translator {
         readyToAct();
         String[] theCommand = this.commandlineToStatusWrapper.getStrIn();
 
-        if (this.commandlineToStatusWrapper.getGenericDictionary()==null) {
-            this.commandlineToStatusWrapper.getOutStream().output("unresolved dictionary");
-            return;
-        }
-
         if (theCommand.length==0|| "--help".equals(theCommand[0])) {
             this.commandlineToStatusWrapper.getOutStream().output(helpCommand());
             //outStream.output(helpCommand());
@@ -97,6 +92,11 @@ public class Translator {
         if (theCommand.length>1&&"--languages".equals(theCommand[1])) {
             this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
             //outStream.output(validLanguages());
+            return;
+        }
+
+        if (this.commandlineToStatusWrapper.getGenericDictionary()==null) {
+            this.commandlineToStatusWrapper.getOutStream().output("unresolved dictionary");
             return;
         }
 
