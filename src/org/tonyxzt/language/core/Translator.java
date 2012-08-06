@@ -106,7 +106,8 @@ public class Translator {
             InputStream altInputStream = this.commandlineToStatusWrapper.getInputStream();
             while ((content = altInputStream.next())!=null) {
                 String translated = translate(content);
-                this.commandlineToStatusWrapper.getOutStream().output(content.trim() + " = " + translated);
+                //this.commandlineToStatusWrapper.getOutStream().output(content.trim() + " = " + translated);
+                this.commandlineToStatusWrapper.getOutStream().output(translated);
             }
         } catch (Exception e) {
             e.printStackTrace();

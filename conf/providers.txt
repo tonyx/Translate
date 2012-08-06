@@ -1,4 +1,3 @@
-gApi,org.externalLangProvider.MyContentProvider,org.externalLangProvider.MyContentFilter
-transRef,org.tonyx.TranslateReferenceProvider,org.tonyx.TranslateReferenceContentFilter
-yandec,org.tonyx.YandecContentProvider,org.tonyx.YandecContentFilter
-
+gApi,org.externalLangProvider.MyContentProvider,org.externalLangProvider.MyContentFilter,org.tonyxzt.language.core.DefaultInputWordRemapper
+transRef,org.tonyx.TranslateReferenceProvider,org.tonyx.TranslateReferenceContentFilter, org.tonyxzt.language.core.DefaultInputWordRemapper
+yandec,org.tonyx.YandecContentProvider,org.tonyx.YandecContentFilter,org.tonyx.YandecInputWordRemapper

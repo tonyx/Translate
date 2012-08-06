@@ -15,15 +15,26 @@ import org.tonyxzt.language.core.ContentProvider;
 public class GenericDictionary {
     ContentProvider provider;
     ContentFilter filter;
+    InputWordRemapper inputWordRemapper;
     String name;
     public GenericDictionary(String name, ContentProvider provider, ContentFilter filter) {
         this.name = name;
         this.provider=provider;
         this.filter=filter;
+        this.inputWordRemapper=new DefaultInputWordRemapper();
+    }
+
+    public GenericDictionary(String name, ContentProvider provider, ContentFilter filter,InputWordRemapper inputWordRemapper) {
+        this.name = name;
+        this.provider=provider;
+        this.filter=filter;
+        this.inputWordRemapper = inputWordRemapper;
     }
 
     public String lookUp(String word,String langIn, String langOut) throws Exception {
-        return filter.filter(provider.retrieve(word,langIn,langOut));
+        String retrievedFromUrl = provider.retrieve(word,langIn,langOut);
+        String theWord = inputWordRemapper.remappedInputWord(word,retrievedFromUrl);
+        return theWord +" = "+ filter.filter(retrievedFromUrl);
     }
 
     public String supportedLanguages() {

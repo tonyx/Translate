@@ -3,6 +3,7 @@ package org.tonyxzt.language.util;
 import org.tonyxzt.language.core.GenericDictionary;
 import org.tonyxzt.language.core.ContentFilter;
 import org.tonyxzt.language.core.ContentProvider;
+import org.tonyxzt.language.core.InputWordRemapper;
 import org.tonyxzt.language.io.FileIoManager;
 
 import java.util.HashMap;
@@ -26,7 +27,13 @@ public class ImplementationInjectorFromFile implements ImplementationInjector {
         String[] rows = content.split("\n");
         for (String current : rows) {
             String[] splittedCurrent = current.split(",");
-            GenericDictionary genDic = new GenericDictionary(splittedCurrent[0],(ContentProvider)Class.forName(splittedCurrent[1].trim()).newInstance(),(ContentFilter)Class.forName(splittedCurrent[2].trim()).newInstance());
+            GenericDictionary genDic=null;
+            if (splittedCurrent.length==3)
+                genDic = new GenericDictionary(splittedCurrent[0],(ContentProvider)Class.forName(splittedCurrent[1].trim()).newInstance(),(ContentFilter)Class.forName(splittedCurrent[2].trim()).newInstance());
+            else if (splittedCurrent.length==4)
+                genDic = new GenericDictionary(splittedCurrent[0],(ContentProvider)Class.forName(splittedCurrent[1].trim()).newInstance(),(ContentFilter)Class.forName(splittedCurrent[2].trim()).newInstance(),(InputWordRemapper)Class.forName(splittedCurrent[3].trim()).newInstance());
+            else
+                throw new Exception("error in configuration file");
             mapDictionaries.put(splittedCurrent[0],genDic);
         }
         return mapDictionaries;
