@@ -88,7 +88,8 @@ public class TranslatorTestWithMock {
     @Test
     public void canReadFromInputStreamAllTheLinesUntilNull() throws Exception {
         // given
-        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=fr", "--inFile=infile"};
+        //String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=fr", "--inFile=infile"};
+        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=fr", "ciao" };
         CommandLineToStatusClassWrapper mapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
         InputStream inputStreamm = mock(InputStream.class);
         when(inputStreamm.next()).thenReturn("hi");
@@ -99,7 +100,7 @@ public class TranslatorTestWithMock {
 
         // then
         verify(gDicContentProviderMock,times(1)).retrieve(anyString(),anyString(),anyString());
-        verify(outStream,times(1)).output(" = salut!, bonjour!, hé!, ");
+        verify(outStream,times(1)).output("ciao = salut!, bonjour!, hé!, ");
     }
 
 

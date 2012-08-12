@@ -8,5 +8,5 @@ package org.tonyxzt.language.core;
  * To change this template use File | Settings | File Templates.
  */
 public interface ContentFilter {
-    String filter(String content);
+    String filter(String content,String langIn, String langOut);
 }

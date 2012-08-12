@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class GDicContentFilter implements ContentFilter {
 
     private static final int INDEX_START_FILTERING = 2;
-    public String filter(String theResult) {
+    public String filter(String theResult,String langin, String langOut) {
         Pattern p = Pattern.compile("<span class=\"dct-tt\">|<div class=\"wbtr_cnt\">");
         String splitted[] = p.split(theResult, Pattern.MULTILINE | Pattern.DOTALL);
         String toReturn="";

@@ -219,7 +219,7 @@
   </manifest>
   </target>
 
-  <target name="createJar" depends="manifest">
+  <target name="createJar" depends="manifest,build.modules">
 		  <jar basedir="${googledictionary.output.dir}" manifest = "MANIFEST.MF" destfile="cltranslatorSNAPSHOT.jar">
       </jar>
   </target>

@@ -100,7 +100,8 @@ public class TranslatorTest {
     @Test
     public void canReadFromInputFileMultipleLines() throws Exception {
         // given
-        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
+        //String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
+        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en"};
         CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
         Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
 
@@ -132,7 +133,8 @@ public class TranslatorTest {
     @Test
     public void canReadFromInputFile() throws Exception {
         // given
-        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
+        //String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
+        String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en" };
         CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
 
         InputStream inputStream = new InputStream() {
@@ -152,7 +154,6 @@ public class TranslatorTest {
         translator.doAction();
 
         // then
-        System.out.println(outStream.getContent());
         Assert.assertTrue(outStream.getContent().contains("salut"));
     }
 
@@ -171,7 +172,7 @@ public class TranslatorTest {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         }),new ContentFilter(){
-            public String filter(String content) {
+            public String filter(String content,String langIn, String langOut) {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         }));

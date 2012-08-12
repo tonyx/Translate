@@ -34,7 +34,7 @@ public class GenericDictionary {
     public String lookUp(String word,String langIn, String langOut) throws Exception {
         String retrievedFromUrl = provider.retrieve(word,langIn,langOut);
         String theWord = inputWordRemapper.remappedInputWord(word,retrievedFromUrl);
-        return theWord +" = "+ filter.filter(retrievedFromUrl);
+        return theWord +" = "+ filter.filter(retrievedFromUrl,langIn, langOut);
     }
 
     public String supportedLanguages() {

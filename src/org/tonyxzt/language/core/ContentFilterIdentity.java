@@ -10,7 +10,7 @@ import org.tonyxzt.language.core.ContentFilter;
  * To change this template use File | Settings | File Templates.
  */
 public class ContentFilterIdentity implements ContentFilter {
-    public String filter(String content) {
+    public String filter(String content,String langIn, String langOut) {
         return content;
     }
 }
