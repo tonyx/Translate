@@ -1,7 +1,6 @@
 package org.tonyxzt.language.util;
 
 import org.tonyxzt.language.core.GenericDictionary;
-import org.tonyxzt.language.core.Translator;
 import org.tonyxzt.language.io.*;
 
 import java.util.Map;
@@ -34,33 +33,6 @@ public class CommandLineToStatusClassWrapper {
         this._outStream=outStream;
     }
 
-    public void setStatusReadyForTheAction(Translator translator)  {
-        if (strIn!=null&&strIn.length>0) {
-            translator.setInputStream(new SimpleInputStream(new String[] {strIn[strIn.length-1]}));
-            for (String aStrIn : strIn) {
-                if (aStrIn.startsWith("--dic=")) {
-                    //translator.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
-                    this.setCurrentDictionary(dics.get(aStrIn.substring(aStrIn.indexOf("=") + 1)));
-                }
-                if (aStrIn.startsWith("--oriLang=")) {
-                    //translator.setOriLang( aStrIn.substring(aStrIn.indexOf("=") + 1));
-                    this.setOriLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
-                }
-                if (aStrIn.startsWith("--targetLang=")) {
-                    //translator.setTargetLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
-                    this.setTargetLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
-                }
-                if (aStrIn.startsWith("--outFile=")) {
-                    //translator.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=")+1)));
-                    this.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=") + 1)));
-                }
-                if (aStrIn.startsWith("--inFile=")) {
-                    //translator.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=")+1)).split("\n")));
-                    this.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=") + 1)).split("\n")));
-                }
-            }
-        }
-    }
 
     public void setStatusReadyForTheAction(String[] strIn)  {
         if (strIn!=null&&strIn.length>0) {

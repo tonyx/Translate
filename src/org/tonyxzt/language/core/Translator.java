@@ -63,23 +63,22 @@ public class Translator {
         this.commandlineToStatusWrapper = mapper;
     }
 
-    public void readyToAct() {
-        commandlineToStatusWrapper.setStatusReadyForTheAction(this);
-        //command=commandlineToStatusWrapper.getStrIn();
-    }
+//    public void readyToAct() {
+////        commandlineToStatusWrapper.setStatusReadyForTheAction(this);
+//    }
 
     public void doAction() {
-        readyToAct();
+
+//        readyToAct();
+
         String[] theCommand = this.commandlineToStatusWrapper.getStrIn();
 
         if (theCommand.length==0|| "--help".equals(theCommand[0])) {
             this.commandlineToStatusWrapper.getOutStream().output(helpCommand());
-            //outStream.output(helpCommand());
             return;
         }
 
         if ("--languages".equals(theCommand[0])) {
-            //outStream.output(validLanguages());
             this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
             return;
         }
@@ -91,7 +90,6 @@ public class Translator {
 
         if (theCommand.length>1&&"--languages".equals(theCommand[1])) {
             this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
-            //outStream.output(validLanguages());
             return;
         }
 
@@ -101,12 +99,10 @@ public class Translator {
         }
 
         try {
-            //String toReturn="";
             String content;
             InputStream altInputStream = this.commandlineToStatusWrapper.getInputStream();
             while ((content = altInputStream.next())!=null) {
                 String translated = translate(content);
-                //this.commandlineToStatusWrapper.getOutStream().output(content.trim() + " = " + translated);
                 this.commandlineToStatusWrapper.getOutStream().output(translated);
             }
         } catch (Exception e) {
@@ -128,12 +124,10 @@ public class Translator {
 
     public String validLanguages() {
         return this.commandlineToStatusWrapper.getGenericDictionary().supportedLanguages();
-        //return this.currentDictionary.supportedLanguages();
     }
 
     public String translate(String word) throws Exception {
         if (this.commandlineToStatusWrapper.getGenericDictionary()!=null)
-        //    return this.currentDictionary.lookUp(word,this._oriLang,this._targetLang);
               return this.commandlineToStatusWrapper.getGenericDictionary().lookUp(word,this.commandlineToStatusWrapper.getOriLang(),this.commandlineToStatusWrapper.getTargetLang());
         return "";
     }
