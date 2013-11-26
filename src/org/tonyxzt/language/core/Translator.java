@@ -1,10 +1,9 @@
 package org.tonyxzt.language.core;
 
+import org.tonyxzt.language.io.InputStream;
 import org.tonyxzt.language.io.StandardOutStream;
 import org.tonyxzt.language.util.BrowserActivator;
 import org.tonyxzt.language.util.CommandLineToStatusClassWrapper;
-import org.tonyxzt.language.io.InputStream;
-import org.tonyxzt.language.io.OutStream;
 import org.tonyxzt.language.util.ImplementationInjectorFromFile;
 
 import java.util.HashMap;
@@ -24,8 +23,6 @@ import java.util.Map;
 public class Translator {
     Map<String,GenericDictionary> dictionaries;
     CommandLineToStatusClassWrapper commandlineToStatusWrapper;
-    InputStream inputStream;
-    OutStream outStream;
 
     BrowserActivator browserActivator;
 
@@ -40,46 +37,27 @@ public class Translator {
             return;
         }
 
-        Translator translate = new Translator(mapDictionaries,new DefaultBrowserActivator(),new StandardOutStream(), new CommandLineToStatusClassWrapper(inLine,mapDictionaries,new StandardOutStream()));
+        Translator translate = new Translator(mapDictionaries,new DefaultBrowserActivator(), new CommandLineToStatusClassWrapper(inLine,mapDictionaries,new StandardOutStream()));
         translate.doAction();
     }
 
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream=inputStream;
-    }
-
-    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator,OutStream outStream, CommandLineToStatusClassWrapper mapper) {
-        this.outStream=outStream;
+    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator, CommandLineToStatusClassWrapper mapper) {
         this.dictionaries =mapTranslator;
         this.browserActivator=browserActivator;
         this.commandlineToStatusWrapper = mapper;
     }
-
-    public Translator(Map<String, GenericDictionary> mapTranslator,BrowserActivator browserActivator,OutStream outStream, CommandLineToStatusClassWrapper mapper,InputStream inStream) {
-        this.outStream=outStream;
-        this.inputStream=inStream;
-        this.dictionaries =mapTranslator;
-        this.browserActivator=browserActivator;
-        this.commandlineToStatusWrapper = mapper;
-    }
-
-//    public void readyToAct() {
-////        commandlineToStatusWrapper.setStatusReadyForTheAction(this);
-//    }
 
     public void doAction() {
-
-//        readyToAct();
 
         String[] theCommand = this.commandlineToStatusWrapper.getStrIn();
 
         if (theCommand.length==0|| "--help".equals(theCommand[0])) {
-            this.commandlineToStatusWrapper.getOutStream().output(helpCommand());
+            System.out.println(helpCommand());
             return;
         }
 
         if ("--languages".equals(theCommand[0])) {
-            this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
+            System.out.println(validLanguages());
             return;
         }
 
@@ -89,12 +67,12 @@ public class Translator {
         }
 
         if (theCommand.length>1&&"--languages".equals(theCommand[1])) {
-            this.commandlineToStatusWrapper.getOutStream().output(validLanguages());
+            System.out.println(validLanguages());
             return;
         }
 
         if (this.commandlineToStatusWrapper.getGenericDictionary()==null) {
-            this.commandlineToStatusWrapper.getOutStream().output("unresolved dictionary");
+            System.out.println("unresolved dictionary");
             return;
         }
 
@@ -104,6 +82,7 @@ public class Translator {
             while ((content = altInputStream.next())!=null) {
                 String translated = translate(content);
                 this.commandlineToStatusWrapper.getOutStream().output(translated);
+                Thread.sleep(commandlineToStatusWrapper.getDelay());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +90,7 @@ public class Translator {
     }
 
     public String helpCommand() {
-        return "usage: gtranslate "+injectedDictionariesList()+"[--languages|--info] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [word|\"any words\"]";
+        return "usage: gtranslate "+injectedDictionariesList()+"[--languages|--info] [--oriLang=oriLang] [--targetLang=targetLang] [--inFile=infile] [--outFile=outfile] [--delay=delay_in_millisec] [word|\"any words\"]\n";
     }
 
     private String injectedDictionariesList() {

@@ -7,35 +7,24 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib1" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/activation.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/commons-codec-1.3.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/commons-httpclient.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/commons-lang-2.4.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/commons-logging-1.1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/commons-logging-adapters-1.1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/commons-logging-api-1.1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/gapipluginSNAPSHOT.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/gldicplugingSNAPSHOT.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/google-api-translate-java-0.94.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/jaxen-1.1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/jsr173_1.0_api.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/junit-4.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/log4j.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/mockito-all-1.8.5.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/translateReferenceSNAPSHOT.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/translateReferenceSNAPSHOT_ori.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/yandecSNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/mockito-all-1.8.5.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="" level="project" />
+    <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="commons-codec-1.3" level="project" />
+    <orderEntry type="library" name="commons-httpclient" level="project" />
+    <orderEntry type="library" name="commons-lang-2.4" level="project" />
+    <orderEntry type="library" name="commons-logging-1.1.1" level="project" />
+    <orderEntry type="library" name="commons-logging-adapters-1.1.1" level="project" />
+    <orderEntry type="library" name="commons-logging-api-1.1.1" level="project" />
+    <orderEntry type="library" name="gapipluginSNAPSHOT" level="project" />
+    <orderEntry type="library" name="gldicplugingSNAPSHOT" level="project" />
+    <orderEntry type="library" name="google-api-translate-java-0.94" level="project" />
+    <orderEntry type="library" name="jaxen-1.1.1" level="project" />
+    <orderEntry type="library" name="jsr173_1.0_api" level="project" />
+    <orderEntry type="library" name="junit-4.0" level="project" />
+    <orderEntry type="library" name="log4j" level="project" />
+    <orderEntry type="library" name="mockito-all-1.8.5" level="project" />
+    <orderEntry type="library" name="translateReferenceSNAPSHOT" level="project" />
+    <orderEntry type="library" name="yandecSNAPSHOT" level="project" />
   </component>
 </module>
 

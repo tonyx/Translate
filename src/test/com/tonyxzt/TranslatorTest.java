@@ -6,14 +6,9 @@ import org.junit.Test;
 import org.tonyxzt.language.core.*;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
-import org.tonyxzt.language.io.OutStream;
 import org.tonyxzt.language.util.CommandLineToStatusClassWrapper;
 import org.tonyxzt.language.util.FakeBrowserActivator;
-import org.tonyxzt.language.util.Utils;
 
-import java.awt.*;
-import java.net.URI;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +67,7 @@ public class TranslatorTest {
         // given
         String[] command = new String[] {"--dic=gApi", "--languages"};
         CommandLineToStatusClassWrapper clMapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
-        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,clMapper);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,clMapper);
 
         // when
         translator.doAction();
@@ -87,7 +82,7 @@ public class TranslatorTest {
         // given
         String[] command = new String[] {"--dic=gUnsupported"};
         CommandLineToStatusClassWrapper commandLineToStatusClassWrapper  = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
-        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,commandLineToStatusClassWrapper);
 
         // when
         translator.doAction();
@@ -103,7 +98,7 @@ public class TranslatorTest {
         //String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"};
         String[] command = new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en"};
         CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
-        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,commandLineToStatusClassWrapper);
 
         // when
         //translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
@@ -120,7 +115,7 @@ public class TranslatorTest {
         // given
         String[] command = new String[] {"--dic=gDic", "--info"};
         CommandLineToStatusClassWrapper commandLineToStatusClassWrapper  = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
-        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,commandLineToStatusClassWrapper);
 
         // when
         translator.doAction();
@@ -145,7 +140,7 @@ public class TranslatorTest {
             }
         };
 
-        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper,inputStream);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,commandLineToStatusClassWrapper);
 
         //translator.setCommand(new String[]{"--dic=gDic", "--oriLang=it", "--targetLang=en", "--inFile=infile"});
         //translator.setInputStream(inputStream);
@@ -180,7 +175,7 @@ public class TranslatorTest {
         String[] command = new String[]{"--help"};
         //CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries);
         CommandLineToStatusClassWrapper commandLineToStatusClassWrapper = new CommandLineToStatusClassWrapper(command,mapMockedDictionaries,outStream);
-        Translator translator = new Translator(mapMockedDictionaries,browserActivator,outStream,commandLineToStatusClassWrapper);
+        Translator translator = new Translator(mapMockedDictionaries,browserActivator,commandLineToStatusClassWrapper);
 
         //translator.setCommand(new String[]{"--help"});
         translator.doAction();

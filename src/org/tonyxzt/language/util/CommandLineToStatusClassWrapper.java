@@ -18,6 +18,7 @@ public class CommandLineToStatusClassWrapper {
     private String _targetLang;
     private OutStream _outStream;
     private InputStream _inputStream;
+    private int _delay;
 
     public String[] getStrIn() {
         return strIn;
@@ -29,8 +30,8 @@ public class CommandLineToStatusClassWrapper {
     public CommandLineToStatusClassWrapper(String[] strIn, Map<String, GenericDictionary> dics, OutStream outStream) {
         this.strIn = strIn;
         this.dics = dics;
-        setStatusReadyForTheAction(strIn);
         this._outStream=outStream;
+        setStatusReadyForTheAction(strIn);
     }
 
 
@@ -48,10 +49,14 @@ public class CommandLineToStatusClassWrapper {
                     this.setTargetLang(aStrIn.substring(aStrIn.indexOf("=") + 1));
                 }
                 if (aStrIn.startsWith("--outFile=")) {
+                    System.out.println("setting out stream "+aStrIn.substring(aStrIn.indexOf("=")+1));
                     this.setOutStream(new FileOutStream(aStrIn.substring(aStrIn.indexOf("=") + 1)));
                 }
                 if (aStrIn.startsWith("--inFile=")) {
                     this.setInputStream(new SimpleInputStream(new FileIoManager().readContentFromFile(aStrIn.substring(aStrIn.indexOf("=") + 1)).split("\n")));
+                }
+                if (aStrIn.startsWith("--delay=")) {
+                    this.setDelay(aStrIn.substring(aStrIn.indexOf("=") + 1));
                 }
             }
         }
@@ -73,9 +78,20 @@ public class CommandLineToStatusClassWrapper {
         this._oriLang=oriLang;
     }
 
+    private void setDelay(String _delay) {
+        try {
+            this._delay = Integer.parseInt(_delay);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("error number format for _delay parameter "+ _delay);
+        }
+    }
+
+    public int getDelay() {
+        return this._delay;
+    }
+
     private void setCurrentDictionary(GenericDictionary genericDictionary) {
         this._genericDictionary=genericDictionary;
-        //To change body of created methods use File | Settings | File Templates.
     }
 
     public InputStream getInputStream() {
