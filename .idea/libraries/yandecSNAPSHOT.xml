@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="yandecSNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/yandecSNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

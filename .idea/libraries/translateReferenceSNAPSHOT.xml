@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="translateReferenceSNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/translateReferenceSNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
